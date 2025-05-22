@@ -1,25 +1,27 @@
-package Entities;
+package BusinessLogic;
 
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 
-import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  *
  * @author Sebastian
  */
-
-public class Granos extends Producto {
+public class Aseo extends Producto {
     private LocalDate fechaDeVencimiento;
     private ArrayList<String> etiquetas;
 
-    public Granos() {
+    public Aseo() {
     }
     
-    public Granos(String nombre, long id, double precio, double precioMayorista,
-                  LocalDate fechaDeVencimiento, ArrayList<String> etiquetas) {
-        super(nombre,id,precio, precioMayorista, EnumTipoProd.GRANOS);
+    public Aseo(String nombre, long id, double precio, double precioMayorista, LocalDate fechaDeVencimiento, ArrayList<String> etiquetas) {
+        super(nombre,id,precio, precioMayorista, EnumTipoProd.ASEO);
         this.fechaDeVencimiento = fechaDeVencimiento;
         this.etiquetas = etiquetas;
     }
@@ -39,7 +41,7 @@ public class Granos extends Producto {
     public void setEtiquetas(ArrayList<String> etiquetas) {
         this.etiquetas = etiquetas;
     }
-    
+
     @Override
     public String imprimirFicha() {
         StringBuilder ficha = new StringBuilder();
@@ -64,3 +66,5 @@ public class Granos extends Producto {
         return ficha.toString();
     }
 }
+ 
+

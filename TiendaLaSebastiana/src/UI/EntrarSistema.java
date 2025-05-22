@@ -1,8 +1,8 @@
 package UI;
 
-import Entities.Empleado;
-import Entities.utilJtextField;
-import Gestión.Caja;
+import BusinessLogic.Empleado;
+import BusinessLogic.utilJtextField;
+import BusinessLogic.Caja;
 import javax.swing.text.AbstractDocument;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license

@@ -1,4 +1,4 @@
-package Gestión;
+package BusinessLogic;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -9,8 +9,8 @@ package Gestión;
  *
  * @author Sebastian
  */
-import Entities.DetalleVenta;
-import Entities.Producto;
+import BusinessLogic.DetalleVenta;
+import BusinessLogic.Producto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

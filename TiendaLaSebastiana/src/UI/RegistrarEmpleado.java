@@ -8,8 +8,8 @@ package UI;
  *
  * @author migue
  */
-import Entities.Empleado;
-import Entities.utilJtextField;
+import BusinessLogic.Empleado;
+import BusinessLogic.utilJtextField;
 import javax.swing.text.AbstractDocument;
 public class RegistrarEmpleado extends javax.swing.JFrame {
 

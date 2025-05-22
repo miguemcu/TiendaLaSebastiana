@@ -1,4 +1,4 @@
-package Entities;
+package BusinessLogic;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -9,7 +9,7 @@ package Entities;
  *
  * @author Sebastian
  */
-import Entities.Producto;
+import BusinessLogic.Producto;
 
 public class DetalleVenta {
     private Producto producto;

@@ -4,7 +4,7 @@
  */
 package UI;
 
-import Entities.Producto;
+import BusinessLogic.Producto;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
