@@ -4,15 +4,15 @@
  */
 package BusinessLogic;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
-
 /**
  *
  * @author migue
  */
 public  class Utils {
-    
     public static Long generarIdUnico(ArrayList<Venta> ventas) {
         Random random = new Random();
         Long nuevoId;
@@ -35,4 +35,27 @@ public  class Utils {
 
         return nuevoId;
     }
+   public static String mostrarMenu (Producto product) {
+       StringBuilder ficha = new StringBuilder();
+        ficha.append("=== Ficha Producto ===\n");
+        ficha.append("Nombre: ").append(product.getNombre()).append("\n");
+        ficha.append("ID: ").append(product.getId()).append("\n");
+        ficha.append("Precio Mayor: ").append(product.getPrecioMayorista()).append("\n");
+        ficha.append("Precio Menor: ").append(product.getPrecio()).append("\n");
+        if (product.getTipoProducto() != null){
+            LocalDate fechaDeVencimiento = product.getFechaDeVencimiento();
+        if (fechaDeVencimiento != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
+            ficha.append("Fecha Vencimiento: ").append(fechaDeVencimiento.format(formatter)).append("\n");
+        } else {
+            ficha.append("Fecha Vencimiento: No especificada\n");
+        }
+
+        ficha.append("Etiquetas:\n");
+        for (String etiqueta : product.getEtiquetas()) {
+            ficha.append("- ").append(etiqueta).append("\n");
+        }
+        }
+     return ficha.toString();
+   }
 }
