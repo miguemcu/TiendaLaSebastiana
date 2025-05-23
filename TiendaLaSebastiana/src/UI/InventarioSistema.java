@@ -298,45 +298,38 @@ public class InventarioSistema extends javax.swing.JFrame {
             if (busqueda.isEmpty() || busqueda.isBlank()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
-
             boolean encontrado = false;
 
-            // Obtenemos la lista de productos
-            List<Producto> productos = parent.getCaja().getInventario().getProductos();
-
             if (busqueda.matches("\\d+")) {
-                long id = Long.parseLong(busqueda);
-                for (Producto producto : productos) {
-                    if (producto.getId() == id) {
-                        this.productoBuscado = producto;
-                        setearCampos(this.productoBuscado);
-                        encontrado = true;
-                        break;
-                    }
+                
+                if (parent.getCaja().getInventario().buscarProductos("ID", busqueda) != null) {
+                    setearCampos(parent.getCaja().getInventario().buscarProductos("ID", busqueda));
+                    encontrado = true;
+                }else{
+                    encontrado = false;
                 }
             } else {
-                for (Producto producto : productos) {
-                    if (producto.getNombre().equalsIgnoreCase(busqueda)) {
-                        this.productoBuscado = producto;
-                        setearCampos(producto);
-                        encontrado = true;
-                        break;
-                    }
+                if (parent.getCaja().getInventario().buscarProductos("nombre", busqueda) != null) {
+                    setearCampos(parent.getCaja().getInventario().buscarProductos("nombre", busqueda));
+                    encontrado = true;
+                }else{
+                    encontrado = false;
                 }
-            }
+                }
+            
 
             if (!encontrado) {
                 throw new NoSuchElementException("Producto no encontrado.");
             }
 
-        } catch (IllegalArgumentException ex) {
+        }catch (IllegalArgumentException ex) {
             txtError.setText(ex.getMessage());
         } catch (Exception ex) {
             txtError.setText("Error inesperado: " + ex.getMessage());
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
-    
+
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -351,22 +344,20 @@ public class InventarioSistema extends javax.swing.JFrame {
             String cantidad = txtCantidadAjustar.getText().trim();
             String busqueda = txtBuscar.getText();
 
-
-            
             if (busqueda.isEmpty() || busqueda.isBlank() || cantidad.isBlank() || cantidad.isEmpty()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
 
             } else {
                 if (!cantidad.matches("\\d+")) {
-                throw new IllegalArgumentException("La cantidad solo debe contener números.");
-            }
+                    throw new IllegalArgumentException("La cantidad solo debe contener números.");
+                }
                 if (this.productoBuscado == null) {
                     throw new IllegalArgumentException("Producto no encontrado.");
                 }
             }
             Double cantidadAjustar = Double.valueOf(cantidad);
             parent.getCaja().getInventario().getCantidades().replace(this.productoBuscado.getId(), cantidadAjustar);
-            
+
         } catch (IllegalArgumentException ex) {
             txtError.setText(ex.getMessage());
         } catch (Exception ex) {

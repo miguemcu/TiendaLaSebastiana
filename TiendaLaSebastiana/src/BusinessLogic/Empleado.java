@@ -34,6 +34,7 @@ public class Empleado {
         this.cedula = cedula;
     }
 
+    
     public void imprimirFichaEmpleado() {
         System.out.println("=== Empleado ===");
         System.out.println("Nombre: " + nombre);

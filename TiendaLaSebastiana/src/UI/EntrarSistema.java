@@ -4,6 +4,7 @@ import BusinessLogic.Empleado;
 import BusinessLogic.utilJtextField;
 import BusinessLogic.Caja;
 import javax.swing.text.AbstractDocument;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,6 +15,7 @@ import javax.swing.text.AbstractDocument;
  * @author DELL
  */
 public class EntrarSistema extends javax.swing.JFrame {
+
     private Main parent;
     private Tienda tienda;
     private Caja caja;
@@ -25,10 +27,10 @@ public class EntrarSistema extends javax.swing.JFrame {
     public void setTienda(Tienda tienda) {
         this.tienda = tienda;
     }
-    
 
     /**
      * Creates new form EntrarSistema
+     *
      * @param parent
      * @param caja
      */
@@ -48,7 +50,6 @@ public class EntrarSistema extends javax.swing.JFrame {
     public void setParent(Main parent) {
         this.parent = parent;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -172,43 +173,42 @@ public class EntrarSistema extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         String nombre = txtNombreEmpleado.getText().trim();
         String cedula = txtCedulaEmpleado.getText().trim();
-         try {
-            
-            if (nombre.isBlank() || cedula.isBlank() || nombre.isBlank() || cedula.isBlank()){
+        try {
+
+            if (nombre.isBlank() || cedula.isBlank() || nombre.isBlank() || cedula.isBlank()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
-            
-            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")){
+
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")) {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
-            
-            if (!cedula.matches("\\d+")){
+
+            if (!cedula.matches("\\d+")) {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
-            for (Empleado empleado : parent.getCaja().getEmpleados()){
-                if (empleado.getNombre().equals(nombre) && empleado.getCedula().equals(cedula)){
-                    if(this.getTienda() == null){
+            Empleado empleadoAuth = parent.getCaja().verificarEmpleado(nombre, cedula);
+            if (empleadoAuth != null) {
+                if (this.getTienda() == null) {
                     this.setTienda(new Tienda(parent));
                 }
-                parent.setUserAuth(empleado);
+                parent.setUserAuth(empleadoAuth);
                 this.getTienda().setVisible(true);
                 this.setVisible(false);
                 return;
-                }
+
             }
-        txtErrorRegistro.setText("El usuario no existe.");
-        } catch (IllegalArgumentException ex){
-           txtErrorRegistro.setText(ex.getMessage());
-       } catch (Exception ex) {
-           txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
-       }
-        
+            txtErrorRegistro.setText("El usuario no existe.");
+        } catch (IllegalArgumentException ex) {
+            txtErrorRegistro.setText(ex.getMessage());
+        } catch (Exception ex) {
+            txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
+        }
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnIngresar;
