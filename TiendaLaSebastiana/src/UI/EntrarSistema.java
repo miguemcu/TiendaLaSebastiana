@@ -34,7 +34,7 @@ public class EntrarSistema extends javax.swing.JFrame {
      * @param parent
      * @param caja
      */
-    public EntrarSistema(Main parent, Caja caja) {
+    public EntrarSistema(Main parent) {
         this.caja = caja;
         this.parent = parent;
         initComponents();
