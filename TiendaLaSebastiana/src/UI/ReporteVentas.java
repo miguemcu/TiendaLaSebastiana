@@ -4,8 +4,10 @@
  */
 package UI;
 
+import BusinessLogic.Reporte;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.HashSet;
 
 /**
  *
@@ -232,6 +234,7 @@ public class ReporteVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAnioFinActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        Reporte reporte = new Reporte(parent.getCaja());
         String diaInicioStr = txtDiaInicio.getText().trim();
         String mesInicioStr = txtMesInicio.getText().trim();
         String anioInicioStr = txtAnioInicio.getText().trim();
@@ -264,8 +267,12 @@ public class ReporteVentas extends javax.swing.JFrame {
 
             lblFechaInicio.setText("Fecha de inicio: "+ fechaInicio);
             lblFechaFin.setText("Fecha de fin: "+ fechaFin);
+            
+            reporte.setFechaInicio(fechaInicio);
+            reporte.setFechaFin(fechaFin);
+            
 
-            var ventasAMostrar = this.parent.getCaja().obtenerVentasSegunPeriodo(fechaInicio, fechaFin);
+            var ventasAMostrar = reporte.obtenerVentasSegunPeriodo();
             var ventasPeriodo = new VentasPeriodo(ventasAMostrar);
             ventasPeriodo.setVisible(true);
             ventasPeriodo.mostrarVentasEnTabla(ventasAMostrar);

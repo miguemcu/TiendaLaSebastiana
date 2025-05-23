@@ -5,6 +5,7 @@
 package UI;
 
 import BusinessLogic.Producto;
+import BusinessLogic.Reporte;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -18,18 +19,20 @@ import javax.swing.table.DefaultTableModel;
 public class ReporteStock extends javax.swing.JFrame {
     private Main parent;
     private DefaultTableModel modeloTabla;
+    private Reporte reporte;
     /**
      * Creates new form ReporteStock
      */
     public ReporteStock(Main parent) {
-        this.parent = parent;
         initComponents();
+        this.parent = parent;
         modeloTabla = (DefaultTableModel)tblReporteStock.getModel();
+        this.reporte = new Reporte(parent.getCaja());
     }
     
    public void mostrarVentasEnTabla() {
-        Map<Long, Double> cantidades = parent.getCaja().getInventario().filtrarStack();
-        ArrayList<Producto> productos = parent.getCaja().getInventario().filtrarProductos(cantidades);
+        Map<Long, Double> cantidades = reporte.filtrarStack();
+        ArrayList<Producto> productos = reporte.filtrarProductos(cantidades);
 
         modeloTabla.setRowCount(0);
 
@@ -44,7 +47,6 @@ public class ReporteStock extends javax.swing.JFrame {
 
             double cantidad = cantidades.get(idProd);
             String alerta = "";
-
             if (cantidad < 5) {
                 alerta = "⚠️ Stock Critico";
             } else if (cantidad > 20) {

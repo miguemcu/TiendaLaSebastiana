@@ -26,7 +26,6 @@ public class Caja {
         this.empleados = new ArrayList<>();
         this.ventas = new ArrayList<>();
         this.inventario = new Inventario();
-        this.ventas = new ArrayList<>();
     }
 
     public Empleado getCajero() {
@@ -63,17 +62,6 @@ public class Caja {
 
     public void agregarEmpleado(Empleado empleado) {
         empleados.add(empleado);
-    }
-    
-    public ArrayList<Venta> obtenerVentasSegunPeriodo(LocalDate fechaInicio, LocalDate fechaFin){
-        ArrayList<Venta> ventasFiltradas = ventas.stream()
-        .filter(v -> {
-            LocalDate fechaVenta = v.getFecha().toLocalDate();
-            return !fechaVenta.isBefore(fechaInicio) && !fechaVenta.isAfter(fechaFin);
-        })
-        .collect(Collectors.toCollection(ArrayList::new));
-        
-        return ventasFiltradas;
     }
     
     public void agregarVenta(Venta venta) {
