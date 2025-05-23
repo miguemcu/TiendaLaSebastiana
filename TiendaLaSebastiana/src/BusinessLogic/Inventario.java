@@ -91,34 +91,7 @@ public class Inventario {
         }
         return null;
     }
-
-    public Map<Long, Double> filtrarStack() {
-        Map<Long, Double> cantidadesFiltradas = new HashMap<>();
-
-        for (Map.Entry<Long, Double> acceso : this.cantidades.entrySet()) {
-            Long productoId = acceso.getKey();
-            Double cantidad = acceso.getValue();
-            if (cantidad < 5 || cantidad > 20) {
-                cantidadesFiltradas.put(productoId, cantidad);
-            }
-        }
-
-        return cantidadesFiltradas;
-    }
-
-    public ArrayList<Producto> filtrarProductos(Map<Long, Double> cantidadesFiltradas) {
-        ArrayList<Producto> productosFiltrados = new ArrayList<>();
-
-        for (Producto producto : this.productos) {
-            Long productoId = producto.getId();
-            if (cantidadesFiltradas.containsKey(productoId)) {
-                productosFiltrados.add(producto);
-            }
-        }
-
-        return productosFiltrados;
-    }
-
+    
     public double getCantidadProducto(Long idProd) {
         if (this.cantidades.containsKey(idProd)) {
             return this.cantidades.get(idProd);

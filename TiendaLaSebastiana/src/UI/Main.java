@@ -14,20 +14,10 @@ import BusinessLogic.Caja;
 public class Main extends javax.swing.JFrame {
     
     private Caja caja;
-    private Empleado userAuth;
     
     public Main() {
-        this.userAuth = null;
         this.caja = new Caja();
         initComponents();
-    }
-
-    public Empleado getUserAuth() {
-        return userAuth;
-    }
-
-    public void setUserAuth(Empleado userAuth) {
-        this.userAuth = userAuth;
     }
     
     private RegistrarEmpleado registrarEmpleado;
@@ -114,7 +104,7 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterActionPerformed
-        var ingresarSistema = new EntrarSistema(this, this.caja);
+        var ingresarSistema = new EntrarSistema(this);
         ingresarSistema.setVisible(true);
     }//GEN-LAST:event_btnEnterActionPerformed
 

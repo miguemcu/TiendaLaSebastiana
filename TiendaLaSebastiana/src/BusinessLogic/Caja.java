@@ -60,7 +60,8 @@ public class Caja {
         this.inventario = inventario;
     }
 
-    public void agregarEmpleado(Empleado empleado) {
+    public void agregarEmpleado(String nombre, String cedula) {
+        Empleado empleado = new Empleado(nombre, cedula);
         empleados.add(empleado);
     }
 

@@ -186,12 +186,12 @@ public class EntrarSistema extends javax.swing.JFrame {
             if (!cedula.matches("\\d+")) {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
-            Empleado empleadoAuth = parent.getCaja().verificarEmpleado(nombre, cedula);
-            if (empleadoAuth != null) {
+            Empleado cajero = parent.getCaja().verificarEmpleado(nombre, cedula);
+            if (cajero != null) {
                 if (this.getTienda() == null) {
                     this.setTienda(new Tienda(parent));
                 }
-                parent.setUserAuth(empleadoAuth);
+                caja.setCajero(cajero);
                 this.getTienda().setVisible(true);
                 this.setVisible(false);
                 return;

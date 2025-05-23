@@ -6,6 +6,7 @@ package UI;
 
 import BusinessLogic.DetalleVenta;
 import BusinessLogic.Producto;
+import BusinessLogic.Venta;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,19 +14,19 @@ import javax.swing.table.DefaultTableModel;
 
 public class Recibo extends javax.swing.JFrame {
 
-    private Main parent;
+    private MenuVenta parent;
     private DefaultTableModel modeloTabla;
-    private MenuVenta venta;
+    private Venta venta;
     private double total;
     
-    public Recibo(Main parent, MenuVenta venta) {
+    public Recibo(MenuVenta parent, Venta venta) {
         initComponents();
         this.parent = parent;
         this.venta = venta;
         modeloTabla = (DefaultTableModel)tblFactura.getModel();
         mostrarFecha();
         mostrarEmpleado();
-        this.total = venta.sumarColumnaDouble(venta.getTblProductosAgregados(), 4);
+        this.total = venta.getTotalVenta();
         String totalstr = String.valueOf(this.total);
         txtTotal.setText(totalstr);
         txtTotal.setEditable(false);
@@ -35,14 +36,12 @@ public class Recibo extends javax.swing.JFrame {
         Object[] nuevaFila = {descripcion, cantidad, precioUni, precioTotal};
         modeloTabla.addRow(nuevaFila);
     }
-    public void mostrarVentaEnRecibo() {
-
-        ArrayList<DetalleVenta> detalles = venta.getDetalles();
+    public void mostrarVentasEnRecibo() {
         String producto = null;
         double cantidad = 0.0;
         double precioUni = 0.0;
         double precioTotal = 0.0;
-        for (DetalleVenta detalle: detalles){
+        for (DetalleVenta detalle: venta.getDetalles()){
             producto = detalle.getProducto().getNombre();
             cantidad = detalle.getCantidad();
             precioUni = detalle.getProducto().getPrecio();
@@ -51,18 +50,16 @@ public class Recibo extends javax.swing.JFrame {
         
         modeloTabla.setRowCount(0);
 
-       
-
         agregarFilaProducto(producto, cantidad, precioUni, precioTotal);
         }
   
     private void mostrarFecha(){
-        LocalDateTime fecha = venta.capturarFecha();
+        LocalDateTime fecha = parent.capturarFecha();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy - HH:mm");
         txtFechaHoy.setText(String.valueOf(fecha.format(formatter)));
     }
     private void mostrarEmpleado(){
-        txtEmpleado.setText(parent.getUserAuth().getNombre());
+        txtEmpleado.setText(parent.getParent().getCaja().getCajero().getNombre());
     }
 
     /**

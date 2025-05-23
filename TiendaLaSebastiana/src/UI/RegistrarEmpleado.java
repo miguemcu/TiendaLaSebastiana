@@ -16,8 +16,8 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
     private Main parent;
     
     public RegistrarEmpleado(Main parent) {
-        this.parent = parent;
         initComponents();
+        this.parent = parent;
         ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new utilJtextField(10));
         ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new utilJtextField(35));
         
@@ -173,15 +173,8 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
         
-        Empleado empleado = new Empleado(nombre, cedula);
-
-        parent.getCaja().agregarEmpleado(empleado);
+        parent.getCaja().agregarEmpleado(nombre, cedula);
         
-        /*System.out.println("Empleado registrado correctamente.");
-        for (Empleado emp : parent.getCaja().getEmpleados()) {
-            emp.imprimirFichaEmpleado();
-    }*/
-
         this.dispose();
         parent.setVisible(true);
         

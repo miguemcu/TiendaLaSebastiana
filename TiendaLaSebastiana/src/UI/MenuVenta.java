@@ -3,6 +3,7 @@ package UI;
 import BusinessLogic.DetalleVenta;
 import BusinessLogic.Producto;
 import BusinessLogic.Caja;
+import BusinessLogic.Utils;
 import BusinessLogic.Venta;
 import java.util.Random;
 import java.time.DateTimeException;
@@ -25,8 +26,9 @@ import javax.swing.table.DefaultTableModel;
 public class MenuVenta extends javax.swing.JFrame {
     private Main parent;
     private DefaultTableModel modeloTabla;
-    private ArrayList<DetalleVenta> detalles;
-    private Random random = new Random();
+    private Venta venta;
+    
+    
     
     private void setearCampos(Producto producto) {
         txtNombreProducto.setEditable(false);
@@ -39,10 +41,10 @@ public class MenuVenta extends javax.swing.JFrame {
         txtTotalVenta.setEditable(false);
         }
         public MenuVenta(Main parent) {
-            this.parent = parent;     
             initComponents();
+            this.parent = parent;     
             modeloTabla = (DefaultTableModel)tblProductosAgregados.getModel();
-            this.detalles = new ArrayList<DetalleVenta>();
+            this.venta = new Venta();
         }
 
         public Main getParent() {
@@ -64,11 +66,12 @@ public class MenuVenta extends javax.swing.JFrame {
         
 
     public ArrayList<DetalleVenta> getDetalles() {
-        return detalles;
+        return venta.getDetalles();
     }
 
     public void setDetalles(ArrayList<DetalleVenta> detalles) {
-        this.detalles = detalles;
+        this.venta.setDetalles(detalles);
+        ;
     }
         
         
@@ -427,41 +430,31 @@ public class MenuVenta extends javax.swing.JFrame {
         String busqueda = txtBuscar.getText();
         try {
             if (busqueda.isEmpty() || busqueda.isBlank()) {
-                throw new IllegalArgumentException("Todos los campos \nson obligatorios.");
+                throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
-
-            boolean encontrado = false;
-
-            // Obtenemos la lista de productos
-            ArrayList<Producto> productos = parent.getCaja().getInventario().getProductos();
 
             if (busqueda.matches("\\d+")) {
-                long id = Long.parseLong(busqueda);
-                for (Producto producto : productos) {
-                    if (producto.getId() == id) {
-                        setearCampos(producto);
-                        encontrado = true;
-                        return producto;
-                    }
+                
+                if (parent.getCaja().getInventario().buscarProductos("ID", busqueda) != null) {
+                    setearCampos(parent.getCaja().getInventario().buscarProductos("ID", busqueda));
+                }else{
+                    throw new NoSuchElementException("Producto no encontrado.");
                 }
+                
             } else {
-                for (Producto producto : productos) {
-                    if (producto.getNombre().equalsIgnoreCase(busqueda)) {
-                        setearCampos(producto);
-                        encontrado = true;               
-                        return producto;
-                    }
+                if (parent.getCaja().getInventario().buscarProductos("nombre", busqueda) != null) {
+                    setearCampos(parent.getCaja().getInventario().buscarProductos("nombre", busqueda));
+                } else{
+                    throw new NoSuchElementException("Producto no encontrado.");
                 }
-            }
-
-            if (!encontrado) {
-                throw new NoSuchElementException("Producto no encontrado.");
-            }
+                }
             
-        }  catch (IllegalArgumentException ex) {
+
+
+        }catch (IllegalArgumentException ex) {
             txtError.setText(ex.getMessage());
         } catch (Exception ex) {
-            txtError.setText(ex.getMessage());
+            txtError.setText("Error inesperado: " + ex.getMessage());
         }
         return null;
     }
@@ -497,7 +490,7 @@ public class MenuVenta extends javax.swing.JFrame {
         }
         
         var detalleVenta = new DetalleVenta(producto, cantidadVender, precio, total, 0, 0);
-        detalles.add(detalleVenta);
+        venta.getDetalles().add(detalleVenta);
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 
     public double sumarColumnaDouble(JTable tabla, int columnIndex) {
@@ -517,7 +510,7 @@ public class MenuVenta extends javax.swing.JFrame {
 
         double totalVenta = sumarColumnaDouble(tblProductosAgregados, 4);
         txtTotalVenta.setText(String.valueOf(totalVenta));
-        Long id = generarIdUnico();
+        Long id = Utils.generarIdUnico(parent.getCaja().getVentas());
         LocalDateTime fecha = capturarFecha();
         
         if (fecha == null) {
@@ -525,22 +518,19 @@ public class MenuVenta extends javax.swing.JFrame {
             return;
         }
         
-        var venta = new Venta(detalles, totalVenta, totalVenta, 0, 0, fecha, id);
+        venta.setTotalVenta(totalVenta);
+        venta.setTotalBruto(totalVenta);
+        venta.setTotalDescuento(0);
+        venta.setTotalIva(0);
+        venta.setFecha(fecha);
+        venta.setID(id);
         this.dispose();
         
-        double ajuste = 0;
-        Producto producto = null;
-        
-        for (DetalleVenta detalle: detalles){
-            producto = detalle.getProducto();
-            ajuste = (detalle.getCantidad()*(-1));
-            parent.getCaja().getInventario().ajustarCantidadProducto(producto.getId(), ajuste);
-        }
-        
+        parent.getCaja().setInventario(venta.detallarCantidades(parent.getCaja().getInventario()));
         parent.getCaja().agregarVenta(venta);
         
-        var recibo = new Recibo(parent, this);
-        recibo.mostrarVentaEnRecibo();
+        var recibo = new Recibo(this, venta);
+        recibo.mostrarVentasEnRecibo();
         recibo.setVisible(true);
     }//GEN-LAST:event_btnVenderActionPerformed
 
@@ -585,28 +575,6 @@ public class MenuVenta extends javax.swing.JFrame {
 
             return fecha;
         }
-   
-    public Long generarIdUnico() {
-        Long nuevoId;
-        boolean existe;
-
-        do {
-            nuevoId = random.nextLong();
-            if (nuevoId < 0) { // Por si me generó un número Negativo
-                nuevoId = -nuevoId;
-            }
-
-            existe = false;
-            for (Venta venta : parent.getCaja().getVentas()) {
-                if (venta.getID() == nuevoId) {
-                    existe = true;
-                    break;
-                }
-            }
-        } while (existe);
-
-        return nuevoId;
-    }
     
     private void txtCantidadDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadDisponibleActionPerformed
         // TODO add your handling code here:
