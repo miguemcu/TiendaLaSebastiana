@@ -170,7 +170,10 @@ public class Main extends javax.swing.JFrame {
             registroEmpleado = new RegistroEmpleado();
         }
         
-        if (!registroEmpleado.isVisible() || registroEmpleado.isClosed()){
+        if (!registroEmpleado.isVisible()){
+            if (registroEmpleado.isClosed()){
+                desktopPane.add(registroEmpleado);
+            }
             registroEmpleado.show();
         }
     }//GEN-LAST:event_btnRegisterEmployee1ActionPerformed
