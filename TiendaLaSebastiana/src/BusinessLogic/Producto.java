@@ -1,4 +1,4 @@
-package Entities;
+package BusinessLogic;
 
 
 public abstract class Producto {

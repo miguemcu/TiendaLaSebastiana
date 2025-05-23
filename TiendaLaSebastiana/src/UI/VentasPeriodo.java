@@ -7,7 +7,7 @@ package UI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import Gestión.Venta;
+import BusinessLogic.Venta;
 import java.util.stream.Collectors;
 
 /**

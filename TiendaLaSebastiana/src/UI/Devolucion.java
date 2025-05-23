@@ -4,10 +4,10 @@
  */
 package UI;
 
-import Entities.DetalleVenta;
-import Entities.utilJtextField;
+import BusinessLogic.DetalleVenta;
+import BusinessLogic.utilJtextField;
 import javax.swing.text.AbstractDocument;
-import Gestión.Venta;
+import BusinessLogic.Venta;
 import UI.Main;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;

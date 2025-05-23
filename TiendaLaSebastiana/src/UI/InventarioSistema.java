@@ -4,8 +4,8 @@
  */
 package UI;
 
-import Entities.Producto;
-import Gestión.Caja;
+import BusinessLogic.Producto;
+import BusinessLogic.Caja;
 import java.util.List;
 import java.util.NoSuchElementException;
 import javax.swing.JToggleButton;

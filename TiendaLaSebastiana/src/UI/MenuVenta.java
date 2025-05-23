@@ -1,9 +1,9 @@
 package UI;
 
-import Entities.DetalleVenta;
-import Entities.Producto;
-import Gestión.Caja;
-import Gestión.Venta;
+import BusinessLogic.DetalleVenta;
+import BusinessLogic.Producto;
+import BusinessLogic.Caja;
+import BusinessLogic.Venta;
 import java.util.Random;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;

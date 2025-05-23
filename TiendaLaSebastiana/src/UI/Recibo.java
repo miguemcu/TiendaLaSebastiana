@@ -4,8 +4,8 @@
  */
 package UI;
 
-import Entities.DetalleVenta;
-import Entities.Producto;
+import BusinessLogic.DetalleVenta;
+import BusinessLogic.Producto;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

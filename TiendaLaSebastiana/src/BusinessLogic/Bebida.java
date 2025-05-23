@@ -1,30 +1,19 @@
-package Entities;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
+package BusinessLogic;
 
 
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-/**
- *
- * @author Sebastian
- */
-public class Mecato extends Producto {
+ public class Bebida extends Producto {
     private LocalDate fechaDeVencimiento;
     private ArrayList<String> etiquetas;
 
-    public Mecato() {
+    public Bebida() {
     }
     
-    public Mecato(String nombre, long id, double precio, double precioMayorista,
+    public Bebida(String nombre, long id,double precio, double precioMayorista,
                   LocalDate fechaDeVencimiento, ArrayList<String> etiquetas) {
-        super(nombre,id,precio, precioMayorista, EnumTipoProd.MECATO);
+        super(nombre,id, precio, precioMayorista, EnumTipoProd.BEBIDA);
         this.fechaDeVencimiento = fechaDeVencimiento;
         this.etiquetas = etiquetas;
     }

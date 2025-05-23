@@ -4,16 +4,16 @@
  */
 package UI;
 
-import Gestión.Caja;
-import Entities.Producto;
-import Entities.Aseo;
-import Entities.Bebida;
-import Entities.Enlatado;
-import Entities.EnumTipoProd;
-import Entities.Granos;
-import Entities.Mecato;
-import Entities.utilJtextField;
-import Gestión.Inventario;
+import BusinessLogic.Caja;
+import BusinessLogic.Producto;
+import BusinessLogic.Aseo;
+import BusinessLogic.Bebida;
+import BusinessLogic.Enlatado;
+import BusinessLogic.EnumTipoProd;
+import BusinessLogic.Granos;
+import BusinessLogic.Mecato;
+import BusinessLogic.utilJtextField;
+import BusinessLogic.Inventario;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Year;

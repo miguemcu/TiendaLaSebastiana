@@ -8,8 +8,8 @@ package UI;
  *
  * @author migue
  */
-import Entities.Empleado;
-import Gestión.Caja;
+import BusinessLogic.Empleado;
+import BusinessLogic.Caja;
 
 public class Main extends javax.swing.JFrame {
     

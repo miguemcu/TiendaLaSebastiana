@@ -1,4 +1,4 @@
-package Entities;
+package BusinessLogic;
 
 
 import java.util.ArrayList;
@@ -9,16 +9,17 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Sebastian
  */
-public class Enlatado extends Producto {
+
+public class Granos extends Producto {
     private LocalDate fechaDeVencimiento;
     private ArrayList<String> etiquetas;
 
-    public Enlatado() {
+    public Granos() {
     }
     
-    public Enlatado(String nombre, long id, double precio, double precioMayorista,
+    public Granos(String nombre, long id, double precio, double precioMayorista,
                   LocalDate fechaDeVencimiento, ArrayList<String> etiquetas) {
-        super(nombre,id,precio, precioMayorista, EnumTipoProd.ENLATADOS);
+        super(nombre,id,precio, precioMayorista, EnumTipoProd.GRANOS);
         this.fechaDeVencimiento = fechaDeVencimiento;
         this.etiquetas = etiquetas;
     }
@@ -38,7 +39,7 @@ public class Enlatado extends Producto {
     public void setEtiquetas(ArrayList<String> etiquetas) {
         this.etiquetas = etiquetas;
     }
-
+    
     @Override
     public String imprimirFicha() {
         StringBuilder ficha = new StringBuilder();
@@ -63,5 +64,3 @@ public class Enlatado extends Producto {
         return ficha.toString();
     }
 }
-
-
