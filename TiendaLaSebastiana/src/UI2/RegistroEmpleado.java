@@ -8,8 +8,8 @@ package UI2;
  *
  * @author Sebastian
  */
-public class RegistrarEmpleado extends javax.swing.JInternalFrame {
-    public RegistrarEmpleado() {
+public class RegistroEmpleado extends javax.swing.JInternalFrame {
+    public RegistroEmpleado() {
         initComponents();
     }
 

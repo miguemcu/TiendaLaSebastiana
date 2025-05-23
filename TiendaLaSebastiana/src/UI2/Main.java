@@ -9,19 +9,21 @@ package UI2;
  * @author Sebastian
  */
 public class Main extends javax.swing.JFrame {
-
-    private RegistrarEmpleado registrarEmpleado;
-
-    public RegistrarEmpleado getRegistrarEmpleado() {
-        return registrarEmpleado;
-    }
-
-    public void setRegistrarEmpleado(RegistrarEmpleado registrarEmpleado) {
-        this.registrarEmpleado = registrarEmpleado;
-    }
+    private RegistroEmpleado registroEmpleado;
     
     public Main() {
         initComponents();
+        initFrames();
+    }
+    
+    // Getters y Setters
+    
+    public RegistroEmpleado getRegistrarEmpleado() {
+        return registroEmpleado;
+    }
+
+    public void setRegistrarEmpleado(RegistroEmpleado registroEmpleado) {
+        this.registroEmpleado = registroEmpleado;
     }
 
     /**
@@ -67,7 +69,7 @@ public class Main extends javax.swing.JFrame {
 
         lblSelect.setText("Seleccione una opción:");
         desktopPane.add(lblSelect);
-        lblSelect.setBounds(130, 90, 122, 16);
+        lblSelect.setBounds(190, 140, 122, 16);
 
         btnEnter1.setText("Entrar al Sistema");
         btnEnter1.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +78,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnEnter1);
-        btnEnter1.setBounds(130, 120, 130, 23);
+        btnEnter1.setBounds(190, 170, 130, 23);
 
         btnRegisterEmployee1.setText("Registrar Empleado");
         btnRegisterEmployee1.addActionListener(new java.awt.event.ActionListener() {
@@ -85,7 +87,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnRegisterEmployee1);
-        btnRegisterEmployee1.setBounds(120, 160, 150, 23);
+        btnRegisterEmployee1.setBounds(180, 210, 150, 23);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -133,11 +135,15 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -160,7 +166,13 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnter1ActionPerformed
 
     private void btnRegisterEmployee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterEmployee1ActionPerformed
+        if (registroEmpleado == null){
+            registroEmpleado = new RegistroEmpleado();
+        }
         
+        if (!registroEmpleado.isVisible() || registroEmpleado.isClosed()){
+            registroEmpleado.show();
+        }
     }//GEN-LAST:event_btnRegisterEmployee1ActionPerformed
 
     /**
@@ -196,6 +208,14 @@ public class Main extends javax.swing.JFrame {
                 new Main().setVisible(true);
             }
         });
+    }
+    
+    private void initFrames(){
+        if (registroEmpleado == null){
+            registroEmpleado = new RegistroEmpleado();
+        }
+        
+        desktopPane.add(registroEmpleado);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
