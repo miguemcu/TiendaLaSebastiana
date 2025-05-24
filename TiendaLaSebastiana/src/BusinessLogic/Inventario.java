@@ -4,13 +4,19 @@ package BusinessLogic;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
+import BusinessLogic.Aseo;
+import BusinessLogic.Bebida;
+import BusinessLogic.Enlatado;
+import BusinessLogic.Granos;
+import BusinessLogic.Mecato;
 import BusinessLogic.Producto;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Inventario {
+
     private ArrayList<Producto> productos;
     private Map<Long, Double> cantidades;
 
@@ -27,7 +33,6 @@ public class Inventario {
         this.productos = productos;
     }
 
-    
     public Map<Long, Double> getCantidades() {
         return cantidades;
     }
@@ -35,36 +40,56 @@ public class Inventario {
     public void setCantidades(Map<Long, Double> cantidades) {
         this.cantidades = cantidades;
     }
-    
-    public void crearProductos(Producto producto){
-        productos.add(producto);
-    }
-    
-    public Map<Long, Double> filtrarStack() {
-        Map<Long, Double> cantidadesFiltradas = new HashMap<>();
 
-        for (Map.Entry<Long, Double> acceso : this.cantidades.entrySet()) {
-            Long productoId = acceso.getKey();
-            Double cantidad = acceso.getValue();
-            if (cantidad < 5 || cantidad > 20) {
-                cantidadesFiltradas.put(productoId, cantidad);
+    public void crearProductos(String tipoSeleccionado, String nombre, long Id, double precioMayorista, double precio,
+            LocalDate fechaVencimiento, ArrayList<String> etiquetas, double cantidad) {
+        switch (tipoSeleccionado) {
+            case "Aseo":
+                Aseo aseo = new Aseo(nombre, Id, precioMayorista, precio,
+                        fechaVencimiento, etiquetas);
+                this.getProductos().add(aseo);
+            case "Bebida":
+                Bebida bebida = new Bebida(nombre, Id, precioMayorista, precio,
+                        fechaVencimiento, etiquetas);
+                this.getProductos().add(bebida);
+            case "Mecato":
+                Mecato mecato = new Mecato(nombre, Id, precioMayorista, precio,
+                        fechaVencimiento, etiquetas);
+                this.getProductos().add(mecato);
+            case "Enlatado":
+                Enlatado enlatado = new Enlatado(nombre, Id, precioMayorista, precio,
+                        fechaVencimiento, etiquetas);
+                this.getProductos().add(enlatado);
+            case "Grano":
+                Granos grano = new Granos(nombre, Id, precioMayorista, precio,
+                        fechaVencimiento, etiquetas);
+                this.getProductos().add(grano);
+        }
+        this.getCantidades().put(Id, cantidad);
+    }
+
+    public Producto buscarProductos(String ID, String busqueda) {
+        switch (ID) {
+            case ("ID") -> {
+                long id = Long.parseLong(busqueda);
+                for (Producto producto : productos) {
+                    if (producto.getId() == id) {
+                        return producto;
+                    }
+                }
+                return null;
+            }
+            case ("nombre") -> {
+
+                for (Producto producto : productos) {
+                    if (producto.getNombre().equals(busqueda)) {
+                        return producto;
+                    }
+                }
+                return null;
             }
         }
-
-        return cantidadesFiltradas;
-    }
-    
-    public ArrayList<Producto> filtrarProductos(Map<Long, Double> cantidadesFiltradas) {
-        ArrayList<Producto> productosFiltrados = new ArrayList<>();
-
-        for (Producto producto : this.productos) {
-            Long productoId = producto.getId();
-            if (cantidadesFiltradas.containsKey(productoId)) {
-                productosFiltrados.add(producto);
-            }
-        }
-
-        return productosFiltrados;
+        return null;
     }
     
     public double getCantidadProducto(Long idProd) {
@@ -74,8 +99,8 @@ public class Inventario {
             return 4;
         }
     }
-    
-    public double ajustarCantidadProducto(Long idProd, double ajuste){
+
+    public double ajustarCantidadProducto(Long idProd, double ajuste) {
         double cantidadActual = cantidades.get(idProd);
         double nuevaCantidad = cantidadActual + ajuste;
         cantidades.put(idProd, nuevaCantidad);

@@ -24,6 +24,9 @@ public class Venta {
     private double totalIva;
     private LocalDateTime fecha;
     private long ID;
+    
+    public Venta(){
+    }
 
     public Venta(ArrayList<DetalleVenta> detalles, double totalVenta, double totalBruto,
             double totalDescuento, double totalIva, LocalDateTime fecha, long ID) {
@@ -90,6 +93,17 @@ public class Venta {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+    
+    public Inventario detallarCantidades(Inventario inventario){
+        double cantidad = 0;
+        Producto producto = null;
+        for (DetalleVenta detalle: this.detalles){
+            producto = detalle.getProducto();
+            cantidad = (detalle.getCantidad()*(-1));
+            inventario.ajustarCantidadProducto(producto.getId(), cantidad);   
+        }
+        return inventario;
     }
 }
 

@@ -5,20 +5,14 @@
 package UI;
 
 import BusinessLogic.Caja;
-import BusinessLogic.Producto;
-import BusinessLogic.Aseo;
-import BusinessLogic.Bebida;
-import BusinessLogic.Enlatado;
+
 import BusinessLogic.EnumTipoProd;
-import BusinessLogic.Granos;
-import BusinessLogic.Mecato;
 import BusinessLogic.utilJtextField;
 import BusinessLogic.Inventario;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.text.AbstractDocument;
 
@@ -27,12 +21,24 @@ public class CreacionProducto extends javax.swing.JFrame {
     private Main parent;
     private Caja caja;
 
+    public Caja getCaja() {
+        return caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
+    }
+
+    @Override
     public Main getParent() {
         return parent;
     }
 
     public void setParent(Main parent) {
         this.parent = parent;
+    }
+
+    public CreacionProducto() {
     }
 
     public CreacionProducto(Main parent, Caja caja, Inventario inventario) {
@@ -322,7 +328,6 @@ public class CreacionProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTipoProdActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Map<Long, Double> cantidades = parent.getCaja().getInventario().getCantidades(); //Atajo
 
         try {
             String nombre = txtNombre.getText().trim();
@@ -380,14 +385,14 @@ public class CreacionProducto extends javax.swing.JFrame {
             double precio = Double.parseDouble(Precio);
             double precioMayorista = Double.parseDouble(PrecioMayorista);
             EnumTipoProd tiposeleccionado = EnumTipoProd.ASEO;
-            
-            if (this.capturarFechaVencimiento() == null){
+
+            if (this.capturarFechaVencimiento() == null) {
                 txtErrorRegistro.setText("Fecha inválida. Por favor ingrese de nuevo.");
                 return;
             }
-            
+
             LocalDate fechaVencimiento = this.capturarFechaVencimiento();
-            
+
             ArrayList<String> etiquetas = new ArrayList<>();
             String[] etiquetasArray = textoEtiquetas.split(",");
             for (String etiqueta : etiquetasArray) {
@@ -400,34 +405,8 @@ public class CreacionProducto extends javax.swing.JFrame {
             if (Integer.parseInt(txtYear.getText().trim()) < Year.now().getValue()) {
                 throw new IllegalArgumentException("La fecha de vencimiento es incorrecta.");
             }
-            switch (tipoSeleccionado) {
-                case "Aseo":
-                    Aseo aseo = new Aseo(nombre, Id, precioMayorista, precio,
-                            fechaVencimiento, etiquetas);
-                    parent.getCaja().getInventario().crearProductos(aseo);
-                    cantidades.put(Id, cantidad);
-                case "Bebida":
-                    Bebida bebida = new Bebida(nombre, Id, precioMayorista, precio,
-                            fechaVencimiento, etiquetas);
-                    parent.getCaja().getInventario().crearProductos(bebida);
-                    cantidades.put(Id, cantidad);
-                case "Mecato":
-                    Mecato mecato = new Mecato(nombre, Id, precioMayorista, precio,
-                            fechaVencimiento, etiquetas);
-                    parent.getCaja().getInventario().crearProductos(mecato);
-                    cantidades.put(Id, cantidad);
-                case "Enlatado":
-                    Enlatado enlatado = new Enlatado(nombre, Id, precioMayorista, precio,
-                            fechaVencimiento, etiquetas);
-                    parent.getCaja().getInventario().crearProductos(enlatado);
-                    cantidades.put(Id, cantidad);
-                case "Grano":
-                    Granos granos = new Granos(nombre, Id, precioMayorista, precio,
-                            fechaVencimiento, etiquetas);
-                    parent.getCaja().getInventario().crearProductos(granos);
-                    cantidades.put(Id, cantidad);
-            }
-
+            this.getCaja().getInventario().crearProductos(tipoSeleccionado, nombre, Id, precio,
+                    precioMayorista, fechaVencimiento, etiquetas, cantidad);
             this.dispose();
             InventarioSistema inventarioSistema = new InventarioSistema(parent);
             inventarioSistema.setVisible(true);
@@ -438,7 +417,7 @@ public class CreacionProducto extends javax.swing.JFrame {
             txtErrorRegistro.setText("Error inesperado: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
-    
+
     public LocalDate capturarFechaVencimiento() {
         String yearStr = txtYear.getText().trim();
         String monthStr = txtMonth.getText().trim();
@@ -456,7 +435,7 @@ public class CreacionProducto extends javax.swing.JFrame {
             int day = Integer.parseInt(dayStr);
 
             fechaVencimiento = LocalDate.of(year, month, day);
-            txtErrorRegistro.setText(""); // Limpiamos cualquier error anterior
+            txtErrorRegistro.setText("");
 
         } catch (NumberFormatException e) {
             System.err.println("Error: Debe ingresar valores numéricos válidos para la fecha de vencimiento.");
@@ -469,8 +448,8 @@ public class CreacionProducto extends javax.swing.JFrame {
             System.err.println("Error inesperado al capturar la fecha de vencimiento: " + ex.getMessage());
         }
 
-    return fechaVencimiento;
-}
+        return fechaVencimiento;
+    }
     private void txtDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDayActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDayActionPerformed
