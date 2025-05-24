@@ -122,8 +122,7 @@ public class Tienda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHacerVentaActionPerformed
 
     private void btnDevoluciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevoluciónActionPerformed
-        Devolucion dev = new Devolucion(this.parent);
-        dev.setVisible(true);
+
     }//GEN-LAST:event_btnDevoluciónActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed

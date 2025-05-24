@@ -4,19 +4,47 @@
  */
 package UI2;
 
+import BusinessLogic.Caja;
+import BusinessLogic.Inventario;
+
 /**
  *
  * @author Sebastian
  */
 public class Main extends javax.swing.JFrame {
     private RegistroEmpleado registroEmpleado;
-    
+    private EntrarSistema entrarSistema;
+    private Caja caja;
+    private Inventario inventario;
+
+    public Caja getCaja() {
+        return caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
+    }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
     public Main() {
         initComponents();
         initFrames();
+        initObjects();
     }
-    
     // Getters y Setters
+    public EntrarSistema getEntrarSistema() {
+        return entrarSistema;
+    }
+
+    public void setEntrarSistema(EntrarSistema entrarSistema) {
+        this.entrarSistema = entrarSistema;
+    }
     
     public RegistroEmpleado getRegistrarEmpleado() {
         return registroEmpleado;
@@ -67,9 +95,10 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lblSelect.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSelect.setText("Seleccione una opción:");
         desktopPane.add(lblSelect);
-        lblSelect.setBounds(190, 140, 122, 16);
+        lblSelect.setBounds(190, 140, 130, 16);
 
         btnEnter1.setText("Entrar al Sistema");
         btnEnter1.addActionListener(new java.awt.event.ActionListener() {
@@ -162,12 +191,21 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegisterEmployeeActionPerformed
 
     private void btnEnter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnter1ActionPerformed
+        if (entrarSistema == null){
+            entrarSistema = new EntrarSistema(this);
+        }
         
+        if (!entrarSistema.isVisible()){
+            if (entrarSistema.isClosed()){
+                desktopPane.add(entrarSistema);
+            }
+            entrarSistema.show();
+        }        
     }//GEN-LAST:event_btnEnter1ActionPerformed
 
     private void btnRegisterEmployee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterEmployee1ActionPerformed
         if (registroEmpleado == null){
-            registroEmpleado = new RegistroEmpleado();
+            registroEmpleado = new RegistroEmpleado(this);
         }
         
         if (!registroEmpleado.isVisible()){
@@ -215,10 +253,19 @@ public class Main extends javax.swing.JFrame {
     
     private void initFrames(){
         if (registroEmpleado == null){
-            registroEmpleado = new RegistroEmpleado();
+            registroEmpleado = new RegistroEmpleado(this);
         }
-        
         desktopPane.add(registroEmpleado);
+        
+        if (entrarSistema == null){
+            entrarSistema = new EntrarSistema(this);
+        }
+        desktopPane.add(entrarSistema);
+    }
+    
+    private void initObjects(){
+        caja = new Caja();
+        inventario = new Inventario();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

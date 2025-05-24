@@ -126,11 +126,12 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblSelect">
           <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Seleccione una opci&#xf3;n:"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="190" y="140" width="-1" height="-1"/>
+              <AbsoluteConstraints x="190" y="140" width="130" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

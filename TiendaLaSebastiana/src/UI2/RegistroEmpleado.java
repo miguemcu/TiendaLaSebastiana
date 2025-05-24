@@ -9,8 +9,13 @@ package UI2;
  * @author Sebastian
  */
 public class RegistroEmpleado extends javax.swing.JInternalFrame {
+    private Main parent;
     public RegistroEmpleado() {
         initComponents();
+    }
+
+    public RegistroEmpleado(Main parent) {
+        this.parent = parent;
     }
 
     /**
