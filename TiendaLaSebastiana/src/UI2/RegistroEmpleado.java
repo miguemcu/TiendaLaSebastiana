@@ -4,18 +4,29 @@
  */
 package UI2;
 
+import BusinessLogic.Caja;
+import BusinessLogic.Empleado;
+
 /**
  *
  * @author Sebastian
  */
 public class RegistroEmpleado extends javax.swing.JInternalFrame {
-    private Main parent;
+    private Caja caja;
     public RegistroEmpleado() {
         initComponents();
     }
 
-    public RegistroEmpleado(Main parent) {
-        this.parent = parent;
+    public RegistroEmpleado(Caja caja) {
+        this.caja = caja;
+    }
+
+    public Caja getCaja() {
+        return caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
     }
 
     /**
@@ -122,14 +133,43 @@ public class RegistroEmpleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreEmpleadoActionPerformed
 
     private void txtCedulaEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaEmpleadoActionPerformed
-        // TODO add your handling code here:
+        // TODO add your. handling code here:
     }//GEN-LAST:event_txtCedulaEmpleadoActionPerformed
 
     private void btnRegistroEmpleadoExitosoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroEmpleadoExitosoActionPerformed
         String nombre = txtNombreEmpleado.getText().trim();
         String cedula = txtCedulaEmpleado.getText().trim();
-
         
+        try {
+            
+            if (nombre.isBlank() || cedula.isBlank()){
+                throw new IllegalArgumentException("Todos los campos son obligatorios.");
+            }
+            
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")){
+                throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
+            }
+            
+            for (Empleado empleado : this.getCaja().getEmpleados()){
+                if (empleado.getCedula().equals(cedula)){
+                    throw new IllegalArgumentException("Ya hay un empleado registrado con esa cédula.");
+                }
+                
+            }
+            
+            if (!cedula.matches("\\d+")){
+                throw new IllegalArgumentException("La cedula solo debe contener números.");
+            }
+        
+        this.getCaja().agregarEmpleado(nombre, cedula);
+        this.dispose();
+        
+        
+       } catch (IllegalArgumentException ex){
+           txtErrorRegistro.setText(ex.getMessage());
+       } catch (Exception ex) {
+           txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
+       }
     }//GEN-LAST:event_btnRegistroEmpleadoExitosoActionPerformed
 
 

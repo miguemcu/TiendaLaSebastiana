@@ -4,6 +4,7 @@
  */
 package UI2;
 
+import BusinessLogic.Caja;
 import BusinessLogic.Empleado;
 
 /**
@@ -15,14 +16,31 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
     /**
      * Creates new form EntrarSistema
      */
-    private Main parent;
-    
+    private Tienda tienda;
+    private Caja caja;
+
     public EntrarSistema() {
         initComponents();
     }
 
-    public EntrarSistema(Main parent) {
-        this.parent = parent;
+    public EntrarSistema(Caja caja) {
+        this.caja = caja;
+    }
+
+    public Tienda getTienda() {
+        return tienda;
+    }
+
+    public void setTienda(Tienda tienda) {
+        this.tienda = tienda;
+    }
+
+    public Caja getCaja() {
+        return caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
     }
 
     /**
@@ -79,18 +97,14 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(btnIngresar)
+                .addGap(38, 38, 38))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnIngresar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -100,12 +114,12 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
                         .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -113,11 +127,11 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCedulaEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnIngresar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIngresar))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,35 +150,40 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
         String cedula = txtCedulaEmpleado.getText().trim();
         try {
 
-            if (nombre.isBlank() || cedula.isBlank() || nombre.isBlank() || cedula.isBlank()){
+            if (nombre.isBlank() || cedula.isBlank() || nombre.isBlank() || cedula.isBlank()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
 
-            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")){
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")) {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
 
-            if (!cedula.matches("\\d+")){
+            if (!cedula.matches("\\d+")) {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
-            for (Empleado empleado : parent.getCaja().getEmpleados()){
-                if (empleado.getNombre().equals(nombre) && empleado.getCedula().equals(cedula)){
-                    if(this.getTienda() == null){
-                        this.setTienda(new Tienda(parent));
-                    }
-                    parent.setUserAuth(empleado);
-                    this.getTienda().setVisible(true);
-                    this.setVisible(false);
-                    return;
+            Empleado cajero = this.getCaja().verificarEmpleado(nombre, cedula);
+            if (cajero != null) {
+                if (this.getTienda() == null) {
+                    this.setTienda(new Tienda(this.caja));
                 }
+                caja.setCajero(cajero);
+                this.getParent().add(this.getTienda());
+                if (!this.getTienda().isVisible()) {
+                    if (this.getTienda().isClosed()) {
+                        this.getParent().add(this.getTienda());
+                    }
+                    this.getTienda().show();
+                }
+                this.setVisible(false);
+                return;
+
             }
             txtErrorRegistro.setText("El usuario no existe.");
-        } catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             txtErrorRegistro.setText(ex.getMessage());
         } catch (Exception ex) {
             txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
         }
-
     }//GEN-LAST:event_btnIngresarActionPerformed
 
 

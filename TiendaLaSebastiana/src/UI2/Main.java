@@ -34,8 +34,8 @@ public class Main extends javax.swing.JFrame {
     }
     public Main() {
         initComponents();
-        initFrames();
         initObjects();
+        initFrames();
     }
     // Getters y Setters
     public EntrarSistema getEntrarSistema() {
@@ -192,7 +192,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnEnter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnter1ActionPerformed
         if (entrarSistema == null){
-            entrarSistema = new EntrarSistema(this);
+            entrarSistema = new EntrarSistema();
         }
         
         if (!entrarSistema.isVisible()){
@@ -205,7 +205,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnRegisterEmployee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterEmployee1ActionPerformed
         if (registroEmpleado == null){
-            registroEmpleado = new RegistroEmpleado(this);
+            registroEmpleado = new RegistroEmpleado();
         }
         
         if (!registroEmpleado.isVisible()){
@@ -253,12 +253,14 @@ public class Main extends javax.swing.JFrame {
     
     private void initFrames(){
         if (registroEmpleado == null){
-            registroEmpleado = new RegistroEmpleado(this);
+            registroEmpleado = new RegistroEmpleado();
+            registroEmpleado.setCaja(caja);
         }
         desktopPane.add(registroEmpleado);
         
         if (entrarSistema == null){
-            entrarSistema = new EntrarSistema(this);
+            entrarSistema = new EntrarSistema();
+            entrarSistema.setCaja(caja);
         }
         desktopPane.add(entrarSistema);
     }
