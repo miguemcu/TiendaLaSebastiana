@@ -3,6 +3,7 @@ package UI;
 import BusinessLogic.Empleado;
 import BusinessLogic.utilJtextField;
 import BusinessLogic.Caja;
+import BusinessLogic.EmpleadoLogin;
 import javax.swing.text.AbstractDocument;
 
 /*
@@ -19,6 +20,7 @@ public class EntrarSistema extends javax.swing.JFrame {
     private Main parent;
     private Tienda tienda;
     private Caja caja;
+    private EmpleadoLogin empLogin;
 
     public Tienda getTienda() {
         return tienda;
@@ -186,7 +188,8 @@ public class EntrarSistema extends javax.swing.JFrame {
             if (!cedula.matches("\\d+")) {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
-            Empleado cajero = parent.getCaja().verificarEmpleado(nombre, cedula);
+            
+            Empleado cajero = empLogin.validarUsuario(nombre, cedula);
             if (cajero != null) {
                 if (this.getTienda() == null) {
                     this.setTienda(new Tienda(parent));

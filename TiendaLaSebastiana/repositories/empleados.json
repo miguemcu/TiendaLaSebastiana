@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "Juan Pérez",
+    "documento": "12345678"
+  },
+  {
+    "nombre": "María García",
+    "documento": "87654321"
+  },
+  {
+    "nombre": "Carlos Ramírez",
+    "documento": "11223344"
+  },
+  {
+    "nombre": "Laura Sánchez",
+    "documento": "44332211"
+  },
+  {
+    "nombre": "Andrés López",
+    "documento": "99887766"
+  }
+]

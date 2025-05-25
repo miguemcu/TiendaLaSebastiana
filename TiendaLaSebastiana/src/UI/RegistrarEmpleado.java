@@ -163,7 +163,7 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
             }
             
             for (Empleado empleado : parent.getCaja().getEmpleados()){
-                if (empleado.getCedula().equals(cedula)){
+                if (empleado.getDocumento().equals(cedula)){
                     throw new IllegalArgumentException("Ya hay un empleado registrado con esa cédula.");
                 }
                 

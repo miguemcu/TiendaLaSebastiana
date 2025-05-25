@@ -75,15 +75,6 @@ public class Caja {
 
         return ventasFiltradas;
     }
-
-    public Empleado verificarEmpleado(String nombre, String cedula) {
-        for (Empleado empleado : this.getEmpleados()) {
-            if (empleado.getNombre().equals(nombre) && empleado.getCedula().equals(cedula)) {
-                return empleado;
-            }
-        }
-        return null;
-    }
   
     public void agregarVenta(Venta venta) {
         this.ventas.add(venta);
