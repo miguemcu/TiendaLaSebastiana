@@ -3,7 +3,7 @@ package UI;
 import BusinessLogic.Empleado;
 import BusinessLogic.utilJtextField;
 import BusinessLogic.Caja;
-import BusinessLogic.EmpleadoLogin;
+import BusinessLogic.EmpleadoService;
 import javax.swing.text.AbstractDocument;
 
 /*
@@ -20,7 +20,6 @@ public class EntrarSistema extends javax.swing.JFrame {
     private Main parent;
     private Tienda tienda;
     private Caja caja;
-    private EmpleadoLogin empLogin;
 
     public Tienda getTienda() {
         return tienda;
@@ -37,7 +36,7 @@ public class EntrarSistema extends javax.swing.JFrame {
      * @param caja
      */
     public EntrarSistema(Main parent) {
-        this.caja = caja;
+        this.caja = parent.getCaja();
         this.parent = parent;
         initComponents();
         ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new utilJtextField(10));
@@ -81,14 +80,12 @@ public class EntrarSistema extends javax.swing.JFrame {
             }
         });
 
-        txtNombreEmpleado.setText(" ");
         txtNombreEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreEmpleadoActionPerformed(evt);
             }
         });
 
-        txtCedulaEmpleado.setText(" ");
         txtCedulaEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCedulaEmpleadoActionPerformed(evt);
@@ -189,22 +186,27 @@ public class EntrarSistema extends javax.swing.JFrame {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
             
-            Empleado cajero = empLogin.validarUsuario(nombre, cedula);
-            if (cajero != null) {
-                if (this.getTienda() == null) {
-                    this.setTienda(new Tienda(parent));
-                }
+            Empleado cajero = parent.getEmpleadoService().validarDocumento(nombre, cedula);
+            
+            if (cajero == null){
+                txtErrorRegistro.setText("Nombre o documento incorrecto");
+                return;
+            }
+            
+            if (this.getTienda() == null) {
+                this.setTienda(new Tienda(parent));
+                
                 caja.setCajero(cajero);
                 this.getTienda().setVisible(true);
                 this.setVisible(false);
                 return;
-
             }
+            
             txtErrorRegistro.setText("El usuario no existe.");
         } catch (IllegalArgumentException ex) {
             txtErrorRegistro.setText(ex.getMessage());
         } catch (Exception ex) {
-            txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
+            txtErrorRegistro.setText("Error inesperado: " + ex.getMessage());
         }
 
     }//GEN-LAST:event_btnIngresarActionPerformed

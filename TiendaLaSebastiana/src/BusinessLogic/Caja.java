@@ -17,12 +17,10 @@ import java.util.stream.Collectors;
 public class Caja {
 
     private Empleado cajero;
-    private ArrayList<Empleado> empleados;
     private ArrayList<Venta> ventas;
     private Inventario inventario;
 
-    public Caja() {
-        this.empleados = new ArrayList<>();
+    public Caja() throws Exception {
         this.ventas = new ArrayList<>();
         this.inventario = new Inventario();
         this.ventas = new ArrayList<>();
@@ -34,14 +32,6 @@ public class Caja {
 
     public void setCajero(Empleado cajero) {
         this.cajero = cajero;
-    }
-
-    public ArrayList<Empleado> getEmpleados() {
-        return empleados;
-    }
-
-    public void setEmpleados(ArrayList<Empleado> empleados) {
-        this.empleados = empleados;
     }
 
     public ArrayList<Venta> getVentas() {
@@ -58,11 +48,6 @@ public class Caja {
 
     public void setInventario(Inventario inventario) {
         this.inventario = inventario;
-    }
-
-    public void agregarEmpleado(String nombre, String cedula) {
-        Empleado empleado = new Empleado(nombre, cedula);
-        empleados.add(empleado);
     }
 
     public ArrayList<Venta> obtenerVentasSegunPeriodo(LocalDate fechaInicio, LocalDate fechaFin) {

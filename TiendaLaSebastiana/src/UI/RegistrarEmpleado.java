@@ -8,7 +8,6 @@ package UI;
  *
  * @author migue
  */
-import BusinessLogic.Empleado;
 import BusinessLogic.utilJtextField;
 import javax.swing.text.AbstractDocument;
 public class RegistrarEmpleado extends javax.swing.JFrame {
@@ -162,18 +161,13 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
             
-            for (Empleado empleado : parent.getCaja().getEmpleados()){
-                if (empleado.getDocumento().equals(cedula)){
-                    throw new IllegalArgumentException("Ya hay un empleado registrado con esa cédula.");
-                }
-                
-            }
-            
             if (!cedula.matches("\\d+")){
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
         
-        parent.getCaja().agregarEmpleado(nombre, cedula);
+            if(parent.getEmpleadoService().agregarEmpleado(nombre, cedula, parent.getEmpleadoService().getRepositorio().getCollection()) == false){
+                throw new Exception("Ya existe un empleado registrado con ese documento o con ese nombre.");
+            }
         
         this.dispose();
         parent.setVisible(true);
@@ -182,7 +176,7 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
        } catch (IllegalArgumentException ex){
            txtErrorRegistro.setText(ex.getMessage());
        } catch (Exception ex) {
-           txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
+           txtErrorRegistro.setText("Error inesperado: " + ex.getMessage());
        }
     }//GEN-LAST:event_btnRegistroEmpleadoExitosoActionPerformed
 

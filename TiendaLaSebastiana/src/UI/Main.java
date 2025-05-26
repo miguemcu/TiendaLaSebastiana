@@ -8,17 +8,31 @@ package UI;
  *
  * @author migue
  */
-import BusinessLogic.Empleado;
+
 import BusinessLogic.Caja;
+import BusinessLogic.EmpleadoService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main extends javax.swing.JFrame {
     
+    private EmpleadoService empleadoService;
     private Caja caja;
     
-    public Main() {
+    public Main() throws Exception {
+        this.empleadoService = new EmpleadoService();
         this.caja = new Caja();
         initComponents();
     }
+
+    public Caja getCaja() {
+        return caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
+    }
+    
     
     private RegistrarEmpleado registrarEmpleado;
 
@@ -29,15 +43,15 @@ public class Main extends javax.swing.JFrame {
     public void setRegistrarEmpleado(RegistrarEmpleado registrarEmpleado) {
         this.registrarEmpleado = registrarEmpleado;
     }
+
+    public EmpleadoService getEmpleadoService() {
+        return empleadoService;
+    }
+
+    public void setEmpleadoService(EmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
+    }
     
-
-    public Caja getCaja() {
-        return caja;
-    }
-
-    public void setCaja(Caja caja) {
-        this.caja = caja;
-    }
     
     
 
@@ -156,7 +170,11 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Main().setVisible(true);
+                try {
+                    new Main().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
