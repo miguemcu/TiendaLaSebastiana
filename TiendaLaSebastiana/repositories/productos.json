@@ -1,0 +1,38 @@
+[
+  {
+    "producto": {
+      "nombre": "Laptop",
+      "id": 1001,
+      "precioMayorista": 3200.0,
+      "precio": 3500.0,
+      "tipoProducto": "ENLATADOS",
+      "fechaDeVencimiento": "2026-12-31",
+      "etiquetas": ["tecnología", "portátil"]
+    },
+    "cantidad": 2
+  },
+  {
+    "producto": {
+      "nombre": "Mouse",
+      "id": 1002,
+      "precioMayorista": 20.0,
+      "precio": 30.0,
+      "tipoProducto": "ASEO",
+      "fechaDeVencimiento": "2027-06-15",
+      "etiquetas": ["accesorio", "usb", "ergonómico"]
+    },
+    "cantidad": 5
+  },
+  {
+    "producto": {
+      "nombre": "Café Premium",
+      "id": 1003,
+      "precioMayorista": 8000.0,
+      "precio": 9500.0,
+      "tipoProducto": "GRANOS",
+      "fechaDeVencimiento": "2025-10-10",
+      "etiquetas": ["orgánico", "colombiano", "molido"]
+    },
+    "cantidad": 3
+  }
+]

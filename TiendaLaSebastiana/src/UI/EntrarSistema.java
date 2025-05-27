@@ -3,7 +3,6 @@ package UI;
 import BusinessLogic.Empleado;
 import BusinessLogic.utilJtextField;
 import BusinessLogic.Caja;
-import BusinessLogic.EmpleadoService;
 import javax.swing.text.AbstractDocument;
 
 /*
@@ -171,10 +170,10 @@ public class EntrarSistema extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         String nombre = txtNombreEmpleado.getText().trim();
-        String cedula = txtCedulaEmpleado.getText().trim();
+        String documento = txtCedulaEmpleado.getText().trim();
         try {
 
-            if (nombre.isBlank() || cedula.isBlank() || nombre.isBlank() || cedula.isBlank()) {
+            if (nombre.isBlank() || documento.isBlank()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
 
@@ -182,11 +181,11 @@ public class EntrarSistema extends javax.swing.JFrame {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
 
-            if (!cedula.matches("\\d+")) {
-                throw new IllegalArgumentException("La cedula solo debe contener números.");
+            if (!documento.matches("\\d+")) {
+                throw new IllegalArgumentException("La documento solo debe contener números.");
             }
             
-            Empleado cajero = parent.getEmpleadoService().validarDocumento(nombre, cedula);
+            Empleado cajero = parent.getEmpleadoService().validarDocumento(nombre, documento);
             
             if (cajero == null){
                 txtErrorRegistro.setText("Nombre o documento incorrecto");

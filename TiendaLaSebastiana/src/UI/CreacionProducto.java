@@ -4,11 +4,8 @@
  */
 package UI;
 
-import BusinessLogic.Caja;
-
 import BusinessLogic.EnumTipoProd;
 import BusinessLogic.utilJtextField;
-import BusinessLogic.Inventario;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Year;
@@ -19,14 +16,14 @@ import javax.swing.text.AbstractDocument;
 public class CreacionProducto extends javax.swing.JFrame {
 
     private Main parent;
-    private Caja caja;
 
-    public Caja getCaja() {
-        return caja;
-    }
-
-    public void setCaja(Caja caja) {
-        this.caja = caja;
+    public CreacionProducto(Main parent) {
+        initComponents();
+        this.parent = parent;
+        inicializarComboTipoProd();
+        ((AbstractDocument) txtDay.getDocument()).setDocumentFilter(new utilJtextField(2));
+        ((AbstractDocument) txtMonth.getDocument()).setDocumentFilter(new utilJtextField(2));
+        ((AbstractDocument) txtYear.getDocument()).setDocumentFilter(new utilJtextField(5));
     }
 
     @Override
@@ -39,17 +36,6 @@ public class CreacionProducto extends javax.swing.JFrame {
     }
 
     public CreacionProducto() {
-    }
-
-    public CreacionProducto(Main parent, Caja caja, Inventario inventario) {
-        this.caja = caja;
-        this.parent = parent;
-        this.parent.getCaja().setInventario(inventario);
-        initComponents();
-        inicializarComboTipoProd();
-        ((AbstractDocument) txtDay.getDocument()).setDocumentFilter(new utilJtextField(2));
-        ((AbstractDocument) txtMonth.getDocument()).setDocumentFilter(new utilJtextField(2));
-        ((AbstractDocument) txtYear.getDocument()).setDocumentFilter(new utilJtextField(5));
     }
 
     private void inicializarComboTipoProd() {
@@ -381,7 +367,7 @@ public class CreacionProducto extends javax.swing.JFrame {
             }
 
             long Id = Long.parseLong(id);
-            double cantidad = Double.parseDouble(Cantidad);
+            int cantidad = Integer.parseInt(Cantidad);
             double precio = Double.parseDouble(Precio);
             double precioMayorista = Double.parseDouble(PrecioMayorista);
             EnumTipoProd tiposeleccionado = EnumTipoProd.ASEO;
@@ -405,8 +391,15 @@ public class CreacionProducto extends javax.swing.JFrame {
             if (Integer.parseInt(txtYear.getText().trim()) < Year.now().getValue()) {
                 throw new IllegalArgumentException("La fecha de vencimiento es incorrecta.");
             }
-            this.getCaja().getInventario().crearProductos(tipoSeleccionado, nombre, Id, precio,
-                    precioMayorista, fechaVencimiento, etiquetas, cantidad);
+            
+            var collection = parent.getProductoService().getRepositorio().getCollection();
+            
+            if(this.parent.getProductoService().añadirProducto(tipoSeleccionado, nombre, Id, precio,
+                    precioMayorista, fechaVencimiento, etiquetas, cantidad, collection) == false){
+                throw new Exception("Ya existe un producto registrado con ese nombre o con ese ID");
+            }
+            
+            
             this.dispose();
             InventarioSistema inventarioSistema = new InventarioSistema(parent);
             inventarioSistema.setVisible(true);

@@ -149,11 +149,11 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
 
     private void btnRegistroEmpleadoExitosoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroEmpleadoExitosoActionPerformed
         String nombre = txtNombreEmpleado.getText().trim();
-        String cedula = txtCedulaEmpleado.getText().trim();
+        String documento = txtCedulaEmpleado.getText().trim();
         
         try {
             
-            if (nombre.isBlank() || cedula.isBlank()){
+            if (nombre.isBlank() || documento.isBlank()){
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
             
@@ -161,11 +161,11 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
             
-            if (!cedula.matches("\\d+")){
-                throw new IllegalArgumentException("La cedula solo debe contener números.");
+            if (!documento.matches("\\d+")){
+                throw new IllegalArgumentException("La documento solo debe contener números.");
             }
         
-            if(parent.getEmpleadoService().agregarEmpleado(nombre, cedula, parent.getEmpleadoService().getRepositorio().getCollection()) == false){
+            if(parent.getEmpleadoService().agregarEmpleado(nombre, documento, parent.getEmpleadoService().getRepositorio().getCollection()) == false){
                 throw new Exception("Ya existe un empleado registrado con ese documento o con ese nombre.");
             }
         

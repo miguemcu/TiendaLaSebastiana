@@ -41,33 +41,6 @@ public class Inventario {
         this.cantidades = cantidades;
     }
 
-    public void crearProductos(String tipoSeleccionado, String nombre, long Id, double precioMayorista, double precio,
-            LocalDate fechaVencimiento, ArrayList<String> etiquetas, double cantidad) {
-        switch (tipoSeleccionado) {
-            case "Aseo":
-                Aseo aseo = new Aseo(nombre, Id, precioMayorista, precio,
-                        fechaVencimiento, etiquetas);
-                this.getProductos().add(aseo);
-            case "Bebida":
-                Bebida bebida = new Bebida(nombre, Id, precioMayorista, precio,
-                        fechaVencimiento, etiquetas);
-                this.getProductos().add(bebida);
-            case "Mecato":
-                Mecato mecato = new Mecato(nombre, Id, precioMayorista, precio,
-                        fechaVencimiento, etiquetas);
-                this.getProductos().add(mecato);
-            case "Enlatado":
-                Enlatado enlatado = new Enlatado(nombre, Id, precioMayorista, precio,
-                        fechaVencimiento, etiquetas);
-                this.getProductos().add(enlatado);
-            case "Grano":
-                Granos grano = new Granos(nombre, Id, precioMayorista, precio,
-                        fechaVencimiento, etiquetas);
-                this.getProductos().add(grano);
-        }
-        this.getCantidades().put(Id, cantidad);
-    }
-
     public Producto buscarProductos(String ID, String busqueda) {
         switch (ID) {
             case ("ID") -> {

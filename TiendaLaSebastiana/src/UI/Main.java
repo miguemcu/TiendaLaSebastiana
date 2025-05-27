@@ -11,20 +11,32 @@ package UI;
 
 import BusinessLogic.Caja;
 import BusinessLogic.EmpleadoService;
+import BusinessLogic.ProductoService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends javax.swing.JFrame {
     
     private EmpleadoService empleadoService;
+    private ProductoService productoService;
     private Caja caja;
     
     public Main() throws Exception {
         this.empleadoService = new EmpleadoService();
         this.caja = new Caja();
+        this.productoService = new ProductoService();
         initComponents();
     }
 
+    public ProductoService getProductoService() {
+        return productoService;
+    }
+
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
+    
     public Caja getCaja() {
         return caja;
     }

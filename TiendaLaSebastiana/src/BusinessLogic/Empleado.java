@@ -38,7 +38,7 @@ public class Empleado {
 
     
     public static Empleado fromDocument(Document doc){
-        return new Empleado(doc.getString("nombre"), doc.getString("empleado"));
+        return new Empleado(doc.getString("nombre"), doc.getString("documento"));
     }
 }
 

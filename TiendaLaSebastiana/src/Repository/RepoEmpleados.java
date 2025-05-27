@@ -52,12 +52,13 @@ public class RepoEmpleados{
             }
 
             return empleadosEncontrados;
+            
         }catch(Exception e){
             throw new Exception("Ha ocurrido un error, contacte al administrador: "+e.getMessage());
         }
     }
     
-    public Empleado getEmpleado(String nombre) throws Exception{         
+    public Empleado getEmpleado(String nombre) throws Exception {         
         try{
             Document empleado = collection.find(Filters.eq("nombre", nombre)).first();
 

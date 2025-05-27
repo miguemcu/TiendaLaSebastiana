@@ -278,7 +278,7 @@ public class InventarioSistema extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProductoActionPerformed
-        var crearProducto = new CreacionProducto(parent, parent.getCaja(), parent.getCaja().getInventario());
+        var crearProducto = new CreacionProducto(parent);
         crearProducto.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCrearProductoActionPerformed

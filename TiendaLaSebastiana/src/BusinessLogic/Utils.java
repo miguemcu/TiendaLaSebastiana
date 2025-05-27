@@ -7,7 +7,9 @@ package BusinessLogic;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+import org.bson.Document;
 /**
  *
  * @author migue
@@ -57,5 +59,20 @@ public  class Utils {
         }
         }
      return ficha.toString();
+   }
+   
+   public static Document crearDocParaProducto(String tipoProducto, String nombre, long id, double precioMayorista, double precio,
+            LocalDate fechaDeVencimiento, ArrayList<String> etiquetas, int cantidad){
+       
+       Document doc = new Document("producto", new Document()
+                        .append("nombre", nombre)
+                        .append("id", id)
+                        .append("precioMayorista", precioMayorista)
+                        .append("precio", precio)
+                        .append("tipoProducto", tipoProducto)
+                        .append("fechaDeVencimiento", fechaDeVencimiento.toString())
+                        .append("Etiquetas", Arrays.asList(etiquetas)))
+                    .append("cantidad", cantidad);
+       return doc;
    }
 }
