@@ -7,7 +7,6 @@ package BusinessLogic;
 import Repository.RepoEmpleados;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -31,7 +30,7 @@ public class EmpleadoService {
     }
     
     
-    public Empleado validarDocumento(String nombre, String documento) throws Exception{
+    public Empleado validarDocumento(String nombre, String documento) throws Exception {
         var empleado = repositorio.getEmpleado(nombre);
         
         if (empleado != null && empleado.getDocumento().equals(documento)){
@@ -57,7 +56,6 @@ public class EmpleadoService {
                 .append("documento",documento);
         
         collection.insertOne(newEmpleado);
-        
         return true;
     }
     
@@ -67,12 +65,10 @@ public class EmpleadoService {
                 Filters.eq("documento", documento));
         
         if (collection.find(filtro).first() == null){
-            return false;
+            return false; // No existe ese empleado
         }
         
         collection.deleteOne(filtro);
         return true;
     }
-    
-
 }
