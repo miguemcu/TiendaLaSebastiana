@@ -9,7 +9,7 @@ package UI;
  * @author migue
  */
 import BusinessLogic.Empleado;
-import BusinessLogic.utilJtextField;
+import BusinessLogic.helperUI;
 import javax.swing.text.AbstractDocument;
 public class RegistrarEmpleado extends javax.swing.JFrame {
 
@@ -18,8 +18,8 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
     public RegistrarEmpleado(Main parent) {
         initComponents();
         this.parent = parent;
-        ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new utilJtextField(10));
-        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new utilJtextField(35));
+        ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new helperUI(10));
+        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new helperUI(35));
         
     }
 

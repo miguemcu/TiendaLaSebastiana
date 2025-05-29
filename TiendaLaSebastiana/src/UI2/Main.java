@@ -5,17 +5,33 @@
 package UI2;
 
 import BusinessLogic.Caja;
+import BusinessLogic.Empleado;
 import BusinessLogic.Inventario;
+import javax.swing.JButton;
+import javax.swing.JMenuItem;
+import javax.swing.JToggleButton;
 
 /**
  *
  * @author Sebastian
  */
 public class Main extends javax.swing.JFrame {
+
     private RegistroEmpleado registroEmpleado;
     private EntrarSistema entrarSistema;
     private Caja caja;
     private Inventario inventario;
+    private InventarioSistema inventarioSistema;
+    private MenuVenta venta;
+
+    //private MenuDevolucion devolucion;
+    private SistemaReportes sistemaReportes;
+
+    public Main() {
+        initComponents();
+        initObjects();
+        initFrames();
+    }
 
     public Caja getCaja() {
         return caja;
@@ -32,11 +48,7 @@ public class Main extends javax.swing.JFrame {
     public void setInventario(Inventario inventario) {
         this.inventario = inventario;
     }
-    public Main() {
-        initComponents();
-        initObjects();
-        initFrames();
-    }
+
     // Getters y Setters
     public EntrarSistema getEntrarSistema() {
         return entrarSistema;
@@ -45,13 +57,86 @@ public class Main extends javax.swing.JFrame {
     public void setEntrarSistema(EntrarSistema entrarSistema) {
         this.entrarSistema = entrarSistema;
     }
-    
+
     public RegistroEmpleado getRegistrarEmpleado() {
         return registroEmpleado;
     }
 
     public void setRegistrarEmpleado(RegistroEmpleado registroEmpleado) {
         this.registroEmpleado = registroEmpleado;
+    }
+
+    public InventarioSistema getInventarioSistema() {
+        return inventarioSistema;
+    }
+
+    public void setInventarioSistema(InventarioSistema inventarioSistema) {
+        this.inventarioSistema = inventarioSistema;
+    }
+
+    public MenuVenta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(MenuVenta venta) {
+        this.venta = venta;
+    }
+
+    /*
+    public MenuDevolucion getDevolucion() {
+        return devolucion;
+    }
+
+    public void setDevolucion(MenuDevolucion devolucion) {
+        this.devolucion = devolucion;
+    }
+*/
+    public SistemaReportes getSistemaReportes() {
+        return sistemaReportes;
+    }
+
+    public void setSistemaReportes(SistemaReportes sistemaReportes) {
+        this.sistemaReportes = sistemaReportes;
+    }
+
+    public JToggleButton getBtnDevolución() {
+        return btnDevolución;
+    }
+
+    public void setBtnDevolución(JToggleButton btnDevolución) {
+        this.btnDevolución = btnDevolución;
+    }
+
+    public JToggleButton getBtnHacerVenta() {
+        return btnHacerVenta;
+    }
+
+    public void setBtnHacerVenta(JToggleButton btnHacerVenta) {
+        this.btnHacerVenta = btnHacerVenta;
+    }
+
+    public JToggleButton getBtnInventario() {
+        return btnInventario;
+    }
+
+    public void setBtnInventario(JToggleButton btnInventario) {
+        this.btnInventario = btnInventario;
+    }
+
+    public JButton getBtnReportes() {
+        return btnReportes;
+    }
+
+    public void setBtnReportes(JButton btnReportes) {
+        this.btnReportes = btnReportes;
+    }
+
+    public JMenuItem getCerrarSesionItem() {
+        return cerrarSesionItem;
+    }
+
+    public void setCerrarSesionItem(JMenuItem cerrarSesionItem) {
+        this.cerrarSesionItem = cerrarSesionItem;
     }
 
     /**
@@ -66,18 +151,16 @@ public class Main extends javax.swing.JFrame {
         btnEnter = new javax.swing.JButton();
         btnRegisterEmployee = new javax.swing.JButton();
         desktopPane = new javax.swing.JDesktopPane();
-        lblSelect = new javax.swing.JLabel();
-        btnEnter1 = new javax.swing.JButton();
-        btnRegisterEmployee1 = new javax.swing.JButton();
+        txtButtonTienda1 = new javax.swing.JLabel();
+        btnHacerVenta = new javax.swing.JToggleButton();
+        btnDevolución = new javax.swing.JToggleButton();
+        btnInventario = new javax.swing.JToggleButton();
+        btnReportes = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        menuIncio = new javax.swing.JMenu();
+        iniciarSesionItem = new javax.swing.JMenuItem();
+        registrarEmpleadoItem = new javax.swing.JMenuItem();
+        cerrarSesionItem = new javax.swing.JMenuItem();
 
         btnEnter.setText("Entrar al Sistema");
         btnEnter.addActionListener(new java.awt.event.ActionListener() {
@@ -95,68 +178,84 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblSelect.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSelect.setText("Seleccione una opción:");
-        desktopPane.add(lblSelect);
-        lblSelect.setBounds(190, 140, 130, 16);
+        txtButtonTienda1.setText("¿Qué desea hacer?");
+        txtButtonTienda1.setMaximumSize(new java.awt.Dimension(100, 16));
+        desktopPane.add(txtButtonTienda1);
+        txtButtonTienda1.setBounds(280, 140, 97, 16);
 
-        btnEnter1.setText("Entrar al Sistema");
-        btnEnter1.addActionListener(new java.awt.event.ActionListener() {
+        btnHacerVenta.setText("Hacer Venta");
+        btnHacerVenta.setEnabled(false);
+        btnHacerVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnter1ActionPerformed(evt);
+                btnHacerVentaActionPerformed(evt);
             }
         });
-        desktopPane.add(btnEnter1);
-        btnEnter1.setBounds(190, 170, 130, 23);
+        desktopPane.add(btnHacerVenta);
+        btnHacerVenta.setBounds(110, 230, 94, 23);
 
-        btnRegisterEmployee1.setText("Registrar Empleado");
-        btnRegisterEmployee1.addActionListener(new java.awt.event.ActionListener() {
+        btnDevolución.setText("Devolución");
+        btnDevolución.setEnabled(false);
+        btnDevolución.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegisterEmployee1ActionPerformed(evt);
+                btnDevoluciónActionPerformed(evt);
             }
         });
-        desktopPane.add(btnRegisterEmployee1);
-        btnRegisterEmployee1.setBounds(180, 210, 150, 23);
+        desktopPane.add(btnDevolución);
+        btnDevolución.setBounds(420, 230, 120, 23);
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
-
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
-        fileMenu.add(openMenuItem);
-
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
-
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        btnInventario.setText("Inventario");
+        btnInventario.setEnabled(false);
+        btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
+                btnInventarioActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        desktopPane.add(btnInventario);
+        btnInventario.setBounds(110, 300, 83, 23);
 
-        menuBar.add(fileMenu);
+        btnReportes.setText("Reportes");
+        btnReportes.setEnabled(false);
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
+        desktopPane.add(btnReportes);
+        btnReportes.setBounds(420, 300, 120, 23);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
+        menuIncio.setMnemonic('f');
+        menuIncio.setText("Inicio");
 
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
+        iniciarSesionItem.setMnemonic('o');
+        iniciarSesionItem.setText("Iniciar Sesion");
+        iniciarSesionItem.setToolTipText("");
+        iniciarSesionItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iniciarSesionItemActionPerformed(evt);
+            }
+        });
+        menuIncio.add(iniciarSesionItem);
 
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
+        registrarEmpleadoItem.setMnemonic('s');
+        registrarEmpleadoItem.setText("Registrar Empleado");
+        registrarEmpleadoItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarEmpleadoItemActionPerformed(evt);
+            }
+        });
+        menuIncio.add(registrarEmpleadoItem);
 
-        menuBar.add(helpMenu);
+        cerrarSesionItem.setMnemonic('x');
+        cerrarSesionItem.setText("Cerrar Sesion");
+        cerrarSesionItem.setEnabled(false);
+        cerrarSesionItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarSesionItemActionPerformed(evt);
+            }
+        });
+        menuIncio.add(cerrarSesionItem);
+
+        menuBar.add(menuIncio);
 
         setJMenuBar(menuBar);
 
@@ -164,57 +263,102 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
+    private void cerrarSesionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionItemActionPerformed
+        this.getBtnHacerVenta().setEnabled(false);
+        this.getBtnInventario().setEnabled(false);
+        this.getBtnReportes().setEnabled(false);
+        this.getBtnDevolución().setEnabled(false);
+        this.getCerrarSesionItem().setEnabled(false);
+        this.getCaja().setCajero(null);
+    }//GEN-LAST:event_cerrarSesionItemActionPerformed
 
     private void btnEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterActionPerformed
-       
+
     }//GEN-LAST:event_btnEnterActionPerformed
 
     private void btnRegisterEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterEmployeeActionPerformed
-        
+
     }//GEN-LAST:event_btnRegisterEmployeeActionPerformed
 
-    private void btnEnter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnter1ActionPerformed
-        if (entrarSistema == null){
+    private void iniciarSesionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarSesionItemActionPerformed
+        if (entrarSistema == null) {
             entrarSistema = new EntrarSistema();
         }
-        
-        if (!entrarSistema.isVisible()){
-            if (entrarSistema.isClosed()){
+
+        if (!entrarSistema.isVisible()) {
+            if (entrarSistema.isClosed()) {
                 desktopPane.add(entrarSistema);
             }
             entrarSistema.show();
-        }        
-    }//GEN-LAST:event_btnEnter1ActionPerformed
+        }
+    }//GEN-LAST:event_iniciarSesionItemActionPerformed
 
-    private void btnRegisterEmployee1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterEmployee1ActionPerformed
-        if (registroEmpleado == null){
+    private void registrarEmpleadoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarEmpleadoItemActionPerformed
+        if (registroEmpleado == null) {
             registroEmpleado = new RegistroEmpleado();
         }
-        
-        if (!registroEmpleado.isVisible()){
-            if (registroEmpleado.isClosed()){
+
+        if (!registroEmpleado.isVisible()) {
+            if (registroEmpleado.isClosed()) {
                 desktopPane.add(registroEmpleado);
             }
             registroEmpleado.show();
         }
-    }//GEN-LAST:event_btnRegisterEmployee1ActionPerformed
+    }//GEN-LAST:event_registrarEmpleadoItemActionPerformed
+
+    private void btnHacerVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHacerVentaActionPerformed
+
+        if (this.getVenta() == null) {
+            this.setVenta(new MenuVenta(this.getCaja(), this.desktopPane));
+            this.desktopPane.add(this.getVenta());
+        }
+        if (!this.getVenta().isVisible()) {
+            if (this.getVenta().isClosed()) {
+                this.desktopPane.add(this.getVenta());
+            }
+            this.getVenta().setVisible(true);
+        }
+    }//GEN-LAST:event_btnHacerVentaActionPerformed
+
+    private void btnDevoluciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevoluciónActionPerformed
+
+    }//GEN-LAST:event_btnDevoluciónActionPerformed
+
+    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
+        if (this.getInventarioSistema() == null) {
+            this.setInventarioSistema(new InventarioSistema(this.getCaja()));
+            this.desktopPane.add(this.getInventarioSistema());
+        }
+        if (!this.getInventarioSistema().isVisible()) {
+            if (this.getInventarioSistema().isClosed()) {
+                this.desktopPane.add(this.getInventarioSistema());
+            }
+            this.getInventarioSistema().setVisible(true);
+        }
+    }//GEN-LAST:event_btnInventarioActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        if (this.getSistemaReportes()== null) {
+            this.setSistemaReportes(new SistemaReportes(this.getCaja(), this, this.desktopPane));
+            this.desktopPane.add(this.getSistemaReportes());
+        }
+        if (!this.getSistemaReportes().isVisible()) {
+            if (this.getSistemaReportes().isClosed()) {
+                this.desktopPane.add(this.getSistemaReportes());
+            }
+            this.getSistemaReportes().setVisible(true);
+        }
+    }//GEN-LAST:event_btnReportesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,42 +394,38 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void initFrames(){
-        if (registroEmpleado == null){
-            registroEmpleado = new RegistroEmpleado();
-            registroEmpleado.setCaja(caja);
+
+    private void initFrames() {
+        if (registroEmpleado == null) {
+            registroEmpleado = new RegistroEmpleado(this.getCaja());
         }
         desktopPane.add(registroEmpleado);
-        
-        if (entrarSistema == null){
-            entrarSistema = new EntrarSistema();
-            entrarSistema.setCaja(caja);
+
+        if (entrarSistema == null) {
+            entrarSistema = new EntrarSistema(this.getCaja(), this);
         }
         desktopPane.add(entrarSistema);
     }
-    
-    private void initObjects(){
+
+    private void initObjects() {
         caja = new Caja();
         inventario = new Inventario();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JToggleButton btnDevolución;
     private javax.swing.JButton btnEnter;
-    private javax.swing.JButton btnEnter1;
+    private javax.swing.JToggleButton btnHacerVenta;
+    private javax.swing.JToggleButton btnInventario;
     private javax.swing.JButton btnRegisterEmployee;
-    private javax.swing.JButton btnRegisterEmployee1;
-    private javax.swing.JMenuItem contentMenuItem;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JMenuItem cerrarSesionItem;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
-    private javax.swing.JLabel lblSelect;
+    private javax.swing.JMenuItem iniciarSesionItem;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenu menuIncio;
+    private javax.swing.JMenuItem registrarEmpleadoItem;
+    private javax.swing.JLabel txtButtonTienda1;
     // End of variables declaration//GEN-END:variables
 
 }

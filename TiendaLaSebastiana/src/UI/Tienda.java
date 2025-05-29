@@ -5,24 +5,18 @@
  */
 package UI;
 
+import BusinessLogic.Caja;
+import BusinessLogic.Inventario;
+
 /**
  *
  * @author Sebastian
  */
 public class Tienda extends javax.swing.JFrame {
 
-    private InventarioSistema inventarioSistema;
     private Main parent;
-
     
-    public InventarioSistema getInventarioSistema() {
-        return inventarioSistema;
-    }
-
-    public void setInventarioSistema(InventarioSistema inventarioSistema) {
-        this.inventarioSistema = inventarioSistema;
-    }
-
+    
     public Tienda(Main parent) {
         this.parent = parent;
         initComponents();

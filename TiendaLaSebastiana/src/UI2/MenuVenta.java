@@ -1,0 +1,716 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+ */
+package UI2;
+
+import BusinessLogic.Caja;
+import BusinessLogic.DetalleVenta;
+import BusinessLogic.Producto;
+import BusinessLogic.Utils;
+import BusinessLogic.Venta;
+import BusinessLogic.helperUI;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import javax.swing.JDesktopPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author DELL
+ */
+public class MenuVenta extends javax.swing.JInternalFrame {
+
+    private Caja caja;
+    private DefaultTableModel modeloTabla;
+    private Venta venta;
+    private Recibo recibo;
+    private double total_acumulado = 0;
+    private JDesktopPane desktopPane;
+
+    /**
+     * Creates new form Venta
+     */
+    public MenuVenta() {
+        initComponents();
+    }
+
+    public MenuVenta(Caja caja, JDesktopPane desktopPane) {
+
+        initComponents();
+        modeloTabla = (DefaultTableModel) tblProductosAgregados.getModel();
+        this.venta = new Venta();
+        this.venta.setDetalles(new ArrayList<>());
+        this.caja = caja;
+        this.desktopPane = desktopPane;
+    }
+
+    //Setter y Getter
+    public Caja getCaja() {
+        return caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
+    }
+
+    public DefaultTableModel getModeloTabla() {
+        return modeloTabla;
+    }
+
+    public void setModeloTabla(DefaultTableModel modeloTabla) {
+        this.modeloTabla = modeloTabla;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
+    }
+
+    public JTable getTblProductosAgregados() {
+        return tblProductosAgregados;
+    }
+
+    public void setTblProductosAgregados(JTable tblProductosAgregados) {
+        this.tblProductosAgregados = tblProductosAgregados;
+    }
+
+    public ArrayList<DetalleVenta> getDetalles() {
+        return venta.getDetalles();
+    }
+
+    public void setDetalles(ArrayList<DetalleVenta> detalles) {
+        this.venta.setDetalles(detalles);
+    }
+
+    public Recibo getRecibo() {
+        return recibo;
+    }
+
+    public void setRecibo(Recibo recibo) {
+        this.recibo = recibo;
+    }
+
+    public double getTotal_acumulado() {
+        return total_acumulado;
+    }
+
+    public void setTotal_acumulado(double total_acumulado) {
+        this.total_acumulado = total_acumulado;
+    }
+
+    @Override
+    public JDesktopPane getDesktopPane() {
+        return desktopPane;
+    }
+
+    public void setDesktopPane(JDesktopPane desktopPane) {
+        this.desktopPane = desktopPane;
+    }
+
+    //Metodos para la clase
+    private void setearCampos(Producto producto) {
+        txtNombreProducto.setEditable(false);
+        txtCantidadDisponible.setEditable(false);
+        txtPrecioUnitario.setEditable(false);
+        txtCantidadVender.setEditable(true);
+        txtNombreProducto.setText(producto.getNombre());
+        txtCantidadDisponible.setText(String.valueOf(this.getCaja().getInventario().getCantidadProducto(producto.getId())));
+        txtPrecioUnitario.setText(String.valueOf(producto.getPrecio()));
+        txtTotalVenta.setEditable(false);
+    }
+
+    private Producto buscarAction() {
+        String busqueda = txtBuscar.getText();
+        try {
+            if (busqueda.isEmpty() || busqueda.isBlank()) {
+                throw new IllegalArgumentException("Todos los campos son obligatorios.");
+            }
+
+            if (busqueda.matches("\\d+")) {
+
+                if (this.getCaja().getInventario().buscarProductos("ID", busqueda) != null) {
+                    setearCampos(this.getCaja().getInventario().buscarProductos("ID", busqueda));
+                    return this.getCaja().getInventario().buscarProductos("ID", busqueda);
+                } else {
+                    throw new NoSuchElementException("Producto no encontrado.");
+                }
+
+            } else {
+                if (this.getCaja().getInventario().buscarProductos("nombre", busqueda) != null) {
+                    setearCampos(this.getCaja().getInventario().buscarProductos("nombre", busqueda));
+                    return this.getCaja().getInventario().buscarProductos("nombre", busqueda);
+                } else {
+                    throw new NoSuchElementException("Producto no encontrado.");
+                }
+            }
+
+        } catch (IllegalArgumentException ex) {
+            txtError.setText(ex.getMessage());
+        } catch (Exception ex) {
+            txtError.setText("Error inesperado: " + ex.getMessage());
+        }
+        return null;
+    }
+
+    public void agregarFilaProducto(Long id, String nombre, double precioUni, double cantidad, double total) {
+        Object[] nuevaFila = {id, nombre, precioUni, cantidad, total};
+        modeloTabla.addRow(nuevaFila);
+    }
+
+    public double sumarColumnaDouble(JTable tabla, int columnIndex) {
+        double suma = 0.0;
+        int rowCount = modeloTabla.getRowCount();
+
+        for (int i = 0; i < rowCount; i++) {
+            Object value = modeloTabla.getValueAt(i, columnIndex);
+            if (value instanceof Double) {
+                suma += (Double) value;
+            }
+        }
+        return suma;
+    }
+
+    public LocalDateTime capturarFecha() {
+        String diaStr = txtDia.getText().trim();
+        String mesStr = txtMes.getText().trim();
+        String anioStr = txtAnio.getText().trim();
+        String horaStr = txtHora.getText().trim();
+        String minutosStr = txtMinuto.getText().trim();
+
+        LocalDateTime fecha = null;
+
+        try {
+            if (diaStr.isBlank() || mesStr.isBlank() || anioStr.isBlank()
+                    || horaStr.isBlank() || minutosStr.isBlank()) {
+                throw new IllegalArgumentException("Todos los campos de fecha y hora son obligatorios.");
+            }
+
+            int dia = Integer.parseInt(diaStr);
+            int mes = Integer.parseInt(mesStr);
+            int anio = Integer.parseInt(anioStr);
+            int hora = Integer.parseInt(horaStr);
+            int minutos = Integer.parseInt(minutosStr);
+
+            fecha = LocalDateTime.of(anio, mes, dia, hora, minutos);
+            lblErrorFecha.setText("");
+
+        } catch (NumberFormatException e) {
+            System.err.println("Error: Debe ingresar valores numéricos válidos para la fecha y hora.");
+            fecha = null;
+        } catch (DateTimeException e) {
+            System.err.println("Fecha y hora inválida: " + e.getMessage());
+            fecha = null;
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            fecha = null;
+        } catch (Exception ex) {
+            System.err.println("Error inesperado: " + ex.getMessage());
+            fecha = null;
+        }
+
+        return fecha;
+    }
+
+    public void limpiarCampos() {
+        ArrayList<javax.swing.JTextField> campos = new ArrayList<>();
+        campos.add(txtNombreProducto);
+        campos.add(txtPrecioUnitario);
+        campos.add(txtCantidadDisponible);
+        helperUI.limpiarCampos(campos);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        lblMes = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
+        lblNombreProducto = new javax.swing.JLabel();
+        lblAnio = new javax.swing.JLabel();
+        lblPrecioUnitario = new javax.swing.JLabel();
+        txtDia = new javax.swing.JTextField();
+        lblTtlVenta = new javax.swing.JLabel();
+        txtMes = new javax.swing.JTextField();
+        lblCantidadAVender = new javax.swing.JLabel();
+        txtAnio = new javax.swing.JTextField();
+        btnAgregarVenta = new javax.swing.JButton();
+        txtMinuto = new javax.swing.JTextField();
+        txtNombreProducto = new javax.swing.JTextField();
+        txtHora = new javax.swing.JTextField();
+        txtPrecioUnitario = new javax.swing.JTextField();
+        lblHora = new javax.swing.JLabel();
+        txtCantidadDisponible = new javax.swing.JTextField();
+        lblMinutos = new javax.swing.JLabel();
+        txtCantidadVender = new javax.swing.JTextField();
+        lblProductosAgregados = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProductosAgregados = new javax.swing.JTable();
+        lblCantidadDisponible = new javax.swing.JLabel();
+        txtTotalVenta = new javax.swing.JTextField();
+        btnCancelarVenta = new javax.swing.JButton();
+        btnVender = new javax.swing.JButton();
+        lblInsucienteStock = new javax.swing.JLabel();
+        scrollVenta = new javax.swing.JScrollBar();
+        lblDia = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
+        lblIngresarFecha = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
+        lblBuscarProducto = new javax.swing.JLabel();
+        lblErrorFecha = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtError = new javax.swing.JTextArea();
+
+        setClosable(true);
+        setIconifiable(true);
+
+        lblMes.setText("MM");
+
+        lblFecha.setText("Fecha:");
+
+        lblNombreProducto.setText("Nombre Producto:");
+
+        lblAnio.setText("AAAA");
+
+        lblPrecioUnitario.setText("Precio Unitario:");
+
+        lblTtlVenta.setText("Total Venta:");
+
+        txtMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMesActionPerformed(evt);
+            }
+        });
+
+        lblCantidadAVender.setText("Cantidad a vender:");
+
+        txtAnio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAnioActionPerformed(evt);
+            }
+        });
+
+        btnAgregarVenta.setText("Agregar a la Venta");
+        btnAgregarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarVentaActionPerformed(evt);
+            }
+        });
+
+        txtMinuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMinutoActionPerformed(evt);
+            }
+        });
+
+        txtHora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHoraActionPerformed(evt);
+            }
+        });
+
+        lblHora.setText("hh");
+
+        txtCantidadDisponible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantidadDisponibleActionPerformed(evt);
+            }
+        });
+
+        lblMinutos.setText("mm");
+
+        txtCantidadVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantidadVenderActionPerformed(evt);
+            }
+        });
+
+        lblProductosAgregados.setText("Productos Agregados:");
+
+        tblProductosAgregados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nombre", "Precio Unitario", "Cantidad", "Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Long.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblProductosAgregados);
+
+        lblCantidadDisponible.setText("Cantidad Disponible:");
+
+        txtTotalVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalVentaActionPerformed(evt);
+            }
+        });
+
+        btnCancelarVenta.setText("Cancelar Venta");
+        btnCancelarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarVentaActionPerformed(evt);
+            }
+        });
+
+        btnVender.setText("Vender");
+        btnVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderActionPerformed(evt);
+            }
+        });
+
+        lblInsucienteStock.setVisible(false);
+        lblInsucienteStock.setText("Insuficiente Stock");
+
+        lblDia.setText("DD");
+
+        lblIngresarFecha.setText("Ingrese la fecha:");
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        lblBuscarProducto.setText("Buscar Producto:");
+
+        txtError.setColumns(20);
+        txtError.setRows(5);
+        jScrollPane2.setViewportView(txtError);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAgregarVenta)
+                        .addGap(64, 64, 64)
+                        .addComponent(lblInsucienteStock, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblProductosAgregados)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTtlVenta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTotalVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblIngresarFecha)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblFecha)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblDia)
+                                .addGap(25, 25, 25)
+                                .addComponent(lblMes, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(lblAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23)
+                                .addComponent(lblHora)
+                                .addGap(27, 27, 27)
+                                .addComponent(lblMinutos))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMes, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnVender, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnCancelarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtMinuto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblErrorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCantidadAVender)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCantidadVender, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(436, 436, 436))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNombreProducto)
+                                    .addComponent(lblPrecioUnitario)
+                                    .addComponent(lblCantidadDisponible))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreProducto, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCantidadDisponible, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(27, 27, 27)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(70, 70, 70)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(scrollVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(lblBuscarProducto)
+                    .addGap(4, 4, 4)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnBuscar)
+                    .addContainerGap(306, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scrollVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblNombreProducto)
+                                    .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblPrecioUnitario)
+                                    .addComponent(txtPrecioUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtCantidadDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblCantidadDisponible)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCantidadAVender)
+                            .addComponent(txtCantidadVender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAgregarVenta)
+                            .addComponent(lblInsucienteStock))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblProductosAgregados)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTtlVenta)
+                            .addComponent(txtTotalVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblIngresarFecha)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMinuto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDia)
+                            .addComponent(lblMes)
+                            .addComponent(lblAnio)
+                            .addComponent(lblHora)
+                            .addComponent(lblMinutos)
+                            .addComponent(lblFecha))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancelarVenta)
+                            .addComponent(btnVender))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblErrorFecha)
+                        .addGap(29, 29, 29)))
+                .addGap(149, 149, 149))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar)
+                        .addComponent(lblBuscarProducto))
+                    .addContainerGap(671, Short.MAX_VALUE)))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMesActionPerformed
+
+    private void txtAnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAnioActionPerformed
+
+    private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
+        try {
+            double cantidadDisponible = Double.parseDouble(txtCantidadDisponible.getText());
+            if (txtCantidadVender.getText().isBlank()) {
+                throw new IllegalArgumentException("El campo de cantidad a vender es obligatorio.");
+            }
+            if (!txtCantidadVender.getText().matches("\\d+")) {
+                throw new IllegalArgumentException("La cantidad solo debe contener números positivos.");
+            }
+            double cantidadVender = Double.parseDouble(txtCantidadVender.getText());
+
+            Producto producto = this.buscarAction();
+            double precio = 0;
+            double total = 0;
+            
+            if (cantidadDisponible < cantidadVender) {
+                this.lblInsucienteStock.setVisible(true);
+            } else {
+
+                if (cantidadVender >= 20) {
+                    precio = producto.getPrecioMayorista();
+                } else {
+                    precio = producto.getPrecio();
+                }
+
+                total = (precio * cantidadVender);
+
+                this.agregarFilaProducto(producto.getId(), producto.getNombre(),
+                        precio, cantidadVender, total);
+            }
+            var detalleVenta = new DetalleVenta(producto, cantidadVender, precio, total, 0, 0);
+            venta.getDetalles().add(detalleVenta);
+            this.setTotal_acumulado(total_acumulado + total);
+            txtTotalVenta.setText(String.valueOf(this.getTotal_acumulado()));
+            txtCantidadVender.setText("");
+        } catch (IllegalArgumentException e) {
+            txtError.setText(e.getMessage());
+        } catch (Exception ex) {
+            txtError.setText("Error inesperado: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnAgregarVentaActionPerformed
+
+    private void txtMinutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMinutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMinutoActionPerformed
+
+    private void txtHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHoraActionPerformed
+
+    private void txtCantidadDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadDisponibleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadDisponibleActionPerformed
+
+    private void txtCantidadVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadVenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadVenderActionPerformed
+
+    private void txtTotalVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalVentaActionPerformed
+
+    private void btnCancelarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVentaActionPerformed
+        this.limpiarCampos();
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarVentaActionPerformed
+
+    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+
+        double totalVenta = sumarColumnaDouble(tblProductosAgregados, 4);
+        txtTotalVenta.setText(String.valueOf(totalVenta));
+        Long id = Utils.generarIdUnico(this.getCaja().getVentas());
+        LocalDateTime fecha = capturarFecha();
+
+        if (fecha == null) {
+            lblErrorFecha.setText("Fecha inválida, ingrese de nuevo.");
+            return;
+        }
+
+        venta.setTotalVenta(totalVenta);
+        venta.setTotalBruto(totalVenta);
+        venta.setTotalDescuento(0);
+        venta.setTotalIva(0);
+        venta.setFecha(fecha);
+        venta.setID(id);
+        this.getCaja().setInventario(venta.detallarCantidades(this.getCaja().getInventario()));
+        this.getCaja().agregarVenta(venta);
+        this.dispose();
+
+        if (this.getRecibo() == null) {
+            this.setRecibo(new Recibo(this, this.getVenta()));
+            this.getDesktopPane().add(this.getRecibo());
+        }
+        if (!this.getRecibo().isVisible()) {
+            if (this.getRecibo().isClosed()) {
+                this.getDesktopPane().add(this.getRecibo());
+            }
+            this.getRecibo().setVisible(true);
+        }
+        /*var recibo = new Recibo(this, venta);
+        recibo.mostrarVentasEnRecibo();
+        recibo.setVisible(true);*/
+    }//GEN-LAST:event_btnVenderActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        this.buscarAction();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarVenta;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelarVenta;
+    private javax.swing.JButton btnVender;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblAnio;
+    private javax.swing.JLabel lblBuscarProducto;
+    private javax.swing.JLabel lblCantidadAVender;
+    private javax.swing.JLabel lblCantidadDisponible;
+    private javax.swing.JLabel lblDia;
+    private javax.swing.JLabel lblErrorFecha;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblHora;
+    private javax.swing.JLabel lblIngresarFecha;
+    private javax.swing.JLabel lblInsucienteStock;
+    private javax.swing.JLabel lblMes;
+    private javax.swing.JLabel lblMinutos;
+    private javax.swing.JLabel lblNombreProducto;
+    private javax.swing.JLabel lblPrecioUnitario;
+    private javax.swing.JLabel lblProductosAgregados;
+    private javax.swing.JLabel lblTtlVenta;
+    private javax.swing.JScrollBar scrollVenta;
+    private javax.swing.JTable tblProductosAgregados;
+    private javax.swing.JTextField txtAnio;
+    private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtCantidadDisponible;
+    private javax.swing.JTextField txtCantidadVender;
+    private javax.swing.JTextField txtDia;
+    private javax.swing.JTextArea txtError;
+    private javax.swing.JTextField txtHora;
+    private javax.swing.JTextField txtMes;
+    private javax.swing.JTextField txtMinuto;
+    private javax.swing.JTextField txtNombreProducto;
+    private javax.swing.JTextField txtPrecioUnitario;
+    private javax.swing.JTextField txtTotalVenta;
+    // End of variables declaration//GEN-END:variables
+
+}

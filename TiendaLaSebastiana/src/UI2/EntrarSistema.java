@@ -6,33 +6,29 @@ package UI2;
 
 import BusinessLogic.Caja;
 import BusinessLogic.Empleado;
+import BusinessLogic.helperUI;
+import java.util.ArrayList;
 
 /**
  *
  * @author DELL
  */
-public class EntrarSistema extends javax.swing.JInternalFrame {
+public class EntrarSistema extends javax.swing.JInternalFrame{
 
     /**
      * Creates new form EntrarSistema
      */
-    private Tienda tienda;
     private Caja caja;
+    private Main main;
 
     public EntrarSistema() {
         initComponents();
     }
 
-    public EntrarSistema(Caja caja) {
+    public EntrarSistema(Caja caja, Main main) {
+        initComponents();
         this.caja = caja;
-    }
-
-    public Tienda getTienda() {
-        return tienda;
-    }
-
-    public void setTienda(Tienda tienda) {
-        this.tienda = tienda;
+        this.main = main;
     }
 
     public Caja getCaja() {
@@ -41,6 +37,14 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
 
     public void setCaja(Caja caja) {
         this.caja = caja;
+    }
+
+    public Main getMain() {
+        return main;
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
     }
 
     /**
@@ -162,23 +166,20 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
             Empleado cajero = this.getCaja().verificarEmpleado(nombre, cedula);
-            if (cajero != null) {
-                if (this.getTienda() == null) {
-                    this.setTienda(new Tienda(this.caja));
-                }
-                caja.setCajero(cajero);
-                this.getParent().add(this.getTienda());
-                if (!this.getTienda().isVisible()) {
-                    if (this.getTienda().isClosed()) {
-                        this.getParent().add(this.getTienda());
-                    }
-                    this.getTienda().show();
-                }
-                this.setVisible(false);
-                return;
 
+            if (cajero != null) {
+
+                this.getCaja().setCajero(cajero);
+                this.getMain().getBtnHacerVenta().setEnabled(true);
+                this.getMain().getBtnInventario().setEnabled(true);
+                this.getMain().getBtnReportes().setEnabled(true);
+                this.getMain().getBtnDevolución().setEnabled(true);
+                this.getMain().getCerrarSesionItem().setEnabled(true);
+                this.limpiarCampos();
+                this.dispose();
+            } else {
+                txtErrorRegistro.setText("El usuario no existe.");
             }
-            txtErrorRegistro.setText("El usuario no existe.");
         } catch (IllegalArgumentException ex) {
             txtErrorRegistro.setText(ex.getMessage());
         } catch (Exception ex) {
@@ -196,4 +197,12 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txtErrorRegistro;
     private javax.swing.JTextField txtNombreEmpleado;
     // End of variables declaration//GEN-END:variables
+
+    public void limpiarCampos() {
+        ArrayList<javax.swing.JTextField> campos = new ArrayList<>();
+        campos.add(txtCedulaEmpleado);
+        campos.add(txtNombreEmpleado);
+        helperUI.limpiarCampos(campos);
+
+    }
 }

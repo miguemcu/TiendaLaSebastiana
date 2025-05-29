@@ -1,7 +1,7 @@
 package UI;
 
 import BusinessLogic.Empleado;
-import BusinessLogic.utilJtextField;
+import BusinessLogic.helperUI;
 import BusinessLogic.Caja;
 import javax.swing.text.AbstractDocument;
 
@@ -38,8 +38,8 @@ public class EntrarSistema extends javax.swing.JFrame {
         this.caja = caja;
         this.parent = parent;
         initComponents();
-        ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new utilJtextField(10));
-        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new utilJtextField(35));
+        ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new helperUI(10));
+        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new helperUI(35));
     }
 
     @Override

@@ -8,12 +8,13 @@ package BusinessLogic;
  *
  * @author DELL
  */
+import java.util.ArrayList;
     import javax.swing.text.*;
 
-public class utilJtextField extends DocumentFilter {
+public class helperUI extends DocumentFilter {
     private final int maxChars;
 
-    public utilJtextField(int maxChars) {
+    public helperUI(int maxChars) {
         this.maxChars = maxChars;
     }
 
@@ -34,5 +35,9 @@ public class utilJtextField extends DocumentFilter {
             java.awt.Toolkit.getDefaultToolkit().beep();
         }
     }
-
+    static public void limpiarCampos(ArrayList<javax.swing.JTextField> campos){
+        for (var txt:campos){
+            txt.setText("");
+        }
+    }
 }

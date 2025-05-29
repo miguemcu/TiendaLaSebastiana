@@ -6,19 +6,25 @@ package UI2;
 
 import BusinessLogic.Caja;
 import BusinessLogic.Empleado;
+import BusinessLogic.helperUI;
+import java.util.ArrayList;
+
 
 /**
  *
  * @author Sebastian
  */
 public class RegistroEmpleado extends javax.swing.JInternalFrame {
+
     private Caja caja;
+
     public RegistroEmpleado() {
         initComponents();
     }
 
     public RegistroEmpleado(Caja caja) {
         this.caja = caja;
+        initComponents();
     }
 
     public Caja getCaja() {
@@ -139,37 +145,36 @@ public class RegistroEmpleado extends javax.swing.JInternalFrame {
     private void btnRegistroEmpleadoExitosoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroEmpleadoExitosoActionPerformed
         String nombre = txtNombreEmpleado.getText().trim();
         String cedula = txtCedulaEmpleado.getText().trim();
-        
+
         try {
-            
-            if (nombre.isBlank() || cedula.isBlank()){
+
+            if (nombre.isBlank() || cedula.isBlank()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
-            
-            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")){
+
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")) {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
-            
-            for (Empleado empleado : this.getCaja().getEmpleados()){
-                if (empleado.getCedula().equals(cedula)){
+
+            for (Empleado empleado : this.getCaja().getEmpleados()) {
+                if (empleado.getCedula().equals(cedula)) {
                     throw new IllegalArgumentException("Ya hay un empleado registrado con esa cédula.");
                 }
-                
+
             }
-            
-            if (!cedula.matches("\\d+")){
+
+            if (!cedula.matches("\\d+")) {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
-        
-        this.getCaja().agregarEmpleado(nombre, cedula);
-        this.dispose();
-        
-        
-       } catch (IllegalArgumentException ex){
-           txtErrorRegistro.setText(ex.getMessage());
-       } catch (Exception ex) {
-           txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
-       }
+
+            this.getCaja().agregarEmpleado(nombre, cedula);
+            this.dispose();
+
+        } catch (IllegalArgumentException ex) {
+            txtErrorRegistro.setText(ex.getMessage());
+        } catch (Exception ex) {
+            txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnRegistroEmpleadoExitosoActionPerformed
 
 
@@ -183,4 +188,12 @@ public class RegistroEmpleado extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txtErrorRegistro;
     private javax.swing.JTextField txtNombreEmpleado;
     // End of variables declaration//GEN-END:variables
+
+    public void limpiarCampos() {
+        ArrayList<javax.swing.JTextField> campos = new ArrayList<>();
+        campos.add(txtCedulaEmpleado);
+        campos.add(txtNombreEmpleado);
+        helperUI.limpiarCampos(campos);
+    }
 }
+
