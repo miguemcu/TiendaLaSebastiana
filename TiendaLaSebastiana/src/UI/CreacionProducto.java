@@ -392,10 +392,8 @@ public class CreacionProducto extends javax.swing.JFrame {
                 throw new IllegalArgumentException("La fecha de vencimiento es incorrecta.");
             }
             
-            var collection = parent.getProductoService().getRepositorio().getCollection();
-            
             if(this.parent.getProductoService().añadirProducto(tipoSeleccionado, nombre, Id, precio,
-                    precioMayorista, fechaVencimiento, etiquetas, cantidad, collection) == false){
+                    precioMayorista, fechaVencimiento, etiquetas, cantidad) == false){
                 throw new Exception("Ya existe un producto registrado con ese nombre o con ese ID");
             }
             

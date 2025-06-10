@@ -11,6 +11,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 
 
@@ -23,7 +24,7 @@ public class RepoEmpleados{
     private final MongoCollection<Document> collection;
 
     public RepoEmpleados() {
-        var client = MongoClients.create("mongodb://localhost:27017/");
+        var client = MongoClients.create("mongodb+srv://miguemcu:admin@clusterejemploinicial.rvaw771.mongodb.net/");
         database = client.getDatabase("TiendaLaSebastiana");
         collection = database.getCollection("Empleados");
     }
@@ -66,6 +67,45 @@ public class RepoEmpleados{
                 return Empleado.fromDocument(empleado);
             }
             return null;
+        }catch(Exception e){
+            throw new Exception("Ha ocurrido un error, contacte al administrador: " +e.getMessage());
+        }
+    }
+    
+    public boolean agregarEmpleado(String nombre, String documento) throws Exception{
+        try{
+            Bson filtro = Filters.or(
+                    Filters.eq("nombre", nombre),
+                    Filters.eq("documento", documento));
+
+            Document empleadoExiste = collection.find(filtro).first();
+
+            if(empleadoExiste != null){ // Si ya existe alguien con esos datos, no lo deja
+                return false;
+            }
+
+            Document newEmpleado = new Document("nombre", nombre)
+                    .append("documento",documento);
+
+            collection.insertOne(newEmpleado);
+            return true;
+        }catch(Exception e){
+            throw new Exception("Ha ocurrido un error, contacte al administrador: " +e.getMessage());
+        }
+    }
+    
+    public boolean eliminarEmpleado(String nombre, String documento) throws Exception{
+        try{
+            Bson filtro = Filters.and(
+                    Filters.eq("nombre", nombre),
+                    Filters.eq("documento", documento));
+
+            if (collection.find(filtro).first() == null){
+                return false; // No existe ese empleado
+            }
+
+            collection.deleteOne(filtro);
+            return true;
         }catch(Exception e){
             throw new Exception("Ha ocurrido un error, contacte al administrador: " +e.getMessage());
         }

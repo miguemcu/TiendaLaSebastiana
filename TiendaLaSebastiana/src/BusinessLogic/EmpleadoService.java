@@ -5,10 +5,6 @@
 package BusinessLogic;
 
 import Repository.RepoEmpleados;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
-import org.bson.Document;
-import org.bson.conversions.Bson;
 
 /**
  *
@@ -40,35 +36,11 @@ public class EmpleadoService {
         return null;
     }
     
-    public boolean agregarEmpleado(String nombre, String documento, MongoCollection<Document> collection){
-        
-        Bson filtro = Filters.or(
-                Filters.eq("nombre", nombre),
-                Filters.eq("documento", documento));
-        
-        Document empleadoExiste = collection.find(filtro).first();
-        
-        if(empleadoExiste != null){ // Si ya existe alguien con esos datos, no lo deja
-            return false;
-        }
-        
-        Document newEmpleado = new Document("nombre", nombre)
-                .append("documento",documento);
-        
-        collection.insertOne(newEmpleado);
-        return true;
+    public boolean agregarEmpleado(String nombre, String documento) throws Exception{
+        return repositorio.agregarEmpleado(nombre, documento);
     }
     
-    public boolean eliminarEmpleado(String nombre, String documento, MongoCollection<Document> collection){
-        Bson filtro = Filters.and(
-                Filters.eq("nombre", nombre),
-                Filters.eq("documento", documento));
-        
-        if (collection.find(filtro).first() == null){
-            return false; // No existe ese empleado
-        }
-        
-        collection.deleteOne(filtro);
-        return true;
+    public boolean eliminarEmpleado(String nombre, String documento) throws Exception{
+        return repositorio.eliminarEmpleado(nombre, documento);
     }
 }

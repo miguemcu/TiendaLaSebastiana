@@ -165,7 +165,7 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
                 throw new IllegalArgumentException("La documento solo debe contener números.");
             }
         
-            if(parent.getEmpleadoService().agregarEmpleado(nombre, documento, parent.getEmpleadoService().getRepositorio().getCollection()) == false){
+            if(parent.getEmpleadoService().agregarEmpleado(nombre, documento) == false){
                 throw new Exception("Ya existe un empleado registrado con ese documento o con ese nombre.");
             }
         
