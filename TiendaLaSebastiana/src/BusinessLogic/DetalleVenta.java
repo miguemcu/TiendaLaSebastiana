@@ -13,7 +13,7 @@ import BusinessLogic.Producto;
 
 public class DetalleVenta {
     private Producto producto;
-    private double cantidad;
+    private int cantidad;
     private double precioUnitario;
     private double subtotalBruto;
     private double iva;
@@ -22,7 +22,7 @@ public class DetalleVenta {
     public DetalleVenta() {
     }
 
-    public DetalleVenta(Producto producto, double cantidad, double precioUnitario,
+    public DetalleVenta(Producto producto, int cantidad, double precioUnitario,
                         double subtotalBruto, double iva, double descuento) {
         this.producto = producto;
         this.cantidad = cantidad;
@@ -42,7 +42,7 @@ public class DetalleVenta {
         this.producto = producto;
     }
 
-    public double getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 

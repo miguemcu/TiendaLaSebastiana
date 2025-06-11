@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import org.bson.BsonInt64;
 import org.bson.Document;
 /**
  *
@@ -66,7 +67,7 @@ public  class Utils {
        
        Document doc = new Document("producto", new Document()
                         .append("nombre", nombre)
-                        .append("id", id)
+                        .append("id", new BsonInt64(id)) // Me aseguro de que no lo guarde como int, que siempre sea Long
                         .append("precioMayorista", precioMayorista)
                         .append("precio", precio)
                         .append("tipoProducto", tipoProducto)

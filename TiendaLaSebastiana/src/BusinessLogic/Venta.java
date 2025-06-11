@@ -12,7 +12,6 @@ package BusinessLogic;
 import BusinessLogic.DetalleVenta;
 import BusinessLogic.Producto;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import java.util.ArrayList;
 
@@ -96,7 +95,7 @@ public class Venta {
     }
     
     public Inventario detallarCantidades(Inventario inventario){
-        double cantidad = 0;
+        int cantidad = 0;
         Producto producto = null;
         for (DetalleVenta detalle: this.detalles){
             producto = detalle.getProducto();

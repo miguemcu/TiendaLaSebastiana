@@ -4,13 +4,7 @@ package BusinessLogic;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import BusinessLogic.Aseo;
-import BusinessLogic.Bebida;
-import BusinessLogic.Enlatado;
-import BusinessLogic.Granos;
-import BusinessLogic.Mecato;
 import BusinessLogic.Producto;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +12,7 @@ import java.util.Map;
 public class Inventario {
 
     private ArrayList<Producto> productos;
-    private Map<Long, Double> cantidades;
+    private Map<Long, Integer> cantidades;
 
     public Inventario() {
         this.productos = new ArrayList<>();
@@ -33,38 +27,14 @@ public class Inventario {
         this.productos = productos;
     }
 
-    public Map<Long, Double> getCantidades() {
+    public Map<Long, Integer> getCantidades() {
         return cantidades;
     }
 
-    public void setCantidades(Map<Long, Double> cantidades) {
+    public void setCantidades(Map<Long, Integer> cantidades) {
         this.cantidades = cantidades;
     }
 
-    public Producto buscarProductos(String ID, String busqueda) {
-        switch (ID) {
-            case ("ID") -> {
-                long id = Long.parseLong(busqueda);
-                for (Producto producto : productos) {
-                    if (producto.getId() == id) {
-                        return producto;
-                    }
-                }
-                return null;
-            }
-            case ("nombre") -> {
-
-                for (Producto producto : productos) {
-                    if (producto.getNombre().equals(busqueda)) {
-                        return producto;
-                    }
-                }
-                return null;
-            }
-        }
-        return null;
-    }
-    
     public double getCantidadProducto(Long idProd) {
         if (this.cantidades.containsKey(idProd)) {
             return this.cantidades.get(idProd);
@@ -73,9 +43,9 @@ public class Inventario {
         }
     }
 
-    public double ajustarCantidadProducto(Long idProd, double ajuste) {
-        double cantidadActual = cantidades.get(idProd);
-        double nuevaCantidad = cantidadActual + ajuste;
+    public double ajustarCantidadProducto(Long idProd, int ajuste) {
+        int cantidadActual = cantidades.get(idProd);
+        int nuevaCantidad = cantidadActual + ajuste;
         cantidades.put(idProd, nuevaCantidad);
         return nuevaCantidad;
     }

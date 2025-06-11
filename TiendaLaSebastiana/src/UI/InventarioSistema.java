@@ -20,7 +20,7 @@ public class InventarioSistema extends javax.swing.JFrame {
         txtNombre.setText(producto.getNombre());
         txtTipo.setText(String.valueOf(producto.getTipoProducto()));
         txtID.setText(String.valueOf(producto.getId()));
-        Double cantidad = parent.getCaja().getInventario().getCantidades().get(producto.getId());
+        int cantidad = parent.getCaja().getInventario().getCantidades().get(producto.getId());
         txtCantidad.setText(Double.toString(cantidad));
         txtPrecio.setText(String.valueOf(producto.getPrecio()));
         txtPrecioMayorista.setText(String.valueOf(producto.getPrecioMayorista()));
@@ -300,20 +300,20 @@ public class InventarioSistema extends javax.swing.JFrame {
 
             if (busqueda.matches("\\d+")) {
                 
-                if (parent.getCaja().getInventario().buscarProductos("ID", busqueda) != null) {
-                    setearCampos(parent.getCaja().getInventario().buscarProductos("ID", busqueda));
+                if (parent.getProductoService().buscarProducto("ID", busqueda) != null) {
+                    setearCampos(parent.getProductoService().buscarProducto("ID", busqueda));
                     encontrado = true;
                 }else{
                     encontrado = false;
                 }
             } else {
-                if (parent.getCaja().getInventario().buscarProductos("nombre", busqueda) != null) {
-                    setearCampos(parent.getCaja().getInventario().buscarProductos("nombre", busqueda));
+                if (parent.getProductoService().buscarProducto("nombre", busqueda) != null) {
+                    setearCampos(parent.getProductoService().buscarProducto("nombre", busqueda));
                     encontrado = true;
                 }else{
                     encontrado = false;
                 }
-                }
+            }
             
 
             if (!encontrado) {
@@ -353,7 +353,7 @@ public class InventarioSistema extends javax.swing.JFrame {
                     throw new IllegalArgumentException("Producto no encontrado.");
                 }
             }
-            Double cantidadAjustar = Double.valueOf(cantidad);
+            int cantidadAjustar = Integer.valueOf(cantidad);
             parent.getCaja().getInventario().getCantidades().replace(this.productoBuscado.getId(), cantidadAjustar);
 
         } catch (IllegalArgumentException ex) {

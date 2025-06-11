@@ -370,7 +370,6 @@ public class CreacionProducto extends javax.swing.JFrame {
             int cantidad = Integer.parseInt(Cantidad);
             double precio = Double.parseDouble(Precio);
             double precioMayorista = Double.parseDouble(PrecioMayorista);
-            EnumTipoProd tiposeleccionado = EnumTipoProd.ASEO;
 
             if (this.capturarFechaVencimiento() == null) {
                 txtErrorRegistro.setText("Fecha inválida. Por favor ingrese de nuevo.");
@@ -391,13 +390,12 @@ public class CreacionProducto extends javax.swing.JFrame {
             if (Integer.parseInt(txtYear.getText().trim()) < Year.now().getValue()) {
                 throw new IllegalArgumentException("La fecha de vencimiento es incorrecta.");
             }
-            
-            if(this.parent.getProductoService().añadirProducto(tipoSeleccionado, nombre, Id, precio,
-                    precioMayorista, fechaVencimiento, etiquetas, cantidad) == false){
+
+            if (this.parent.getProductoService().añadirProducto(tipoSeleccionado, nombre, Id, precio,
+                    precioMayorista, fechaVencimiento, etiquetas, cantidad) == false) {
                 throw new Exception("Ya existe un producto registrado con ese nombre o con ese ID");
             }
-            
-            
+
             this.dispose();
             InventarioSistema inventarioSistema = new InventarioSistema(parent);
             inventarioSistema.setVisible(true);

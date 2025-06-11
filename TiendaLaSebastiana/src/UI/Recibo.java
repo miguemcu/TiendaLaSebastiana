@@ -5,11 +5,9 @@
 package UI;
 
 import BusinessLogic.DetalleVenta;
-import BusinessLogic.Producto;
 import BusinessLogic.Venta;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class Recibo extends javax.swing.JFrame {
@@ -32,13 +30,13 @@ public class Recibo extends javax.swing.JFrame {
         txtTotal.setEditable(false);
         
     }
-    public void agregarFilaProducto(String descripcion, double cantidad, double precioUni, double precioTotal){
+    public void agregarFilaProducto(String descripcion, int cantidad, double precioUni, double precioTotal){
         Object[] nuevaFila = {descripcion, cantidad, precioUni, precioTotal};
         modeloTabla.addRow(nuevaFila);
     }
     public void mostrarVentasEnRecibo() {
         String producto = null;
-        double cantidad = 0.0;
+        int cantidad = 0;
         double precioUni = 0.0;
         double precioTotal = 0.0;
         for (DetalleVenta detalle: venta.getDetalles()){

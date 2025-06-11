@@ -435,15 +435,15 @@ public class MenuVenta extends javax.swing.JFrame {
 
             if (busqueda.matches("\\d+")) {
                 
-                if (parent.getCaja().getInventario().buscarProductos("ID", busqueda) != null) {
-                    setearCampos(parent.getCaja().getInventario().buscarProductos("ID", busqueda));
+                if (parent.getProductoService().buscarProducto("ID", busqueda) != null) {
+                    setearCampos(parent.getProductoService().buscarProducto("ID", busqueda));
                 }else{
                     throw new NoSuchElementException("Producto no encontrado.");
                 }
                 
             } else {
-                if (parent.getCaja().getInventario().buscarProductos("nombre", busqueda) != null) {
-                    setearCampos(parent.getCaja().getInventario().buscarProductos("nombre", busqueda));
+                if (parent.getProductoService().buscarProducto("nombre", busqueda) != null) {
+                    setearCampos(parent.getProductoService().buscarProducto("nombre", busqueda));
                 } else{
                     throw new NoSuchElementException("Producto no encontrado.");
                 }
@@ -459,14 +459,14 @@ public class MenuVenta extends javax.swing.JFrame {
         return null;
     }
     
-    public void agregarFilaProducto(Long id,String nombre, double precioUni, double cantidad, double total){
+    public void agregarFilaProducto(Long id,String nombre, double precioUni, int cantidad, double total){
         Object[] nuevaFila = {id, nombre, precioUni, cantidad, total};
         modeloTabla.addRow(nuevaFila);
     }
     
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
-        double cantidadDisponible = Double.parseDouble(txtCantidadDisponible.getText());
-        double cantidadVender = Double.parseDouble(txtCantidadVender.getText());
+        int cantidadDisponible = Integer.parseInt(txtCantidadDisponible.getText());
+        int cantidadVender = Integer.parseInt(txtCantidadVender.getText());
         
         Producto producto = this.buscarAction();   
         double precio = 0;

@@ -31,7 +31,7 @@ public class ReporteStock extends javax.swing.JFrame {
     }
     
    public void mostrarVentasEnTabla() {
-        Map<Long, Double> cantidades = reporte.filtrarStack();
+        Map<Long, Integer> cantidades = reporte.filtrarStack();
         ArrayList<Producto> productos = reporte.filtrarProductos(cantidades);
 
         modeloTabla.setRowCount(0);
@@ -45,7 +45,7 @@ public class ReporteStock extends javax.swing.JFrame {
                 }
             }
 
-            double cantidad = cantidades.get(idProd);
+            int cantidad = cantidades.get(idProd);
             String alerta = "";
             if (cantidad < 5) {
                 alerta = "⚠️ Stock Critico";
@@ -59,7 +59,7 @@ public class ReporteStock extends javax.swing.JFrame {
         }
     }
 
-    public void agregarFilaProducto(String producto, Double cantidad, String alerta) {
+    public void agregarFilaProducto(String producto, int cantidad, String alerta) {
         Object[] nuevaFila = {producto, cantidad, alerta};
         modeloTabla.addRow(nuevaFila);
     } 
