@@ -46,7 +46,7 @@ public class RepoProductos {
         return collection;
     }
 
-    public Map getProductos() throws Exception {
+    public Map<Producto, Integer> getProductos() throws Exception {
         var productosEncontrados = collection.find();
         Map<Producto, Integer> productos = new HashMap<>();
 
@@ -98,12 +98,12 @@ public class RepoProductos {
             ArrayList<String> etiquetas, int cantidad) throws Exception {
         try{
             Bson filtro = Filters.or(
-                    Filters.eq("nombre", nombre),
-                    Filters.eq("id", id));
+                    Filters.eq("producto.nombre", nombre),
+                    Filters.eq("producto.id", id));
 
-            Document productoExiste = collection.find(filtro).first();
+            Document producto = collection.find(filtro).first();
 
-            if (productoExiste != null) { // Si ya existe un producto con esos datos, no lo deja
+            if (producto != null) { // Si ya existe un producto con esos datos, no lo deja
                 return false;
             }
 
