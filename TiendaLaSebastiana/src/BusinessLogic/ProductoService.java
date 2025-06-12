@@ -35,10 +35,14 @@ public class ProductoService {
 
         return repositorio.añadirProducto(tipoProducto, nombre, id, precioMayorista, precio, fechaDeVencimiento, etiquetas, cantidad);
     }
+    
+    public Map<Producto, Integer> getProductos() throws Exception{
+        return repositorio.getProductos();
+    }
 
     public Producto buscarProducto(String idONombre, String busqueda) throws Exception {
         switch (idONombre) {
-            case ("ID") -> {
+            case ("id") -> {
                 long id = Long.parseLong(busqueda);
                 for (Map.Entry<Producto, Integer> accesoProducto : repositorio.getProductos().entrySet()) {
                     Producto producto = accesoProducto.getKey();
@@ -60,6 +64,23 @@ public class ProductoService {
             }
         }
         return null;
+    }
+
+    public int getCantidadProducto(Long idProd) throws Exception {
+        Map<Producto, Integer> productos = repositorio.getProductos();
+        for (Map.Entry<Producto, Integer> productosAccedidos : productos.entrySet()) {
+            var producto = productosAccedidos.getKey();
+            var cantidad = productosAccedidos.getValue();
+            if (producto.getId() == idProd) {
+                return cantidad;
+            }
+        }
+        return 0;
+    }
+    
+    public boolean editarCantidadProducto(Producto producto, int nuevaCantidad) throws Exception {
+        repositorio.editarCantidadProducto(producto, nuevaCantidad);
+        return true;
     }
 
 }
