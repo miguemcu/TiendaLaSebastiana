@@ -99,8 +99,7 @@ public class Venta {
         Producto producto = null;
         for (DetalleVenta detalle: this.detalles){
             producto = detalle.getProducto();
-            cantidad = (detalle.getCantidad()*(-1));
-            inventario.ajustarCantidadProducto(producto.getId(), cantidad);   
+            cantidad = (detalle.getCantidad()*(-1));   
         }
         return inventario;
     }

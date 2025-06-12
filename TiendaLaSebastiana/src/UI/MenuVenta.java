@@ -2,14 +2,11 @@ package UI;
 
 import BusinessLogic.DetalleVenta;
 import BusinessLogic.Producto;
-import BusinessLogic.Caja;
 import BusinessLogic.Utils;
 import BusinessLogic.Venta;
-import java.util.Random;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -30,13 +27,13 @@ public class MenuVenta extends javax.swing.JFrame {
     
     
     
-    private void setearCampos(Producto producto) {
+    private void setearCampos(Producto producto) throws Exception {
         txtNombreProducto.setEditable(false);
         txtCantidadDisponible.setEditable(false);
         txtPrecioUnitario.setEditable(false);
         txtCantidadVender.setEditable(true);
         txtNombreProducto.setText(producto.getNombre());
-        txtCantidadDisponible.setText(String.valueOf(parent.getCaja().getInventario().getCantidadProducto(producto.getId())));
+        txtCantidadDisponible.setText(String.valueOf(parent.getProductoService().getCantidadProducto(producto.getId())));
         txtPrecioUnitario.setText(String.valueOf(producto.getPrecio()));
         txtTotalVenta.setEditable(false);
         }

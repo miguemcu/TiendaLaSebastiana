@@ -34,19 +34,4 @@ public class Inventario {
     public void setCantidades(Map<Long, Integer> cantidades) {
         this.cantidades = cantidades;
     }
-
-    public double getCantidadProducto(Long idProd) {
-        if (this.cantidades.containsKey(idProd)) {
-            return this.cantidades.get(idProd);
-        } else {
-            return 4;
-        }
-    }
-
-    public double ajustarCantidadProducto(Long idProd, int ajuste) {
-        int cantidadActual = cantidades.get(idProd);
-        int nuevaCantidad = cantidadActual + ajuste;
-        cantidades.put(idProd, nuevaCantidad);
-        return nuevaCantidad;
-    }
 }

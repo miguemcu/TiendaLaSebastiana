@@ -10,7 +10,7 @@ import java.time.LocalDate;
     
     public Bebida(String nombre, long id,double precio, double precioMayorista,
                   LocalDate fechaDeVencimiento, ArrayList<String> etiquetas) {
-        super(nombre,id,precio, precioMayorista, EnumTipoProd.GRANOS, fechaDeVencimiento, etiquetas);
+        super(nombre,id,precio, precioMayorista, EnumTipoProd.BEBIDA, fechaDeVencimiento, etiquetas);
     }
 
     @Override

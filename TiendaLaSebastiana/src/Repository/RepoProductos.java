@@ -15,6 +15,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -64,27 +65,32 @@ public class RepoProductos {
 
                 LocalDate fechaDeVencimiento = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
 
-                switch (tipoProducto) {
-                    case "Aseo":
+                switch (tipoProducto.toUpperCase()) {
+                    case ("ASEO"):
                         Producto aseo = new Aseo(nombre, id, precioMayorista, precio,
                                 fechaDeVencimiento, etiquetas);
                         productos.put(aseo, cantidad);
-                    case "Bebida":
+                        break;
+                    case ("BEBIDA"):
                         Producto bebida = new Bebida(nombre, id, precioMayorista, precio,
                                 fechaDeVencimiento, etiquetas);
                         productos.put(bebida, cantidad);
-                    case "Mecato":
+                        break;
+                    case ("MECATO"):
                         Producto mecato = new Mecato(nombre, id, precioMayorista, precio,
                                 fechaDeVencimiento, etiquetas);
                         productos.put(mecato, cantidad);
-                    case "Enlatado":
+                        break;
+                    case ("ENLATADO"):
                         Producto enlatado = new Enlatado(nombre, id, precioMayorista, precio,
                                 fechaDeVencimiento, etiquetas);
                         productos.put(enlatado, cantidad);
-                    case "Grano":
+                        break;
+                    case ("GRANOS"):
                         Producto grano = new Granos(nombre, id, precioMayorista, precio,
                                 fechaDeVencimiento, etiquetas);
                         productos.put(grano, cantidad);
+                        break;
                 }
             }
             return productos;
@@ -96,7 +102,7 @@ public class RepoProductos {
     public boolean añadirProducto(String tipoProducto, String nombre, long id,
             double precioMayorista, double precio, LocalDate fechaDeVencimiento,
             ArrayList<String> etiquetas, int cantidad) throws Exception {
-        try{
+        try {
             Bson filtro = Filters.or(
                     Filters.eq("producto.nombre", nombre),
                     Filters.eq("producto.id", id));
@@ -107,20 +113,20 @@ public class RepoProductos {
                 return false;
             }
 
-            switch (tipoProducto) {
-                case "Aseo":
+            switch (tipoProducto.toUpperCase()) {
+                case "ASEO":
                     Producto aseo = new Aseo(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
-                case "Bebida":
+                case "BEBIDA":
                     Producto bebida = new Bebida(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
-                case "Mecato":
+                case "MECATO":
                     Producto mecato = new Mecato(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
-                case "Enlatado":
+                case "ENLATADOS":
                     Producto enlatado = new Enlatado(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
-                case "Grano":
+                case "GRANOS":
                     Producto grano = new Granos(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
             }
@@ -130,7 +136,17 @@ public class RepoProductos {
             collection.insertOne(doc);
 
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
+            throw new Exception("Ha ocurrido un error, por favor contacte al administrador");
+        }
+    }
+
+    public void editarCantidadProducto(Producto producto, int cantidad) throws Exception {
+        try {
+            Bson filtro = Filters.eq("producto.nombre", producto.getNombre());
+            Bson cantidadNueva = Updates.set("cantidad", cantidad);
+            collection.updateOne(filtro, cantidadNueva);
+        } catch (Exception e) {
             throw new Exception("Ha ocurrido un error, por favor contacte al administrador");
         }
     }

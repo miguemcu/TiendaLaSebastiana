@@ -10,7 +10,7 @@ import javax.swing.JToggleButton;
 
 public class InventarioSistema extends javax.swing.JFrame {
 
-    private void setearCampos(Producto producto) {
+    private void setearCampos(Producto producto) throws Exception {
         txtNombre.setEditable(false);
         txtTipo.setEditable(false);
         txtID.setEditable(false);
@@ -20,8 +20,8 @@ public class InventarioSistema extends javax.swing.JFrame {
         txtNombre.setText(producto.getNombre());
         txtTipo.setText(String.valueOf(producto.getTipoProducto()));
         txtID.setText(String.valueOf(producto.getId()));
-        int cantidad = parent.getCaja().getInventario().getCantidades().get(producto.getId());
-        txtCantidad.setText(Double.toString(cantidad));
+        int cantidad = parent.getProductoService().getCantidadProducto(producto.getId());
+        txtCantidad.setText(Integer.toString(cantidad));
         txtPrecio.setText(String.valueOf(producto.getPrecio()));
         txtPrecioMayorista.setText(String.valueOf(producto.getPrecioMayorista()));
         txtFichaProducto.setText(producto.imprimirFicha());
@@ -80,6 +80,7 @@ public class InventarioSistema extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtFichaProducto = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        lblInfoAjuste = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,6 +158,8 @@ public class InventarioSistema extends javax.swing.JFrame {
 
         jLabel1.setText("Ficha");
 
+        lblInfoAjuste.setText("Ingrese aquí la nueva cantidad del producto:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,14 +169,17 @@ public class InventarioSistema extends javax.swing.JFrame {
                 .addComponent(lblNombre)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(btnBuscar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAjustarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantidadAjustar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(127, 127, 127))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnRegresar)
@@ -205,17 +211,9 @@ public class InventarioSistema extends javax.swing.JFrame {
                                 .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(173, 173, 173)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnAjustarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCantidadAjustar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnCrearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(129, 129, 129)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(92, 92, 92))))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblInfoAjuste))
+                        .addGap(75, 75, 75))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,21 +223,23 @@ public class InventarioSistema extends javax.swing.JFrame {
                         .addGap(16, 16, 16)
                         .addComponent(btnRegresar)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(67, 67, 67)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar)
-                            .addComponent(btnCrearProducto))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCrearProducto)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnAjustarCantidad)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtCantidadAjustar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblInfoAjuste)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBuscar))
                                 .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblNombre)
@@ -297,33 +297,37 @@ public class InventarioSistema extends javax.swing.JFrame {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
             boolean encontrado = false;
-
+            Producto producto;
             if (busqueda.matches("\\d+")) {
-                
-                if (parent.getProductoService().buscarProducto("ID", busqueda) != null) {
-                    setearCampos(parent.getProductoService().buscarProducto("ID", busqueda));
+                producto = parent.getProductoService().buscarProducto("id", busqueda);
+                if (producto != null) {
+                    setearCampos(producto);
                     encontrado = true;
-                }else{
+                    this.productoBuscado = producto;
+                } else {
                     encontrado = false;
                 }
+
             } else {
-                if (parent.getProductoService().buscarProducto("nombre", busqueda) != null) {
-                    setearCampos(parent.getProductoService().buscarProducto("nombre", busqueda));
+                producto = parent.getProductoService().buscarProducto("nombre", busqueda);
+                if (producto != null) {
+                    setearCampos(producto);
                     encontrado = true;
-                }else{
+                    this.productoBuscado = producto;
+                } else {
                     encontrado = false;
                 }
             }
-            
 
             if (!encontrado) {
                 throw new NoSuchElementException("Producto no encontrado.");
             }
+            txtError.setText("");
 
-        }catch (IllegalArgumentException ex) {
-            txtError.setText(ex.getMessage());
-        } catch (Exception ex) {
-            txtError.setText("Error inesperado: " + ex.getMessage());
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            txtError.setText(e.getMessage());
+        } catch (Exception e) {
+            txtError.setText("Error inesperado: " + e.getMessage());
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -350,16 +354,17 @@ public class InventarioSistema extends javax.swing.JFrame {
                     throw new IllegalArgumentException("La cantidad solo debe contener números.");
                 }
                 if (this.productoBuscado == null) {
-                    throw new IllegalArgumentException("Producto no encontrado.");
+                    throw new NoSuchElementException("Producto no encontrado.");
                 }
             }
-            int cantidadAjustar = Integer.valueOf(cantidad);
-            parent.getCaja().getInventario().getCantidades().replace(this.productoBuscado.getId(), cantidadAjustar);
+            int cantidadNueva = Integer.valueOf(cantidad);
+            parent.getProductoService().editarCantidadProducto(productoBuscado, cantidadNueva);
+            txtError.setText("Cantidad ajustada correctamente a " + cantidadNueva);
 
-        } catch (IllegalArgumentException ex) {
-            txtError.setText(ex.getMessage());
-        } catch (Exception ex) {
-            txtError.setText("Error inesperado: " + ex.getMessage());
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            txtError.setText(e.getMessage());
+        } catch (Exception e) {
+            txtError.setText("Error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_btnAjustarCantidadActionPerformed
 
@@ -377,6 +382,7 @@ public class InventarioSistema extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblInfoAjuste;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPrecioMayorista;
     private javax.swing.JLabel lblPrecioMenor;
