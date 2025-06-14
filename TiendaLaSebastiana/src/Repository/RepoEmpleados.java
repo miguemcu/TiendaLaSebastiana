@@ -13,13 +13,12 @@ import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-
-
 /**
  *
  * @author migue
  */
-public class RepoEmpleados{ 
+public class RepoEmpleados {
+
     private final MongoDatabase database;
     private final MongoCollection<Document> collection;
 
@@ -36,15 +35,14 @@ public class RepoEmpleados{
     public MongoCollection<Document> getCollection() {
         return collection;
     }
-    
-    
-    public ArrayList<Empleado> getEmpleados() throws Exception{
-        
+
+    public ArrayList<Empleado> getEmpleados() throws Exception {
+
         var empleados = collection.find();
         ArrayList<Empleado> empleadosEncontrados = new ArrayList<>();
-        
-        try{
-            for (Document doc: empleados){
+
+        try {
+            for (Document doc : empleados) {
                 var nombre = doc.getString("nombre");
                 var documento = doc.getString("documento");
 
@@ -53,62 +51,60 @@ public class RepoEmpleados{
             }
 
             return empleadosEncontrados;
-            
-        }catch(Exception e){
-            throw new Exception("Ha ocurrido un error, contacte al administrador: "+e.getMessage());
+
+        } catch (Exception e) {
+            throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
         }
     }
-    
-    public Empleado getEmpleado(String nombre) throws Exception {         
-        try{
+
+    public Empleado getEmpleado(String nombre) throws Exception {
+        try {
             Document empleado = collection.find(Filters.eq("nombre", nombre)).first();
 
-            if (empleado != null){
+            if (empleado != null) {
                 return Empleado.fromDocument(empleado);
             }
             return null;
-        }catch(Exception e){
-            throw new Exception("Ha ocurrido un error, contacte al administrador: " +e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
         }
     }
-    
-    public boolean agregarEmpleado(String nombre, String documento) throws Exception{
-        try{
+
+    public boolean agregarEmpleado(String nombre, String documento) throws Exception {
+        try {
             Bson filtro = Filters.or(
                     Filters.eq("nombre", nombre),
                     Filters.eq("documento", documento));
 
             Document empleadoExiste = collection.find(filtro).first();
 
-            if(empleadoExiste != null){ // Si ya existe alguien con esos datos, no lo deja
+            if (empleadoExiste != null) { // Si ya existe alguien con esos datos, no lo deja
                 return false;
             }
 
-            Document newEmpleado = new Document("nombre", nombre)
-                    .append("documento",documento);
-
-            collection.insertOne(newEmpleado);
+            Empleado empleado = new Empleado(nombre, documento);
+            collection.insertOne(empleado.toDocument());
             return true;
-        }catch(Exception e){
-            throw new Exception("Ha ocurrido un error, contacte al administrador: " +e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
         }
     }
-    
-    public boolean eliminarEmpleado(String nombre, String documento) throws Exception{
-        try{
+
+    public boolean eliminarEmpleado(String nombre, String documento) throws Exception {
+        try {
             Bson filtro = Filters.and(
                     Filters.eq("nombre", nombre),
                     Filters.eq("documento", documento));
 
-            if (collection.find(filtro).first() == null){
+            if (collection.find(filtro).first() == null) {
                 return false; // No existe ese empleado
             }
 
             collection.deleteOne(filtro);
             return true;
-        }catch(Exception e){
-            throw new Exception("Ha ocurrido un error, contacte al administrador: " +e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
         }
     }
-    
+
 }

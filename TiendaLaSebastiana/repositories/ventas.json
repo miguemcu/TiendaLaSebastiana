@@ -1,0 +1,55 @@
+[
+  {
+    "id": {
+      "$numberLong": "1"
+    },
+    "fecha": "2024-12-24T00:00:00Z",
+    "detalles": [
+      {
+        "producto": {
+          "nombre": "Mr. Músculo",
+          "id": {
+            "$numberLong": "1002"
+          },
+          "precioMayorista": 20.0,
+          "precio": 30.0,
+          "tipoProducto": "ASEO",
+          "fechaDeVencimiento": "2027-06-15T00:00:00Z",
+          "etiquetas": [
+            "Mantener alejado de los niños",
+            "En caso de reacciones adversas, consulte a un médico"
+          ]
+        },
+        "cantidad": 2,
+        "precioUnitario": 25.0,
+        "subtotalBruto": 50.0,
+        "iva": 9.5,
+        "descuento": 5.0,
+        "subtotalNeto": 54.5
+      },
+      {
+        "producto": {
+          "nombre": "Café Premium",
+          "id": {
+            "$numberLong": "1003"
+          },
+          "precioMayorista": 8000.0,
+          "precio": 9500.0,
+          "tipoProducto": "GRANOS",
+          "fechaDeVencimiento": "2025-10-10T00:00:00Z",
+          "etiquetas": ["orgánico", "colombiano", "molido"]
+        },
+        "cantidad": 3,
+        "precioUnitario": 12.0,
+        "subtotalBruto": 36.0,
+        "iva": 6.84,
+        "descuento": 0.0,
+        "subtotalNeto": 42.84
+      }
+    ],
+    "totalVenta": 97.34,
+    "totalBruto": 86.0,
+    "totalDescuento": 5.0,
+    "totalIVA": 16.34
+  }
+]

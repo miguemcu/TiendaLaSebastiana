@@ -41,8 +41,8 @@ public class ProductoService {
     }
 
     public Producto buscarProducto(String idONombre, String busqueda) throws Exception {
-        switch (idONombre) {
-            case ("id") -> {
+        switch (idONombre.toUpperCase()) {
+            case ("ID"):
                 long id = Long.parseLong(busqueda);
                 for (Map.Entry<Producto, Integer> accesoProducto : repositorio.getProductos().entrySet()) {
                     Producto producto = accesoProducto.getKey();
@@ -50,9 +50,8 @@ public class ProductoService {
                         return producto;
                     }
                 }
-                return null;
-            }
-            case ("nombre") -> {
+                break;
+            case ("NOMBRE"):
 
                 for (Map.Entry<Producto, Integer> accesoProducto : repositorio.getProductos().entrySet()) {
                     Producto producto = accesoProducto.getKey();
@@ -60,8 +59,8 @@ public class ProductoService {
                         return producto;
                     }
                 }
-                return null;
-            }
+                break;
+
         }
         return null;
     }
@@ -81,6 +80,19 @@ public class ProductoService {
     public boolean editarCantidadProducto(Producto producto, int nuevaCantidad) throws Exception {
         repositorio.editarCantidadProducto(producto, nuevaCantidad);
         return true;
+    }
+    
+    public void ajustarCantidades(Venta venta) throws Exception {
+        var productos = this.getProductos();
+        for (DetalleVenta detalleVenta : venta.getDetalles()) {
+            for (Map.Entry<Producto, Integer> entrada : productos.entrySet()) {
+                if (entrada.getKey().getId() == detalleVenta.getProducto().getId()) {
+                    int nuevaCantidad = entrada.getValue() - detalleVenta.getCantidad();
+                    this.editarCantidadProducto(detalleVenta.getProducto(), nuevaCantidad);
+                    
+                }
+            }
+        }
     }
 
 }

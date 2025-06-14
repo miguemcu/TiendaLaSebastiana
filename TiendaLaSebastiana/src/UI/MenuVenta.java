@@ -8,6 +8,8 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,18 +17,16 @@ import javax.swing.table.DefaultTableModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author DELL
  */
 public class MenuVenta extends javax.swing.JFrame {
+
     private Main parent;
     private DefaultTableModel modeloTabla;
     private Venta venta;
-    
-    
-    
+
     private void setearCampos(Producto producto) throws Exception {
         txtNombreProducto.setEditable(false);
         txtCantidadDisponible.setEditable(false);
@@ -36,43 +36,40 @@ public class MenuVenta extends javax.swing.JFrame {
         txtCantidadDisponible.setText(String.valueOf(parent.getProductoService().getCantidadProducto(producto.getId())));
         txtPrecioUnitario.setText(String.valueOf(producto.getPrecio()));
         txtTotalVenta.setEditable(false);
-        }
-        public MenuVenta(Main parent) {
-            initComponents();
-            this.parent = parent;     
-            modeloTabla = (DefaultTableModel)tblProductosAgregados.getModel();
-            this.venta = new Venta();
-        }
-
-        public Main getParent() {
-            return parent;
-        }
-
-        public void setParent(Main parent) {
-            this.parent = parent;
-        }
-
-        public JTable getTblProductosAgregados() {
-            return tblProductosAgregados;
-        }
-
-        public void setTblProductosAgregados(JTable tblProductosAgregados) {
-            this.tblProductosAgregados = tblProductosAgregados;
-        }
-        
-        
-
-    public ArrayList<DetalleVenta> getDetalles() {
-        return venta.getDetalles();
     }
 
-    public void setDetalles(ArrayList<DetalleVenta> detalles) {
-        this.venta.setDetalles(detalles);
-        ;
+    public MenuVenta(Main parent) {
+        initComponents();
+        this.parent = parent;
+        modeloTabla = (DefaultTableModel) tblProductosAgregados.getModel();
+        this.venta = new Venta();
+        ArrayList<DetalleVenta> detalles = new ArrayList<>();
+        venta.setDetalles(detalles);
     }
-        
-        
-    
+
+    public Main getParent() {
+        return parent;
+    }
+
+    public void setParent(Main parent) {
+        this.parent = parent;
+    }
+
+    public JTable getTblProductosAgregados() {
+        return tblProductosAgregados;
+    }
+
+    public void setTblProductosAgregados(JTable tblProductosAgregados) {
+        this.tblProductosAgregados = tblProductosAgregados;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -422,8 +419,8 @@ public class MenuVenta extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.buscarAction();
     }//GEN-LAST:event_btnBuscarActionPerformed
-    
-    private Producto buscarAction(){
+
+    private Producto buscarAction() {
         String busqueda = txtBuscar.getText();
         try {
             if (busqueda.isEmpty() || busqueda.isBlank()) {
@@ -431,62 +428,68 @@ public class MenuVenta extends javax.swing.JFrame {
             }
 
             if (busqueda.matches("\\d+")) {
-                
+
                 if (parent.getProductoService().buscarProducto("ID", busqueda) != null) {
-                    setearCampos(parent.getProductoService().buscarProducto("ID", busqueda));
-                }else{
+                    var producto = parent.getProductoService().buscarProducto("ID", busqueda);
+                    setearCampos(producto);
+                    return producto;
+                } else {
                     throw new NoSuchElementException("Producto no encontrado.");
                 }
-                
+
             } else {
                 if (parent.getProductoService().buscarProducto("nombre", busqueda) != null) {
-                    setearCampos(parent.getProductoService().buscarProducto("nombre", busqueda));
-                } else{
+                    var producto = parent.getProductoService().buscarProducto("ID", busqueda);
+                    setearCampos(producto);
+                    return producto;
+                } else {
                     throw new NoSuchElementException("Producto no encontrado.");
                 }
-                }
-            
+            }
 
-
-        }catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             txtError.setText(ex.getMessage());
         } catch (Exception ex) {
             txtError.setText("Error inesperado: " + ex.getMessage());
         }
         return null;
     }
-    
-    public void agregarFilaProducto(Long id,String nombre, double precioUni, int cantidad, double total){
+
+    public void agregarFilaProducto(Long id, String nombre, double precioUni, int cantidad, double total) {
         Object[] nuevaFila = {id, nombre, precioUni, cantidad, total};
         modeloTabla.addRow(nuevaFila);
     }
-    
+
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
+        if (txtCantidadVender.getText().isBlank()){
+            txtError.setText("Ingrese la cantidad a vender.");
+            return;
+        }
         int cantidadDisponible = Integer.parseInt(txtCantidadDisponible.getText());
         int cantidadVender = Integer.parseInt(txtCantidadVender.getText());
-        
-        Producto producto = this.buscarAction();   
+
+        Producto producto = this.buscarAction();
         double precio = 0;
         double total = 0;
         
-        if(cantidadDisponible<cantidadVender){
+        if (cantidadDisponible < cantidadVender) {
             this.lblInsucienteStock.setVisible(true);
-        }
-        else {
-            
-            if (cantidadVender >=20){
+        } else {
+
+            if (cantidadVender >= 20) {
                 precio = producto.getPrecioMayorista();
             } else {
                 precio = producto.getPrecio();
             }
-            
-            total = (precio*cantidadVender);
-            
+
+            total = (precio * cantidadVender);
+
             this.agregarFilaProducto(producto.getId(), producto.getNombre(),
                     precio, cantidadVender, total);
         }
-        
-        var detalleVenta = new DetalleVenta(producto, cantidadVender, precio, total, 0, 0);
+
+        var detalleVenta = new DetalleVenta(producto, cantidadVender, precio, total, 0, 0, total);
+        ArrayList<DetalleVenta> detalles = new ArrayList<>();
         venta.getDetalles().add(detalleVenta);
     }//GEN-LAST:event_btnAgregarVentaActionPerformed
 
@@ -498,23 +501,30 @@ public class MenuVenta extends javax.swing.JFrame {
             Object value = modeloTabla.getValueAt(i, columnIndex);
             if (value instanceof Double) {
                 suma += (Double) value;
-            } 
+            }
         }
         return suma;
     }
-    
-    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
 
+    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+        try {
+            this.venderAction();
+        } catch (Exception ex) {
+            Logger.getLogger(MenuVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnVenderActionPerformed
+    
+    public boolean venderAction() throws Exception{
         double totalVenta = sumarColumnaDouble(tblProductosAgregados, 4);
         txtTotalVenta.setText(String.valueOf(totalVenta));
         Long id = Utils.generarIdUnico(parent.getCaja().getVentas());
         LocalDateTime fecha = capturarFecha();
-        
+
         if (fecha == null) {
             lblErrorFecha.setText("Fecha inválida, ingrese de nuevo.");
-            return;
+            return false;
         }
-        
+
         venta.setTotalVenta(totalVenta);
         venta.setTotalBruto(totalVenta);
         venta.setTotalDescuento(0);
@@ -523,16 +533,21 @@ public class MenuVenta extends javax.swing.JFrame {
         venta.setID(id);
         this.dispose();
         
-        parent.getCaja().setInventario(venta.detallarCantidades(parent.getCaja().getInventario()));
-        parent.getCaja().agregarVenta(venta);
+        try {
+            parent.getVentaService().añadirVenta(venta);
+        } catch (Exception ex) {
+            txtError.setText("Error inesperado: No se pudo registrar la venta");
+            return false;
+        }
         
+        parent.getProductoService().ajustarCantidades(venta);
         var recibo = new Recibo(this, venta);
         recibo.mostrarVentasEnRecibo();
         recibo.setVisible(true);
-    }//GEN-LAST:event_btnVenderActionPerformed
-
+        return true;
+    }
     
-   public LocalDateTime capturarFecha() {
+    public LocalDateTime capturarFecha() {
         String diaStr = txtDia.getText().trim();
         String mesStr = txtMes.getText().trim();
         String anioStr = txtAnio.getText().trim();
@@ -542,37 +557,37 @@ public class MenuVenta extends javax.swing.JFrame {
         LocalDateTime fecha = null;
 
         try {
-             if (diaStr.isBlank() || mesStr.isBlank() || anioStr.isBlank()
-                     || horaStr.isBlank() || minutosStr.isBlank()) {
-                 throw new IllegalArgumentException("Todos los campos de fecha y hora son obligatorios.");
-             }
+            if (diaStr.isBlank() || mesStr.isBlank() || anioStr.isBlank()
+                    || horaStr.isBlank() || minutosStr.isBlank()) {
+                this.lblErrorFecha.setText("Ingrese la fecha.");
+            }
 
-             int dia = Integer.parseInt(diaStr);
-             int mes = Integer.parseInt(mesStr);
-             int anio = Integer.parseInt(anioStr);
-             int hora = Integer.parseInt(horaStr);
-             int minutos = Integer.parseInt(minutosStr);
+            int dia = Integer.parseInt(diaStr);
+            int mes = Integer.parseInt(mesStr);
+            int anio = Integer.parseInt(anioStr);
+            int hora = Integer.parseInt(horaStr);
+            int minutos = Integer.parseInt(minutosStr);
 
-             fecha = LocalDateTime.of(anio, mes, dia, hora, minutos);
-             lblErrorFecha.setText("");
+            fecha = LocalDateTime.of(anio, mes, dia, hora, minutos);
+            lblErrorFecha.setText("");
 
-            } catch (NumberFormatException e) {
-                System.err.println("Error: Debe ingresar valores numéricos válidos para la fecha y hora.");
-                fecha = null;
-            } catch (DateTimeException e) {
-                System.err.println("Fecha y hora inválida: " + e.getMessage());
-                fecha = null;
-         } catch (IllegalArgumentException e) {
-                System.err.println(e.getMessage());
-                fecha = null;
-         } catch (Exception ex) {
-                System.err.println("Error inesperado: " + ex.getMessage());
-                fecha = null;
-         }
-
-            return fecha;
+        } catch (NumberFormatException e) {
+            System.err.println("Error: Debe ingresar valores numéricos válidos para la fecha y hora.");
+            fecha = null;
+        } catch (DateTimeException e) {
+            System.err.println("Fecha y hora inválida: " + e.getMessage());
+            fecha = null;
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            fecha = null;
+        } catch (Exception ex) {
+            System.err.println("Error inesperado: " + ex.getMessage());
+            fecha = null;
         }
-    
+
+        return fecha;
+    }
+
     private void txtCantidadDisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadDisponibleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadDisponibleActionPerformed

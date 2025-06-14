@@ -9,6 +9,7 @@ package BusinessLogic;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
+import org.bson.Document;
 
 /**
  *
@@ -27,6 +28,11 @@ public class Mecato extends Producto {
     @Override
     public String imprimirFicha() {
         return Utils.mostrarMenu(this);
+    }
+
+    @Override
+    public Document toDocument() {
+        return Utils.productoToDocument(this);
     }
 }
 
