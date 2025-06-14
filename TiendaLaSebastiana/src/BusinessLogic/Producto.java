@@ -2,6 +2,7 @@ package BusinessLogic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import org.bson.Document;
 
 public abstract class Producto {
 
@@ -84,4 +85,7 @@ public abstract class Producto {
     }
 
     public abstract String imprimirFicha();
+
+    public abstract Document toDocument();
+
 }

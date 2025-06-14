@@ -18,21 +18,31 @@ public class DetalleVenta {
     private double subtotalBruto;
     private double iva;
     private double descuento;
+    private double subtotalNeto;
 
     public DetalleVenta() {
     }
 
     public DetalleVenta(Producto producto, int cantidad, double precioUnitario,
-                        double subtotalBruto, double iva, double descuento) {
+                        double subtotalBruto, double iva, double descuento, double subtotalNeto) {
         this.producto = producto;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.subtotalBruto = subtotalBruto;
         this.iva = iva;
         this.descuento = descuento;
+        this.subtotalNeto = subtotalNeto;
     }
 
     // Getters y Setters
+
+    public double getSubtotalNeto() {
+        return subtotalNeto;
+    }
+
+    public void setSubtotalNeto(double subtotalNeto) {
+        this.subtotalNeto = subtotalNeto;
+    }
 
     public Producto getProducto() {
         return producto;

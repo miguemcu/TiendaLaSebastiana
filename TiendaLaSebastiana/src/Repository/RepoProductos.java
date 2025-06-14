@@ -17,7 +17,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,50 +47,13 @@ public class RepoProductos {
     }
 
     public Map<Producto, Integer> getProductos() throws Exception {
-        var productosEncontrados = collection.find();
-        Map<Producto, Integer> productos = new HashMap<>();
-
         try {
+            var productosEncontrados = collection.find();
+            Map<Producto, Integer> productos = new HashMap<>();
             for (Document doc : productosEncontrados) {
-                Document producto = (Document) doc.get("producto");
-                String nombre = producto.getString("nombre");
-                Long id = producto.getLong("id");
-                Double precio = producto.getDouble("precio");
-                Double precioMayorista = producto.getDouble("precioMayorista");
-                String tipoProducto = producto.getString("tipoProducto");
-                String fechaStr = producto.getString("fechaDeVencimiento");
-                ArrayList<String> etiquetas = (ArrayList<String>) producto.get("etiquetas");
+                var producto = Utils.getProductoMongo(doc);
                 int cantidad = doc.getInteger("cantidad");
-
-                LocalDate fechaDeVencimiento = LocalDate.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
-
-                switch (tipoProducto.toUpperCase()) {
-                    case ("ASEO"):
-                        Producto aseo = new Aseo(nombre, id, precioMayorista, precio,
-                                fechaDeVencimiento, etiquetas);
-                        productos.put(aseo, cantidad);
-                        break;
-                    case ("BEBIDA"):
-                        Producto bebida = new Bebida(nombre, id, precioMayorista, precio,
-                                fechaDeVencimiento, etiquetas);
-                        productos.put(bebida, cantidad);
-                        break;
-                    case ("MECATO"):
-                        Producto mecato = new Mecato(nombre, id, precioMayorista, precio,
-                                fechaDeVencimiento, etiquetas);
-                        productos.put(mecato, cantidad);
-                        break;
-                    case ("ENLATADO"):
-                        Producto enlatado = new Enlatado(nombre, id, precioMayorista, precio,
-                                fechaDeVencimiento, etiquetas);
-                        productos.put(enlatado, cantidad);
-                        break;
-                    case ("GRANOS"):
-                        Producto grano = new Granos(nombre, id, precioMayorista, precio,
-                                fechaDeVencimiento, etiquetas);
-                        productos.put(grano, cantidad);
-                        break;
-                }
+                productos.put(producto, cantidad);
             }
             return productos;
         } catch (Exception e) {
@@ -107,32 +69,37 @@ public class RepoProductos {
                     Filters.eq("producto.nombre", nombre),
                     Filters.eq("producto.id", id));
 
-            Document producto = collection.find(filtro).first();
+            Document productoExistente = collection.find(filtro).first();
 
-            if (producto != null) { // Si ya existe un producto con esos datos, no lo deja
+            if (productoExistente != null) { // Si ya existe un producto con esos datos, no lo deja
                 return false;
             }
 
+            Producto producto = null;
+
             switch (tipoProducto.toUpperCase()) {
                 case "ASEO":
-                    Producto aseo = new Aseo(nombre, id, precioMayorista, precio,
+                    producto = new Aseo(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
+                    break;
                 case "BEBIDA":
-                    Producto bebida = new Bebida(nombre, id, precioMayorista, precio,
+                    producto = new Bebida(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
+                    break;
                 case "MECATO":
-                    Producto mecato = new Mecato(nombre, id, precioMayorista, precio,
+                    producto = new Mecato(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
+                    break;
                 case "ENLATADOS":
-                    Producto enlatado = new Enlatado(nombre, id, precioMayorista, precio,
+                    producto = new Enlatado(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
+                    break;
                 case "GRANOS":
-                    Producto grano = new Granos(nombre, id, precioMayorista, precio,
+                    producto = new Granos(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
             }
-
-            Document doc = Utils.crearDocParaProducto(tipoProducto, nombre, id,
-                    precioMayorista, precio, fechaDeVencimiento, etiquetas, cantidad);
+            Document doc = new Document("producto", producto.toDocument()).
+                    append("cantidad", cantidad);
             collection.insertOne(doc);
 
             return true;

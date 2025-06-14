@@ -60,8 +60,4 @@ public class Caja {
 
         return ventasFiltradas;
     }
-  
-    public void agregarVenta(Venta venta) {
-        this.ventas.add(venta);
-    }
 }
