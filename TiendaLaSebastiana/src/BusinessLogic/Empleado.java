@@ -1,22 +1,21 @@
 package BusinessLogic;
 
-import org.bson.Document;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-public class Empleado {
 
+
+public class Empleado {
     private String nombre;
-    private String documento;
+    private String cedula;
 
     public Empleado() {
     }
 
-    public Empleado(String nombre, String documento) {
+    public Empleado(String nombre, String cedula) {
         this.nombre = nombre;
-        this.documento = documento;
+        this.cedula = cedula;
     }
 
     public String getNombre() {
@@ -27,21 +26,19 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public String getDocumento() {
-        return documento;
+    public String getCedula() {
+        return cedula;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
-    public static Empleado fromDocument(Document doc) {
-        return new Empleado(doc.getString("nombre"), doc.getString("documento"));
-    }
-
-    public Document toDocument() {
-        Document nuevoEmpleado = new Document("nombre", nombre)
-                .append("documento", documento);
-        return nuevoEmpleado;
+    
+    public void imprimirFichaEmpleado() {
+        System.out.println("=== Empleado ===");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Cédula: " + cedula);
     }
 }
+

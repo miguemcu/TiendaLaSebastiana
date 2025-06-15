@@ -1,36 +1,39 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package UI;
+package UI2;
+
+import BusinessLogic.Caja;
+import BusinessLogic.Empleado;
+import BusinessLogic.helperUI;
+import java.util.ArrayList;
+
 
 /**
  *
- * @author migue
+ * @author Sebastian
  */
-import BusinessLogic.utilJtextField;
-import javax.swing.text.AbstractDocument;
-public class RegistrarEmpleado extends javax.swing.JFrame {
+public class RegistroEmpleado extends javax.swing.JInternalFrame {
 
-    private Main parent;
-    
-    public RegistrarEmpleado(Main parent) {
+    private Caja caja;
+
+    public RegistroEmpleado() {
         initComponents();
-        this.parent = parent;
-        ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new utilJtextField(10));
-        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new utilJtextField(35));
-        
     }
 
-    @Override
-    public Main getParent() {
-        return parent;
+    public RegistroEmpleado(Caja caja) {
+        this.caja = caja;
+        initComponents();
     }
 
-    public void setParent(Main parent) {
-        this.parent = parent;
+    public Caja getCaja() {
+        return caja;
     }
-    
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,7 +44,6 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblRegistroEmpleados = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblCedula = new javax.swing.JLabel();
         txtNombreEmpleado = new javax.swing.JTextField();
@@ -49,11 +51,10 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
         btnRegistroEmpleadoExitoso = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtErrorRegistro = new javax.swing.JTextArea();
-        btnRegresar = new javax.swing.JToggleButton();
+        lblRegistroEmpleados = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        lblRegistroEmpleados.setText("Registro de empleados:");
+        setClosable(true);
+        setIconifiable(true);
 
         lblNombre.setText("Nombre:");
 
@@ -83,13 +84,7 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
         txtErrorRegistro.setRows(5);
         jScrollPane1.setViewportView(txtErrorRegistro);
 
-        btnRegresar.setBackground(new java.awt.Color(225, 20, 50));
-        btnRegresar.setText("Regresar");
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
+        lblRegistroEmpleados.setText("Registro de empleados:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,12 +105,10 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNombreEmpleado)
                             .addComponent(txtCedulaEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnRegistroEmpleadoExitoso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnRegistroEmpleadoExitoso)
                 .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
@@ -135,9 +128,7 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegistroEmpleadoExitoso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegresar)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -147,55 +138,48 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtNombreEmpleadoActionPerformed
 
-    private void btnRegistroEmpleadoExitosoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroEmpleadoExitosoActionPerformed
-        String nombre = txtNombreEmpleado.getText().trim();
-        String documento = txtCedulaEmpleado.getText().trim();
-        
-        try {
-            
-            if (nombre.isBlank() || documento.isBlank()){
-                throw new IllegalArgumentException("Todos los campos son obligatorios.");
-            }
-            
-            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")){
-                throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
-            }
-            
-            if (!documento.matches("\\d+")){
-                throw new IllegalArgumentException("La documento solo debe contener números.");
-            }
-        
-            if(parent.getEmpleadoService().agregarEmpleado(nombre, documento) == false){
-                throw new Exception("Ya existe un empleado registrado con ese documento o con ese nombre.");
-            }
-        
-        this.dispose();
-        parent.setVisible(true);
-        
-        
-       } catch (IllegalArgumentException ex){
-           txtErrorRegistro.setText(ex.getMessage());
-       } catch (Exception ex) {
-           txtErrorRegistro.setText("Error inesperado: " + ex.getMessage());
-       }
-    }//GEN-LAST:event_btnRegistroEmpleadoExitosoActionPerformed
-
     private void txtCedulaEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaEmpleadoActionPerformed
-        // TODO add your handling code here:
+        // TODO add your. handling code here:
     }//GEN-LAST:event_txtCedulaEmpleadoActionPerformed
 
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnRegresarActionPerformed
+    private void btnRegistroEmpleadoExitosoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroEmpleadoExitosoActionPerformed
+        String nombre = txtNombreEmpleado.getText().trim();
+        String cedula = txtCedulaEmpleado.getText().trim();
 
-    /**
-     * @param args the command line arguments
-     */
+        try {
+
+            if (nombre.isBlank() || cedula.isBlank()) {
+                throw new IllegalArgumentException("Todos los campos son obligatorios.");
+            }
+
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")) {
+                throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
+            }
+
+            for (Empleado empleado : this.getCaja().getEmpleados()) {
+                if (empleado.getCedula().equals(cedula)) {
+                    throw new IllegalArgumentException("Ya hay un empleado registrado con esa cédula.");
+                }
+
+            }
+
+            if (!cedula.matches("\\d+")) {
+                throw new IllegalArgumentException("La cedula solo debe contener números.");
+            }
+
+            this.getCaja().agregarEmpleado(nombre, cedula);
+            this.dispose();
+
+        } catch (IllegalArgumentException ex) {
+            txtErrorRegistro.setText(ex.getMessage());
+        } catch (Exception ex) {
+            txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnRegistroEmpleadoExitosoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistroEmpleadoExitoso;
-    private javax.swing.JToggleButton btnRegresar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblNombre;
@@ -204,4 +188,12 @@ public class RegistrarEmpleado extends javax.swing.JFrame {
     private javax.swing.JTextArea txtErrorRegistro;
     private javax.swing.JTextField txtNombreEmpleado;
     // End of variables declaration//GEN-END:variables
+
+    public void limpiarCampos() {
+        ArrayList<javax.swing.JTextField> campos = new ArrayList<>();
+        campos.add(txtCedulaEmpleado);
+        campos.add(txtNombreEmpleado);
+        helperUI.limpiarCampos(campos);
+    }
 }
+

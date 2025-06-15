@@ -1,54 +1,50 @@
-package UI;
-
-import BusinessLogic.Empleado;
-import BusinessLogic.utilJtextField;
-import BusinessLogic.Caja;
-import javax.swing.text.AbstractDocument;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
+package UI2;
+
+import BusinessLogic.Caja;
+import BusinessLogic.Empleado;
+import BusinessLogic.helperUI;
+import java.util.ArrayList;
 
 /**
  *
  * @author DELL
  */
-public class EntrarSistema extends javax.swing.JFrame {
-
-    private Main parent;
-    private Tienda tienda;
-    private Caja caja;
-
-    public Tienda getTienda() {
-        return tienda;
-    }
-
-    public void setTienda(Tienda tienda) {
-        this.tienda = tienda;
-    }
+public class EntrarSistema extends javax.swing.JInternalFrame{
 
     /**
      * Creates new form EntrarSistema
-     *
-     * @param parent
-     * @param caja
      */
-    public EntrarSistema(Main parent) {
-        this.caja = parent.getCaja();
-        this.parent = parent;
+    private Caja caja;
+    private Main main;
+
+    public EntrarSistema() {
         initComponents();
-        ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new utilJtextField(10));
-        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new utilJtextField(35));
     }
 
-    @Override
-    public Main getParent() {
-        return parent;
+    public EntrarSistema(Caja caja, Main main) {
+        initComponents();
+        this.caja = caja;
+        this.main = main;
     }
 
-    public void setParent(Main parent) {
-        this.parent = parent;
+    public Caja getCaja() {
+        return caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
+    }
+
+    public Main getMain() {
+        return main;
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
     }
 
     /**
@@ -60,40 +56,34 @@ public class EntrarSistema extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnRegresar = new javax.swing.JToggleButton();
         txtNombreEmpleado = new javax.swing.JTextField();
         txtCedulaEmpleado = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblCedula = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtErrorRegistro = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
 
-        btnRegresar.setBackground(new java.awt.Color(225, 20, 50));
-        btnRegresar.setText("Regresar");
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
-
+        txtNombreEmpleado.setText(" ");
         txtNombreEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreEmpleadoActionPerformed(evt);
             }
         });
 
+        txtCedulaEmpleado.setText(" ");
         txtCedulaEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCedulaEmpleadoActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Nombre:");
+        lblNombre.setText("Nombre:");
 
-        jLabel2.setText("Cedula:");
+        lblCedula.setText("Cedula:");
 
         btnIngresar.setBackground(new java.awt.Color(50, 155, 225));
         btnIngresar.setText("Ingresar");
@@ -112,22 +102,20 @@ public class EntrarSistema extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnIngresar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(31, 31, 31)
+                .addComponent(btnIngresar)
                 .addGap(38, 38, 38))
             .addGroup(layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCedulaEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -135,30 +123,23 @@ public class EntrarSistema extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCedulaEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnIngresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRegresar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIngresar))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void txtNombreEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreEmpleadoActionPerformed
 
@@ -170,10 +151,10 @@ public class EntrarSistema extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         String nombre = txtNombreEmpleado.getText().trim();
-        String documento = txtCedulaEmpleado.getText().trim();
+        String cedula = txtCedulaEmpleado.getText().trim();
         try {
 
-            if (nombre.isBlank() || documento.isBlank()) {
+            if (nombre.isBlank() || cedula.isBlank() || nombre.isBlank() || cedula.isBlank()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
 
@@ -181,47 +162,47 @@ public class EntrarSistema extends javax.swing.JFrame {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
 
-            if (!documento.matches("\\d+")) {
-                throw new IllegalArgumentException("La documento solo debe contener números.");
+            if (!cedula.matches("\\d+")) {
+                throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
-            
-            Empleado cajero = parent.getEmpleadoService().validarDocumento(nombre, documento);
-            
-            if (cajero == null){
-                txtErrorRegistro.setText("Nombre o documento incorrecto");
-                return;
+            Empleado cajero = this.getCaja().verificarEmpleado(nombre, cedula);
+
+            if (cajero != null) {
+
+                this.getCaja().setCajero(cajero);
+                this.getMain().getBtnHacerVenta().setEnabled(true);
+                this.getMain().getBtnInventario().setEnabled(true);
+                this.getMain().getBtnReportes().setEnabled(true);
+                this.getMain().getBtnDevolución().setEnabled(true);
+                this.getMain().getCerrarSesionItem().setEnabled(true);
+                this.limpiarCampos();
+                this.dispose();
+            } else {
+                txtErrorRegistro.setText("El usuario no existe.");
             }
-            
-            if (this.getTienda() == null) {
-                this.setTienda(new Tienda(parent));
-                
-                caja.setCajero(cajero);
-                this.getTienda().setVisible(true);
-                this.setVisible(false);
-                return;
-            }
-            
-            txtErrorRegistro.setText("El usuario no existe.");
         } catch (IllegalArgumentException ex) {
             txtErrorRegistro.setText(ex.getMessage());
         } catch (Exception ex) {
-            txtErrorRegistro.setText("Error inesperado: " + ex.getMessage());
+            txtErrorRegistro.setText("Error inesperado " + ex.getMessage());
         }
-
     }//GEN-LAST:event_btnIngresarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnIngresar;
-    private javax.swing.JToggleButton btnRegresar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCedula;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtCedulaEmpleado;
     private javax.swing.JTextArea txtErrorRegistro;
     private javax.swing.JTextField txtNombreEmpleado;
     // End of variables declaration//GEN-END:variables
+
+    public void limpiarCampos() {
+        ArrayList<javax.swing.JTextField> campos = new ArrayList<>();
+        campos.add(txtCedulaEmpleado);
+        campos.add(txtNombreEmpleado);
+        helperUI.limpiarCampos(campos);
+
+    }
 }

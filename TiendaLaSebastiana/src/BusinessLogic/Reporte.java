@@ -61,12 +61,12 @@ public class Reporte {
         return ventasFiltradas;
     }
     
-        public Map<Long, Integer> filtrarStack() {
-        Map<Long, Integer> cantidadesFiltradas = new HashMap<>();
+        public Map<Long, Double> filtrarStack() {
+        Map<Long, Double> cantidadesFiltradas = new HashMap<>();
 
-        for (Map.Entry<Long, Integer> acceso : caja.getInventario().getCantidades().entrySet()) {
+        for (Map.Entry<Long, Double> acceso : caja.getInventario().getCantidades().entrySet()) {
             Long productoId = acceso.getKey();
-            Integer cantidad = acceso.getValue();
+            Double cantidad = acceso.getValue();
             if (cantidad < 5 || cantidad > 20) {
                 cantidadesFiltradas.put(productoId, cantidad);
             }
@@ -75,7 +75,7 @@ public class Reporte {
         return cantidadesFiltradas;
     }
     
-    public ArrayList<Producto> filtrarProductos(Map<Long, Integer> cantidadesFiltradas) {
+    public ArrayList<Producto> filtrarProductos(Map<Long, Double> cantidadesFiltradas) {
         ArrayList<Producto> productosFiltrados = new ArrayList<>();
 
         for (Producto producto : caja.getInventario().getProductos()) {

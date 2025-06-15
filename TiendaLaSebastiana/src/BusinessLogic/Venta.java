@@ -4,6 +4,7 @@ package BusinessLogic;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 /**
  *
  * @author Sebastian
@@ -11,12 +12,11 @@ package BusinessLogic;
 import BusinessLogic.DetalleVenta;
 import BusinessLogic.Producto;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import java.util.ArrayList;
-import org.bson.Document;
 
 public class Venta {
-
     private ArrayList<DetalleVenta> detalles;
     private double totalVenta;
     private double totalBruto;
@@ -24,14 +24,14 @@ public class Venta {
     private double totalIva;
     private LocalDateTime fecha;
     private long ID;
-
-    public Venta() {
+    
+    public Venta(){
     }
 
     public Venta(ArrayList<DetalleVenta> detalles, double totalVenta, double totalBruto,
             double totalDescuento, double totalIva, LocalDateTime fecha, long ID) {
         this.ID = ID;
-        this.detalles = detalles;
+        this.detalles = new ArrayList<DetalleVenta>();
         this.totalVenta = totalVenta;
         this.totalBruto = totalBruto;
         this.totalDescuento = totalDescuento;
@@ -94,32 +94,20 @@ public class Venta {
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
-
-    public Document toDocument() {
-        Document ventaDocument = new Document("id", ID)
-                .append("fecha", fecha);
-
-        ArrayList<Document> detallesDoc = new ArrayList<>();
-        for (DetalleVenta detalle : detalles) {
-            Document detalleDoc = new Document();
-            Producto producto = detalle.getProducto();
-            var docProducto = producto.toDocument();
-            detalleDoc.append("producto", docProducto)
-                    .append("cantidad", detalle.getCantidad())
-                    .append("precioUnitario", detalle.getPrecioUnitario())
-                    .append("subtotalBruto", detalle.getSubtotalBruto())
-                    .append("iva", detalle.getIva())
-                    .append("descuento", detalle.getDescuento())
-                    .append("subtotalNeto", detalle.getSubtotalNeto());
-
-            detallesDoc.add(detalleDoc);
+    
+    public Inventario detallarCantidades(Inventario inventario){
+        double cantidad = 0;
+        Producto producto = null;
+        for (DetalleVenta detalle: this.detalles){
+            producto = detalle.getProducto();
+            cantidad = (detalle.getCantidad()*(-1));
+            inventario.ajustarCantidadProducto(producto.getId(), cantidad);   
         }
-
-        ventaDocument.append("detalles", detallesDoc)
-                .append("totalVenta", totalVenta)
-                .append("totalBruto", totalBruto)
-                .append("totalDescuento", totalDescuento)
-                .append("totalIVA", totalIva);
-        return ventaDocument;
+        return inventario;
     }
 }
+
+    
+
+
+
