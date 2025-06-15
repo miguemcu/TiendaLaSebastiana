@@ -1,11 +1,11 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package UI2;
+package UI;
 
-import BusinessLogic.Caja;
-import BusinessLogic.helperUI;
+import BusinessLogic.EnumTipoProd;
+import BusinessLogic.utilJtextField;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Year;
@@ -13,95 +13,35 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.text.AbstractDocument;
 
-/**
- *
- * @author DELL
- */
-public class CreacionProducto extends javax.swing.JInternalFrame {
+public class CreacionProducto extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CreacionProducto
-     */
-    private Caja caja;
-    private InventarioSistema inventarioSistema;
+    private Main parent;
+
+    public CreacionProducto(Main parent) {
+        initComponents();
+        this.parent = parent;
+        inicializarComboTipoProd();
+        ((AbstractDocument) txtDay.getDocument()).setDocumentFilter(new utilJtextField(2));
+        ((AbstractDocument) txtMonth.getDocument()).setDocumentFilter(new utilJtextField(2));
+        ((AbstractDocument) txtYear.getDocument()).setDocumentFilter(new utilJtextField(5));
+    }
+
+    @Override
+    public Main getParent() {
+        return parent;
+    }
+
+    public void setParent(Main parent) {
+        this.parent = parent;
+    }
 
     public CreacionProducto() {
-        initComponents();
     }
 
-    public CreacionProducto(Caja caja, InventarioSistema inventarioSistema) {
-        this.caja = caja;
-        this.inventarioSistema = inventarioSistema;
-        initComponents();
-        inicializarComboTipoProd();
-        ((AbstractDocument) txtDay.getDocument()).setDocumentFilter(new helperUI(2));
-        ((AbstractDocument) txtMonth.getDocument()).setDocumentFilter(new helperUI(2));
-        ((AbstractDocument) txtYear.getDocument()).setDocumentFilter(new helperUI(5));
-    }
-//gettets y setters.
-
-    public Caja getCaja() {
-        return caja;
-    }
-
-    public void setCaja(Caja caja) {
-        this.caja = caja;
-    }
-
-    public InventarioSistema getInventarioSistema() {
-        return inventarioSistema;
-    }
-
-    public void setInventarioSistema(InventarioSistema inventarioSistema) {
-        this.inventarioSistema = inventarioSistema;
-    }
-
-//metodos para la clase.
     private void inicializarComboTipoProd() {
         txtTipoProd.setModel(new DefaultComboBoxModel<>(new String[]{
             "Bebida", "Mecato", "Aseo", "Enlatado", "Grano"
         }));
-    }
-
-    public LocalDate capturarFechaVencimiento() {
-        String yearStr = txtYear.getText().trim();
-        String monthStr = txtMonth.getText().trim();
-        String dayStr = txtDay.getText().trim();
-        LocalDate fechaVencimiento = null;
-
-        try {
-            if (yearStr.isBlank() || monthStr.isBlank() || dayStr.isBlank()) {
-                throw new IllegalArgumentException("Todos los campos de la fecha de vencimiento son obligatorios.");
-            }
-            int year = Integer.parseInt(yearStr);
-            int month = Integer.parseInt(monthStr);
-            int day = Integer.parseInt(dayStr);
-            fechaVencimiento = LocalDate.of(year, month, day);
-            txtErrorRegistro.setText("");
-
-        } catch (NumberFormatException e) {
-            System.err.println("Error: Debe ingresar valores numéricos válidos para la fecha de vencimiento.");
-        } catch (DateTimeException e) {
-            System.err.println("Fecha de vencimiento inválida: " + e.getMessage());
-            txtErrorRegistro.setText("Error: Fecha de vencimiento inválida - " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        } catch (Exception ex) {
-            System.err.println("Error inesperado al capturar la fecha de vencimiento: " + ex.getMessage());
-        }
-        return fechaVencimiento;
-    }
-    
-    public void limpiarCampos() {
-        txtID.setText("");
-        txtNombre.setText("");
-        txtCantidad.setText("");
-        txtPrecioMayorista.setText("");
-        txtPrecio.setText("");
-        txtDay.setText("");
-        txtMonth.setText("");
-        txtYear.setText("");
-        txtEtiquetas.setText("");
     }
 
     /**
@@ -113,16 +53,10 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtYear = new javax.swing.JTextField();
-        lblDia = new javax.swing.JLabel();
-        lblMes = new javax.swing.JLabel();
-        lblAño = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         lblID = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        txtEtiquetas = new javax.swing.JTextField();
-        lblEtiqueta = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
-        lblIndicacionEtiquetas = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         lblCantidad = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
@@ -138,15 +72,18 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         lblFechaVencimiento = new javax.swing.JLabel();
         txtDay = new javax.swing.JTextField();
         txtMonth = new javax.swing.JTextField();
+        txtYear = new javax.swing.JTextField();
+        lblDia = new javax.swing.JLabel();
+        lblMes = new javax.swing.JLabel();
+        lblAño = new javax.swing.JLabel();
+        txtEtiquetas = new javax.swing.JTextField();
+        lblEtiqueta = new javax.swing.JLabel();
+        lblIndicacionEtiquetas = new javax.swing.JLabel();
+        btnRegresarCreacion = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
+        jLabel4.setText("jLabel4");
 
-        lblDia.setText("DD");
-
-        lblMes.setText("MM");
-
-        lblAño.setText("YYYY");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblID.setText("ID : ");
 
@@ -156,17 +93,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        txtEtiquetas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEtiquetasActionPerformed(evt);
-            }
-        });
-
-        lblEtiqueta.setText("Etiqueta :");
-
         lblNombre.setText("Nombre : ");
-
-        lblIndicacionEtiquetas.setText("#Escriba asi: etiqueta1,etiqueta2,...,etiquetak");
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,6 +148,30 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         txtMonth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMonthActionPerformed(evt);
+            }
+        });
+
+        lblDia.setText("DD");
+
+        lblMes.setText("MM");
+
+        lblAño.setText("YYYY");
+
+        txtEtiquetas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEtiquetasActionPerformed(evt);
+            }
+        });
+
+        lblEtiqueta.setText("Etiqueta :");
+
+        lblIndicacionEtiquetas.setText("#Escriba asi: etiqueta1,etiqueta2,...,etiquetak");
+
+        btnRegresarCreacion.setBackground(new java.awt.Color(247, 84, 73));
+        btnRegresarCreacion.setText("Regresar");
+        btnRegresarCreacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarCreacionActionPerformed(evt);
             }
         });
 
@@ -280,11 +231,15 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(104, 104, 104)
                                 .addComponent(txtEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 9, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblIndicacionEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRegresarCreacion)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,7 +283,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblEtiqueta)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,7 +293,9 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
                             .addComponent(btnGuardar))
                         .addGap(18, 18, 18)
                         .addComponent(ScrollMensajesProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegresarCreacion)))
+                .addContainerGap())
         );
 
         pack();
@@ -348,17 +305,9 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
 
-    private void txtEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEtiquetasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEtiquetasActionPerformed
-
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioActionPerformed
 
     private void txtTipoProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoProdActionPerformed
 
@@ -418,7 +367,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
             }
 
             long Id = Long.parseLong(id);
-            double cantidad = Double.parseDouble(Cantidad);
+            int cantidad = Integer.parseInt(Cantidad);
             double precio = Double.parseDouble(Precio);
             double precioMayorista = Double.parseDouble(PrecioMayorista);
 
@@ -441,18 +390,15 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
             if (Integer.parseInt(txtYear.getText().trim()) < Year.now().getValue()) {
                 throw new IllegalArgumentException("La fecha de vencimiento es incorrecta.");
             }
-            this.getCaja().getInventario().crearProductos(tipoSeleccionado, nombre, Id, precio,
-                    precioMayorista, fechaVencimiento, etiquetas, cantidad);
-            
-            if (!this.getInventarioSistema().isVisible()) {
-                if (this.getInventarioSistema().isClosed()) {
-                    this.getParent().add(this.getInventarioSistema());
-                }
-                this.getInventarioSistema().setVisible(true);
-                this.dispose();
+
+            if (this.parent.getProductoService().añadirProducto(tipoSeleccionado, nombre, Id, precio,
+                    precioMayorista, fechaVencimiento, etiquetas, cantidad) == false) {
+                throw new Exception("Ya existe un producto registrado con ese nombre o con ese ID");
             }
-            this.limpiarCampos();
+
             this.dispose();
+            InventarioSistema inventarioSistema = new InventarioSistema(parent);
+            inventarioSistema.setVisible(true);
 
         } catch (IllegalArgumentException ex) {
             txtErrorRegistro.setText(ex.getMessage());
@@ -461,6 +407,38 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    public LocalDate capturarFechaVencimiento() {
+        String yearStr = txtYear.getText().trim();
+        String monthStr = txtMonth.getText().trim();
+        String dayStr = txtDay.getText().trim();
+
+        LocalDate fechaVencimiento = null;
+
+        try {
+            if (yearStr.isBlank() || monthStr.isBlank() || dayStr.isBlank()) {
+                throw new IllegalArgumentException("Todos los campos de la fecha de vencimiento son obligatorios.");
+            }
+
+            int year = Integer.parseInt(yearStr);
+            int month = Integer.parseInt(monthStr);
+            int day = Integer.parseInt(dayStr);
+
+            fechaVencimiento = LocalDate.of(year, month, day);
+            txtErrorRegistro.setText("");
+
+        } catch (NumberFormatException e) {
+            System.err.println("Error: Debe ingresar valores numéricos válidos para la fecha de vencimiento.");
+        } catch (DateTimeException e) {
+            System.err.println("Fecha de vencimiento inválida: " + e.getMessage());
+            txtErrorRegistro.setText("Error: Fecha de vencimiento inválida - " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Error inesperado al capturar la fecha de vencimiento: " + ex.getMessage());
+        }
+
+        return fechaVencimiento;
+    }
     private void txtDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDayActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDayActionPerformed
@@ -469,10 +447,27 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMonthActionPerformed
 
+    private void txtEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEtiquetasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEtiquetasActionPerformed
+
+    private void btnRegresarCreacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarCreacionActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarCreacionActionPerformed
+
+    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollMensajesProductos;
     private javax.swing.JToggleButton btnGuardar;
+    private javax.swing.JButton btnRegresarCreacion;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lblAño;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblDia;
