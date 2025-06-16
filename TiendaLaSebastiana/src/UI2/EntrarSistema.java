@@ -169,6 +169,7 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
                 this.getMain().getBtnReportes().setEnabled(true);
                 this.getMain().getBtnDevolución().setEnabled(true);
                 this.getMain().getCerrarSesionItem().setEnabled(true);
+                this.getMain().getIniciarSesionItem().setEnabled(false);
                 this.limpiarCampos();
                 this.dispose();
             } else {

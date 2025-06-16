@@ -4,9 +4,10 @@
  */
 package UI2;
 
-import BusinessLogic.Caja;
 import BusinessLogic.ProductoService;
 import BusinessLogic.VentaService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 
 /**
@@ -19,7 +20,7 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
     private VentaService ventaService;
     private ProductoService productoService;
     private ReporteStock reporteStock;
-    private ReporteVentas reporteVentas;
+    private SelectFechaReporte selectFechaReporte;
     private JDesktopPane desktopPane;
 
     /**
@@ -53,12 +54,12 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
         this.reporteStock = reporteStock;
     }
 
-    public ReporteVentas getReporteVentas() {
-        return reporteVentas;
+    public SelectFechaReporte getSelectFechaReporte() {
+        return selectFechaReporte;
     }
 
-    public void setReporteVentas(ReporteVentas reporteVentas) {
-        this.reporteVentas = reporteVentas;
+    public void setSelectFechaReporte(SelectFechaReporte selectFechaReporte) {
+        this.selectFechaReporte = selectFechaReporte;
     }
 
     @Override
@@ -146,21 +147,25 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReporteVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteVentasActionPerformed
-        if (this.getReporteVentas() == null) {
-            this.setReporteVentas(new ReporteVentas(this.main, this.ventaService, this.getDesktopPane()));
-            this.getParent().add(this.getReporteVentas());
+        if (this.getSelectFechaReporte() == null) {
+            this.setSelectFechaReporte(new SelectFechaReporte(this.main, this.ventaService, this.getDesktopPane()));
+            this.getParent().add(this.getSelectFechaReporte());
         }
-        if (!this.getReporteVentas().isVisible()) {
-            if (this.getReporteVentas().isClosed()) {
-                this.getParent().add(this.getReporteVentas());
+        if (!this.getSelectFechaReporte().isVisible()) {
+            if (this.getSelectFechaReporte().isClosed()) {
+                this.getParent().add(this.getSelectFechaReporte());
             }
-            this.getReporteVentas().setVisible(true);
+            this.getSelectFechaReporte().setVisible(true);
         }
     }//GEN-LAST:event_btnReporteVentasActionPerformed
 
     private void btnReporteStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteStockActionPerformed
        if (this.getReporteStock()== null) {
-            this.setReporteStock(new ReporteStock(this.productoService));
+           try {
+               this.setReporteStock(new ReporteStock(this.productoService));
+           } catch (Exception ex) {
+               Logger.getLogger(SistemaReportes.class.getName()).log(Level.SEVERE, null, ex);
+           }
             this.getParent().add(this.getReporteStock());
         }
         if (!this.getReporteStock().isVisible()) {
