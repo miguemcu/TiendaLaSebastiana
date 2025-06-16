@@ -11,6 +11,7 @@ package BusinessLogic;
 import BusinessLogic.DetalleVenta;
 import BusinessLogic.Producto;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import org.bson.Document;
@@ -121,5 +122,40 @@ public class Venta {
                 .append("totalDescuento", totalDescuento)
                 .append("totalIVA", totalIva);
         return ventaDocument;
+    }
+    
+    public static Venta fromDocument(Document doc, Long id){
+        String fechaStr = doc.getString("fecha");
+        double totalVenta = doc.getDouble("totalVenta");
+        double totalBruto = doc.getDouble("totalBruto");
+        double totalDescuento = doc.getDouble("totalDescuento");
+        double totalIVA = doc.getDouble("totalIVA");
+
+        ArrayList<Document> docDetalles = (ArrayList<Document>) doc.get("detalles");
+        ArrayList<DetalleVenta> DetallesVenta = new ArrayList<>();
+
+        if (docDetalles != null) {
+            for (Document docDetalle : docDetalles) {
+                Document docProducto = (Document) docDetalle.get("producto");
+                Producto producto = Utils.getProductoMongo(docProducto);
+
+                // Atributos del detalle de la venta
+                int cantidad = docDetalle.getInteger("cantidad");
+                double precioUnitario = docDetalle.getDouble("precioUnitario");
+                double subtotalBrutoDetalle = docDetalle.getDouble("subtotalBruto");
+                double ivaDetalle = docDetalle.getDouble("iva");
+                double descuentoDetalle = docDetalle.getDouble("descuento");
+                double subtotalNetoDetalle = docDetalle.getDouble("subtotalNeto");
+
+                DetalleVenta detalleVenta = new DetalleVenta(producto, cantidad, precioUnitario,
+                        subtotalBrutoDetalle, ivaDetalle, descuentoDetalle, subtotalNetoDetalle);
+                DetallesVenta.add(detalleVenta);
+            }
+        }
+
+        LocalDateTime fechaVenta = LocalDateTime.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+        var venta = new Venta(DetallesVenta, totalVenta, totalBruto, totalDescuento, totalIVA, fechaVenta, id);
+        return venta;
     }
 }

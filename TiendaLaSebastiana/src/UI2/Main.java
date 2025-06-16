@@ -26,8 +26,7 @@ public class Main extends javax.swing.JFrame {
     private EntrarSistema entrarSistema;
     private InventarioSistema inventarioSistema;
     private MenuVenta venta;
-
-    //private MenuDevolucion devolucion;
+    private Devolucion devolucion;
     private SistemaReportes sistemaReportes;
 
     public Main() throws Exception {
@@ -93,15 +92,15 @@ public class Main extends javax.swing.JFrame {
         this.venta = venta;
     }
 
-    /*
-    public MenuDevolucion getDevolucion() {
+    public Devolucion getDevolucion() {
         return devolucion;
     }
 
-    public void setDevolucion(MenuDevolucion devolucion) {
+    public void setDevolucion(Devolucion devolucion) {
         this.devolucion = devolucion;
     }
-     */
+
+    
     public SistemaReportes getSistemaReportes() {
         return sistemaReportes;
     }
@@ -221,7 +220,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnDevolución);
-        btnDevolución.setBounds(420, 230, 120, 23);
+        btnDevolución.setBounds(430, 230, 120, 23);
 
         btnInventario.setText("Inventario");
         btnInventario.setEnabled(false);
@@ -353,7 +352,16 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHacerVentaActionPerformed
 
     private void btnDevoluciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevoluciónActionPerformed
-
+        if (this.getDevolucion()== null) {
+            this.setDevolucion(new Devolucion(this.ventaService, this.productoService, this));
+            this.desktopPane.add(this.getDevolucion());
+        }
+        if (!this.getDevolucion().isVisible()) {
+            if (this.getDevolucion().isClosed()) {
+                this.desktopPane.add(this.getDevolucion());
+            }
+            this.getDevolucion().setVisible(true);
+        }
     }//GEN-LAST:event_btnDevoluciónActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed

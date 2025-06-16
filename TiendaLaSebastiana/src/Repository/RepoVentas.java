@@ -5,15 +5,18 @@
 package Repository;
 
 import BusinessLogic.DetalleVenta;
+import BusinessLogic.Producto;
 import BusinessLogic.Utils;
 import BusinessLogic.Venta;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -78,12 +81,42 @@ public class RepoVentas {
             throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
         }
     }
+    
+    public Venta getVenta(long id) throws Exception {
+        try{
+            Document doc = collection.find(Filters.eq("id", id)).first();
+
+            if (doc == null) {
+                throw new Exception("Venta no encontrada.");
+            } else {
+                return Venta.fromDocument(doc, id);
+                
+            }
+        } catch (Exception e) {
+            throw new Exception("Error inesperado: " + e.getMessage());
+        }
+    }
 
     public boolean agregarVenta(ArrayList<DetalleVenta> detalles, double totalVenta, double totalBruto,
             double totalDescuento, double totalIva, LocalDateTime fecha, long id) throws Exception {
         try {
             Venta venta = new Venta(detalles, totalVenta, totalBruto, totalDescuento, totalIva, fecha, id);
             collection.insertOne(venta.toDocument());
+            return true;
+        } catch (Exception e) {
+            throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
+        }
+    }
+    public boolean eliminarVenta(Venta venta) throws Exception{
+        try {
+            Bson filtro = Filters.eq("id", venta.getID());
+            
+
+            if (collection.find(filtro).first() == null) {
+                return false; // No existe esa venta
+            }
+
+            collection.deleteOne(filtro);
             return true;
         } catch (Exception e) {
             throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
