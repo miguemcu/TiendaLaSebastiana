@@ -7,6 +7,8 @@ package UI2;
 import BusinessLogic.Caja;
 import BusinessLogic.ProductoService;
 import BusinessLogic.VentaService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 
 /**
@@ -160,7 +162,11 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
 
     private void btnReporteStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteStockActionPerformed
        if (this.getReporteStock()== null) {
-            this.setReporteStock(new ReporteStock(this.productoService));
+           try {
+               this.setReporteStock(new ReporteStock(this.productoService));
+           } catch (Exception ex) {
+               Logger.getLogger(SistemaReportes.class.getName()).log(Level.SEVERE, null, ex);
+           }
             this.getParent().add(this.getReporteStock());
         }
         if (!this.getReporteStock().isVisible()) {

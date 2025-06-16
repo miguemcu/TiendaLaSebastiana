@@ -25,10 +25,11 @@ public class ReporteStock extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public ReporteStock(ProductoService productoService) {
+    public ReporteStock(ProductoService productoService) throws Exception {
         initComponents();
         initServices(productoService);
-        modeloTabla = (DefaultTableModel) tblReporteStock.getModel();
+        initJTable();
+        this.mostrarVentasEnTabla();
     }
 
     public ProductoService getProductoService() {
@@ -49,8 +50,8 @@ public class ReporteStock extends javax.swing.JInternalFrame {
 
         for (Producto producto : productos.keySet()) {
             String nombre = producto.getNombre();
-
-            int cantidad = productos.get(producto.getId());
+            long id = producto.getId();
+            int cantidad = productos.get(producto);
             String alerta = "";
             if (cantidad <= 10) {
                 alerta = "⚠️ Stock Critico";
@@ -60,18 +61,39 @@ public class ReporteStock extends javax.swing.JInternalFrame {
                 alerta = "Normal";
             }
 
-            agregarFilaProducto(nombre, cantidad, alerta);
+            agregarProductoFactura(id, nombre, cantidad, alerta);
         }
     }
 
-    public void agregarFilaProducto(String producto, int cantidad, String alerta) {
-        Object[] nuevaFila = {producto, cantidad, alerta};
-        modeloTabla.addRow(nuevaFila);
-    } 
+    public void agregarProductoFactura(Long id, String producto, int cantidad,
+            String alerta) {
+
+        Object[] rowData = {
+            id,
+            producto,
+            cantidad,
+            alerta,
+        };
+
+        modeloTabla.addRow(rowData);
+    }
     
     private void initServices(ProductoService productoService){
         this.productoService = productoService;
-        
+    }
+    
+    private void initJTable() {
+        modeloTabla = new DefaultTableModel();
+        tblReporteStock.setModel(modeloTabla);
+        String[] newColumnNames = {"ID", "Producto", "Cantidad", "Alerta"};
+        modeloTabla.setColumnIdentifiers(newColumnNames);
+        modeloTabla = new DefaultTableModel(newColumnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblReporteStock.setModel(modeloTabla);
     }
 
     /**
@@ -95,17 +117,14 @@ public class ReporteStock extends javax.swing.JInternalFrame {
 
         tblReporteStock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Producto", "Cantidad", "Alerta"
+                "ID", "Producto", "Cantidad", "Alerta"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.String.class
+                java.lang.Long.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
