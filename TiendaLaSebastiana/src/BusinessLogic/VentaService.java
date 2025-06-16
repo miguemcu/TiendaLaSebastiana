@@ -52,4 +52,32 @@ public class VentaService {
         return ventasFiltradas;
     }
 
+    public double calculaPrecio(double cantidad, Producto producto) {
+        double precio;
+        if (cantidad >= 20) {
+            precio = producto.getPrecioMayorista();
+        } else {
+            precio = producto.getPrecio();
+        }
+        return precio;
+    }
+
+    public double calcularPrecioBruto(double precio, int cantidad) {
+        return (precio * cantidad);
+    }
+
+    public double calcularPrecioNeto(double subtotalBruto, double iva, double descuento) {
+        var subtotalIVA = (subtotalBruto + subtotalBruto * iva);
+        return (subtotalIVA - (subtotalIVA * descuento));
+    }
+
+    public double calcularIVAGenerado(double subtotalBruto, double iva) {
+        return (subtotalBruto * iva);
+    }
+
+    public double calcularDescuentoGenerado(double subtotalBruto, double iva, double descuento) {
+        var subtotalIVA = (subtotalBruto + subtotalBruto * iva);
+        return (subtotalIVA * descuento);
+    }
+
 }

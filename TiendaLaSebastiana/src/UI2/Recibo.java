@@ -26,19 +26,13 @@ public class Recibo extends javax.swing.JInternalFrame {
      */
     public Recibo() {
         initComponents();
+        initJTable();
     }
 
     public Recibo(MenuVenta menuVenta, Venta venta) {
         initComponents();
-        this.menuVenta = menuVenta;
-        this.venta = venta;
-        modeloTabla = (DefaultTableModel) tblFactura.getModel();
-        mostrarFecha();
-        mostrarEmpleado();
-        this.total = venta.getTotalVenta();
-        String totalstr = String.valueOf(this.total);
-        txtTotal.setText(totalstr);
-        txtTotal.setEditable(false);
+        initJTable();
+        initAdditional(menuVenta,venta);
     }
 
     public MenuVenta getMenuVenta() {
@@ -49,27 +43,49 @@ public class Recibo extends javax.swing.JInternalFrame {
         this.menuVenta = menuVenta;
     }
 
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
+    }
+
     //Metodos para la UI
-    public void agregarFilaProducto(String descripcion, int cantidad, double precioUni, double precioTotal) {
-        Object[] nuevaFila = {descripcion, cantidad, precioUni, precioTotal};
-        modeloTabla.addRow(nuevaFila);
+    public void agregarProductoFactura(String descripcion, double precioUnitario, int cantidad,
+            double subtotalBruto, double iva, double descuento, double subtotalNeto) {
+
+        Object[] rowData = {
+            descripcion,
+            precioUnitario,
+            cantidad,
+            String.format("%.2f", subtotalBruto),
+            String.format("%.2f", iva),
+            String.format("%.2f", descuento),
+            String.format("%.2f", subtotalNeto)
+        };
+
+        modeloTabla.addRow(rowData);
     }
 
     public void mostrarVentasEnRecibo() {
-        String producto = null;
-        int cantidad = 0;
-        double precioUni = 0.0;
-        double precioTotal = 0.0;
         for (DetalleVenta detalle : venta.getDetalles()) {
-            producto = detalle.getProducto().getNombre();
-            cantidad = detalle.getCantidad();
-            precioUni = detalle.getProducto().getPrecio();
-            precioTotal = (precioUni * cantidad);
+            String descripcion = detalle.getProducto().getNombre();
+            int cantidad = detalle.getCantidad();
+            double precioUni = detalle.getProducto().getPrecio();
+            double subtotalBruto = detalle.getSubtotalBruto();
+            double iva = detalle.getIva();
+            double descuento = detalle.getDescuento();
+            double subtotalNeto = detalle.getSubtotalNeto();
+            agregarProductoFactura(descripcion, precioUni, cantidad, subtotalBruto,
+                    iva, descuento, subtotalNeto);
+        }
+        
+        if (venta.getTotalDescuento() > 0) {
+            lblAhorro.setText("¡¡FELICITACIONES!!, en total ahorró: " + venta.getTotalDescuento()
+                                + "$. Esperamos que siga confianzo en nosotros para futuras compras.");
         }
 
-        modeloTabla.setRowCount(0);
-
-        agregarFilaProducto(producto, cantidad, precioUni, precioTotal);
     }
 
     private void mostrarFecha() {
@@ -104,8 +120,9 @@ public class Recibo extends javax.swing.JInternalFrame {
         lblLaSebastiana = new javax.swing.JLabel();
         txtEmpleado = new javax.swing.JLabel();
         txtFechaHoy = new javax.swing.JLabel();
+        lblAhorro = new javax.swing.JLabel();
 
-        lblFactura.setFont(new java.awt.Font("Serif", 0, 24)); // NOI18N
+        lblFactura.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblFactura.setText("FACTURA");
 
         jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
@@ -113,17 +130,14 @@ public class Recibo extends javax.swing.JInternalFrame {
 
         tblFactura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Descripción", "Unidades", "Precio Unitario", "Precio"
+                "Descripción", "Precio Unitario", "Cantidad", "Subtotal Bruto", "IVA", "Descuento", "Subtotal Neto"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -132,7 +146,7 @@ public class Recibo extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblFactura);
 
-        lblTotal.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
+        lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTotal.setText("TOTAL :");
 
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +168,7 @@ public class Recibo extends javax.swing.JInternalFrame {
         lblEmpleado.setText("Empleado : ");
 
         lblLaSebastiana.setBackground(new java.awt.Color(255, 255, 255));
-        lblLaSebastiana.setFont(new java.awt.Font("Vladimir Script", 0, 36)); // NOI18N
+        lblLaSebastiana.setFont(new java.awt.Font("Script MT Bold", 1, 36)); // NOI18N
         lblLaSebastiana.setForeground(new java.awt.Color(70, 123, 254));
         lblLaSebastiana.setText("LA SEBASTIANA");
 
@@ -164,12 +178,17 @@ public class Recibo extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(359, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(359, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAhorro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(16, 16, 16))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -200,11 +219,14 @@ public class Recibo extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(89, 89, 89)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFechaHoy)
-                    .addComponent(lblFecha))
-                .addGap(18, 18, 18)
-                .addComponent(txtEmpleado)
-                .addContainerGap(353, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmpleado))
+                    .addComponent(txtFechaHoy))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 336, Short.MAX_VALUE)
+                .addComponent(lblAhorro, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -219,7 +241,7 @@ public class Recibo extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblTotal)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,11 +260,38 @@ public class Recibo extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnCerrarFacturaActionPerformed
 
+    private void initJTable() {
+        modeloTabla = new DefaultTableModel();
+        tblFactura.setModel(modeloTabla);
+        String[] newColumnNames = {"Descripcion", "Precio Unitario", "Cantidad",
+            "Subtotal Bruto", "IVA", "Descuento", "Subtotal Neto"};
+        modeloTabla.setColumnIdentifiers(newColumnNames);
+        modeloTabla = new DefaultTableModel(newColumnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblFactura.setModel(modeloTabla);
+    }
+    
+    private void initAdditional(MenuVenta menuVenta, Venta venta){
+        this.menuVenta = menuVenta;
+        this.venta = venta;
+        mostrarFecha();
+        mostrarEmpleado();
+        this.total = venta.getTotalVenta();
+        String totalstr = String.format("%.2f", total);
+        txtTotal.setText(totalstr);
+        txtTotal.setEditable(false);
+        mostrarVentasEnRecibo();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarFactura;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblAhorro;
     private javax.swing.JLabel lblEmpleado;
     private javax.swing.JLabel lblFactura;
     private javax.swing.JLabel lblFecha;
