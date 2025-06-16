@@ -191,7 +191,7 @@ public class Main extends javax.swing.JFrame {
         txtButtonTienda1.setText("¿Qué desea hacer?");
         txtButtonTienda1.setMaximumSize(new java.awt.Dimension(100, 16));
         desktopPane.add(txtButtonTienda1);
-        txtButtonTienda1.setBounds(280, 140, 97, 16);
+        txtButtonTienda1.setBounds(270, 140, 100, 16);
 
         btnHacerVenta.setText("Hacer Venta");
         btnHacerVenta.setEnabled(false);
@@ -201,7 +201,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnHacerVenta);
-        btnHacerVenta.setBounds(110, 230, 94, 23);
+        btnHacerVenta.setBounds(110, 230, 99, 27);
 
         btnDevolución.setText("Devolución");
         btnDevolución.setEnabled(false);
@@ -211,7 +211,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnDevolución);
-        btnDevolución.setBounds(430, 230, 120, 23);
+        btnDevolución.setBounds(420, 230, 120, 27);
 
         btnInventario.setText("Inventario");
         btnInventario.setEnabled(false);
@@ -221,7 +221,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnInventario);
-        btnInventario.setBounds(110, 300, 83, 23);
+        btnInventario.setBounds(110, 300, 87, 27);
 
         btnReportes.setText("Reportes");
         btnReportes.setEnabled(false);
@@ -231,7 +231,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnReportes);
-        btnReportes.setBounds(420, 300, 120, 23);
+        btnReportes.setBounds(420, 300, 120, 27);
 
         menuIncio.setMnemonic('f');
         menuIncio.setText("Inicio");
