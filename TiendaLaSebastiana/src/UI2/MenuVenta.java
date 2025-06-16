@@ -530,20 +530,20 @@ public class MenuVenta extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblPercent))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(lblInsucienteStock)
-                        .addGap(42, 42, 42)
-                        .addComponent(btnAgregarVenta))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addComponent(lblCantidadAVender1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPercent2)
-                            .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                            .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblInsucienteStock)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnAgregarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(lblProductosAgregados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -751,6 +751,11 @@ public class MenuVenta extends javax.swing.JInternalFrame {
             if (busqueda.matches("\\d+")) {
                 producto = this.getProductoService().buscarProducto("id", busqueda);
                 if (producto != null) {
+                    for (DetalleVenta detalle : venta.getDetalles()) {
+                        if (producto.getId() == detalle.getProducto().getId()) {
+                            throw new NoSuchElementException("Producto ya agregado.");
+                        }
+                    }
                     setearCampos(producto);
                     encontrado = true;
                     return producto;
@@ -761,6 +766,11 @@ public class MenuVenta extends javax.swing.JInternalFrame {
             } else {
                 producto = this.getProductoService().buscarProducto("nombre", busqueda);
                 if (producto != null) {
+                    for (DetalleVenta detalle: venta.getDetalles()){
+                    if (producto.getId() == detalle.getProducto().getId()){
+                        throw new NoSuchElementException("Producto ya agregado.");
+                    }
+                }
                     setearCampos(producto);
                     encontrado = true;
                     return producto;
