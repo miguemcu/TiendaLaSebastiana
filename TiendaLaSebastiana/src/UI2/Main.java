@@ -175,6 +175,7 @@ public class Main extends javax.swing.JFrame {
         btnDevolución = new javax.swing.JToggleButton();
         btnInventario = new javax.swing.JToggleButton();
         btnReportes = new javax.swing.JButton();
+        lblLaSebastiana = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuIncio = new javax.swing.JMenu();
         iniciarSesionItem = new javax.swing.JMenuItem();
@@ -197,10 +198,11 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txtButtonTienda1.setForeground(new java.awt.Color(255, 255, 255));
         txtButtonTienda1.setText("¿Qué desea hacer?");
         txtButtonTienda1.setMaximumSize(new java.awt.Dimension(100, 16));
         desktopPane.add(txtButtonTienda1);
-        txtButtonTienda1.setBounds(280, 140, 97, 16);
+        txtButtonTienda1.setBounds(390, 210, 110, 20);
 
         btnHacerVenta.setText("Hacer Venta");
         btnHacerVenta.setEnabled(false);
@@ -210,7 +212,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnHacerVenta);
-        btnHacerVenta.setBounds(110, 230, 94, 23);
+        btnHacerVenta.setBounds(230, 290, 110, 27);
 
         btnDevolución.setText("Devolución");
         btnDevolución.setEnabled(false);
@@ -220,7 +222,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnDevolución);
-        btnDevolución.setBounds(430, 230, 120, 23);
+        btnDevolución.setBounds(540, 290, 120, 27);
 
         btnInventario.setText("Inventario");
         btnInventario.setEnabled(false);
@@ -230,7 +232,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnInventario);
-        btnInventario.setBounds(110, 300, 83, 23);
+        btnInventario.setBounds(230, 360, 110, 27);
 
         btnReportes.setText("Reportes");
         btnReportes.setEnabled(false);
@@ -240,7 +242,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         desktopPane.add(btnReportes);
-        btnReportes.setBounds(420, 300, 120, 23);
+        btnReportes.setBounds(540, 360, 120, 27);
+
+        lblLaSebastiana.setBackground(new java.awt.Color(255, 255, 255));
+        lblLaSebastiana.setFont(new java.awt.Font("Eras Bold ITC", 1, 36)); // NOI18N
+        lblLaSebastiana.setForeground(new java.awt.Color(255, 255, 255));
+        lblLaSebastiana.setText("LA SEBASTIANA");
+        desktopPane.add(lblLaSebastiana);
+        lblLaSebastiana.setBounds(280, 140, 330, 42);
 
         menuIncio.setMnemonic('f');
         menuIncio.setText("Inicio");
@@ -282,7 +291,7 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 917, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,6 +467,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem cerrarSesionItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem iniciarSesionItem;
+    private javax.swing.JLabel lblLaSebastiana;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuIncio;
     private javax.swing.JMenuItem registrarEmpleadoItem;

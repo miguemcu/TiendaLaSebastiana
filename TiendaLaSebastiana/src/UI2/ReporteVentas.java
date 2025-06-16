@@ -6,9 +6,7 @@ package UI2;
 
 import BusinessLogic.DetalleVenta;
 import BusinessLogic.Venta;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -98,6 +96,11 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
         scrollPanelVentasFiltradas1 = new javax.swing.JScrollPane();
         tblVentasFiltradas1 = new javax.swing.JTable();
         scrollVentasFiltradas1 = new javax.swing.JScrollBar();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         scrollPanelVentasFiltradas.setViewportView(tblVentasFiltradas);
 

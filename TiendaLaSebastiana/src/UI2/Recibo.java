@@ -83,7 +83,7 @@ public class Recibo extends javax.swing.JInternalFrame {
         
         if (venta.getTotalDescuento() > 0) {
             lblAhorro.setText("¡¡FELICITACIONES!!, en total ahorró: " + venta.getTotalDescuento()
-                                + "$. Esperamos que siga confianzo en nosotros para futuras compras.");
+                                + "$. Esperamos que siga confiando en nosotros para futuras compras.");
         }
 
     }
@@ -109,7 +109,6 @@ public class Recibo extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         lblFactura = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFactura = new javax.swing.JTable();
         lblTotal = new javax.swing.JLabel();
@@ -122,11 +121,12 @@ public class Recibo extends javax.swing.JInternalFrame {
         txtFechaHoy = new javax.swing.JLabel();
         lblAhorro = new javax.swing.JLabel();
 
-        lblFactura.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblFactura.setText("FACTURA");
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
 
-        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
-        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+        lblFactura.setFont(new java.awt.Font("Eras Bold ITC", 1, 24)); // NOI18N
+        lblFactura.setText("FACTURA");
 
         tblFactura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -168,9 +168,11 @@ public class Recibo extends javax.swing.JInternalFrame {
         lblEmpleado.setText("Empleado : ");
 
         lblLaSebastiana.setBackground(new java.awt.Color(255, 255, 255));
-        lblLaSebastiana.setFont(new java.awt.Font("Script MT Bold", 1, 36)); // NOI18N
+        lblLaSebastiana.setFont(new java.awt.Font("Eras Bold ITC", 1, 36)); // NOI18N
         lblLaSebastiana.setForeground(new java.awt.Color(70, 123, 254));
         lblLaSebastiana.setText("LA SEBASTIANA");
+
+        lblAhorro.setFont(new java.awt.Font("Eras Medium ITC", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -185,7 +187,7 @@ public class Recibo extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(359, Short.MAX_VALUE))
+                        .addContainerGap(482, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblAhorro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(16, 16, 16))))
@@ -193,26 +195,24 @@ public class Recibo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jScrollPane1)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(lblEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(562, 562, 562))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(lblFactura)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblLaSebastiana, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane1)
+                            .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(575, 575, 575))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblFactura)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
+                            .addComponent(lblLaSebastiana, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(13, 13, 13))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(btnCerrarFactura)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(51, 51, 51)))
-                    .addContainerGap()))
+                            .addGap(57, 57, 57)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,10 +238,8 @@ public class Recibo extends javax.swing.JInternalFrame {
                     .addGap(62, 62, 62)
                     .addComponent(lblEmpleado)
                     .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblTotal)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,7 +288,6 @@ public class Recibo extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarFactura;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAhorro;
     private javax.swing.JLabel lblEmpleado;
     private javax.swing.JLabel lblFactura;
