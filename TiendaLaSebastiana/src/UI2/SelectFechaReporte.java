@@ -240,9 +240,9 @@ public class SelectFechaReporte extends javax.swing.JInternalFrame {
                             .addComponent(lblAnioFin))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFechaFin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnConsultar)
-                .addGap(26, 26, 26))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
