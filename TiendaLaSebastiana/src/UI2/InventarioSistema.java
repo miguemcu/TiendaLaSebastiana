@@ -4,8 +4,8 @@
  */
 package UI2;
 
-import BusinessLogic.Caja;
 import BusinessLogic.Producto;
+import BusinessLogic.ProductoService;
 import BusinessLogic.helperUI;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -17,8 +17,8 @@ import java.util.NoSuchElementException;
 public class InventarioSistema extends javax.swing.JInternalFrame{
 
     private Producto productoBuscado;
-    private Caja caja;
     private CreacionProducto crearProducto;
+    private ProductoService productoService;
 
     /**
      * Creates new form InventarioSistema
@@ -27,10 +27,10 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
         initComponents();
     }
 
-    public InventarioSistema(Caja caja) {
-        this.productoBuscado = null;
-        this.caja = caja;
+    public InventarioSistema(ProductoService productoService) {
         initComponents();
+        initServices(productoService);
+        this.productoBuscado = null;
     }
 
     //setters y getters
@@ -42,13 +42,14 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
         this.productoBuscado = productoBuscado;
     }
 
-    public Caja getCaja() {
-        return caja;
+    public ProductoService getProductoService() {
+        return productoService;
     }
 
-    public void setCaja(Caja caja) {
-        this.caja = caja;
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
     }
+
 
     public CreacionProducto getCrearProducto() {
         return crearProducto;
@@ -59,7 +60,7 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
     }
 
     //metodos para la clase.
-    private void setearCampos(Producto producto) {
+    private void setearCampos(Producto producto) throws Exception {
         txtNombre.setEditable(false);
         txtTipo.setEditable(false);
         txtID.setEditable(false);
@@ -69,7 +70,7 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
         txtNombre.setText(producto.getNombre());
         txtTipo.setText(String.valueOf(producto.getTipoProducto()));
         txtID.setText(String.valueOf(producto.getId()));
-        Double cantidad = this.getCaja().getInventario().getCantidades().get(producto.getId());
+        int cantidad = this.getProductoService().getCantidadProducto(producto.getId());
         txtCantidad.setText(Double.toString(cantidad));
         txtPrecio.setText(String.valueOf(producto.getPrecio()));
         txtPrecioMayorista.setText(String.valueOf(producto.getPrecioMayorista()));
@@ -297,21 +298,23 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
             boolean encontrado = false;
-
+            Producto producto;
             if (busqueda.matches("\\d+")) {
-
-                if (this.getCaja().getInventario().buscarProductos("ID", busqueda) != null) {
-                    this.setProductoBuscado(this.getCaja().getInventario().buscarProductos("ID", busqueda));
-                    setearCampos(this.getProductoBuscado());
+                producto = this.getProductoService().buscarProducto("id", busqueda);
+                if (producto != null) {
+                    setearCampos(producto);
                     encontrado = true;
+                    this.productoBuscado = producto;
                 } else {
                     encontrado = false;
                 }
+
             } else {
-                if (this.getCaja().getInventario().buscarProductos("nombre", busqueda) != null) {
-                    this.setProductoBuscado(this.getCaja().getInventario().buscarProductos("nombre", busqueda));
-                    setearCampos(this.getProductoBuscado());
+                producto = this.getProductoService().buscarProducto("nombre", busqueda);
+                if (producto != null) {
+                    setearCampos(producto);
                     encontrado = true;
+                    this.productoBuscado = producto;
                 } else {
                     encontrado = false;
                 }
@@ -320,11 +323,12 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
             if (!encontrado) {
                 throw new NoSuchElementException("Producto no encontrado.");
             }
+            txtError.setText("");
 
-        } catch (IllegalArgumentException ex) {
-            txtError.setText(ex.getMessage());
-        } catch (Exception ex) {
-            txtError.setText("Error inesperado: " + ex.getMessage());
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            txtError.setText(e.getMessage());
+        } catch (Exception e) {
+            txtError.setText("Error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -347,26 +351,26 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
 
             } else {
                 if (!cantidad.matches("\\d+")) {
-                    throw new IllegalArgumentException("La cantidad solo debe contener números positivos.");
+                    throw new IllegalArgumentException("La cantidad solo debe contener números.");
                 }
                 if (this.productoBuscado == null) {
-                    throw new IllegalArgumentException("Producto no encontrado.");
+                    throw new NoSuchElementException("Producto no encontrado.");
                 }
             }
-            Double cantidadAjustar = Double.valueOf(cantidad);
-            this.getCaja().getInventario().getCantidades().replace(this.getProductoBuscado().getId(), cantidadAjustar);
-            this.btnBuscarActionPerformed(evt);
-            this.txtCantidadAjustar.setText("");
-        } catch (IllegalArgumentException ex) {
-            txtError.setText(ex.getMessage());
-        } catch (Exception ex) {
-            txtError.setText("Error inesperado: " + ex.getMessage());
+            int cantidadNueva = Integer.valueOf(cantidad);
+            this.getProductoService().editarCantidadProducto(productoBuscado, cantidadNueva);
+            txtError.setText("Cantidad ajustada correctamente a " + cantidadNueva);
+
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            txtError.setText(e.getMessage());
+        } catch (Exception e) {
+            txtError.setText("Error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_btnAjustarCantidadActionPerformed
 
     private void btnCrearProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProductoActionPerformed
         if (this.getCrearProducto() == null) {
-            this.setCrearProducto(new CreacionProducto(this.getCaja(), this));
+            this.setCrearProducto(new CreacionProducto(this.productoService, this));
             this.getParent().add(this.getCrearProducto());
         }
         if (!this.getCrearProducto().isVisible()) {
@@ -380,7 +384,10 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioActionPerformed
-
+    
+    private void initServices(ProductoService productoService){
+        this.productoService = productoService;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAjustarCantidad;

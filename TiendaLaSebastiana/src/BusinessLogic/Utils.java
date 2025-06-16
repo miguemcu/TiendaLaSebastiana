@@ -7,7 +7,6 @@ package BusinessLogic;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import org.bson.BsonInt64;
 import org.bson.Document;
@@ -69,8 +68,7 @@ public class Utils {
         return ficha.toString();
     }
 
-    public static Producto getProductoMongo(Document doc) {
-        Document producto = (Document) doc.get("producto");
+    public static Producto getProductoMongo(Document producto) {
         String nombre = producto.getString("nombre");
         Long id = producto.getLong("id");
         Double precio = producto.getDouble("precio");

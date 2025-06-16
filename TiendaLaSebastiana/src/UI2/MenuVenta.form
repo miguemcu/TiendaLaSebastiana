@@ -24,99 +24,133 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnAgregarVenta" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                      <Component id="lblInsucienteStock" min="-2" pref="98" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jScrollPane1" alignment="0" min="-2" pref="365" max="-2" attributes="0"/>
-                  <Component id="lblProductosAgregados" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblTtlVenta" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtTotalVenta" min="-2" pref="158" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="lblIngresarFecha" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="lblDia" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="lblMes" min="-2" pref="22" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="lblAnio" min="-2" pref="37" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="lblHora" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="lblMinutos" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAgregarVenta" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="474" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtDia" min="-2" pref="35" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtMes" min="-2" pref="37" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnVender" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="btnCancelarVenta" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="lblProductosAgregados" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lblTtlVenta" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="txtTotalVenta" min="-2" pref="158" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="lblIngresarFecha" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="lblDia" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                                      <Component id="lblMes" min="-2" pref="22" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                                      <Component id="lblAnio" min="-2" pref="37" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                                      <Component id="lblHora" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                                      <Component id="lblMinutos" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="txtDia" min="-2" pref="35" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="txtMes" min="-2" pref="37" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="txtAnio" min="-2" pref="62" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="txtHora" min="-2" pref="35" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="txtMinuto" min="-2" pref="35" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                      </Group>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="txtAnio" min="-2" pref="62" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtHora" min="-2" pref="35" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtMinuto" min="-2" pref="35" max="-2" attributes="0"/>
-                                  </Group>
+                              </Group>
+                              <EmptySpace pref="178" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnVender" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="btnCancelarVenta" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="lblErrorFecha" min="-2" pref="279" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblCantidadAVender" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtCantidadVender" min="-2" pref="129" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="436" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblNombreProducto" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblPrecioUnitario" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCantidadDisponible" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblNombreProducto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblPrecioUnitario" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblCantidadDisponible" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="txtPrecioUnitario" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtNombreProducto" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtCantidadDisponible" alignment="0" min="-2" pref="172" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblCantidadAVender" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblInsucienteStock" min="-2" pref="98" max="-2" attributes="0"/>
+                                          <Component id="txtCantidadVender" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="txtPrecioUnitario" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtNombreProducto" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtCantidadDisponible" alignment="0" min="-2" pref="172" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="txtIVA" min="-2" pref="129" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblPercent" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jScrollPane2" min="-2" pref="297" max="-2" attributes="0"/>
+                                  <Component id="lblIVA" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCantidadAVender1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="txtDescuento" min="-2" pref="129" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblPercent2" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="297" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
+                              <Component id="txtBuscar" min="-2" pref="226" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="scrollVenta" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="270" max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblBuscarProducto" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                  <Component id="txtBuscar" min="-2" pref="226" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="306" max="32767" attributes="0"/>
+                  <EmptySpace pref="630" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -124,54 +158,86 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="scrollVenta" min="-2" pref="519" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblNombreProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtNombreProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblPrecioUnitario" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtPrecioUnitario" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtCantidadDisponible" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCantidadDisponible" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="jScrollPane2" min="-2" pref="68" max="-2" attributes="0"/>
+              <EmptySpace pref="64" max="32767" attributes="0"/>
+              <Component id="scrollVenta" min="-2" pref="519" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblNombreProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNombreProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblPrecioUnitario" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtPrecioUnitario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtCantidadDisponible" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCantidadDisponible" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblCantidadAVender" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtCantidadVender" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jScrollPane2" min="-2" pref="68" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="lblIVA" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnAgregarVenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblInsucienteStock" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIVA" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPercent" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblProductosAgregados" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="108" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="lblInsucienteStock" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="btnAgregarVenta" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Component id="lblCantidadAVender1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblPercent2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDescuento" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lblProductosAgregados" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="108" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblTtlVenta" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtTotalVenta" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblIngresarFecha" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="btnVender" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtDia" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtMes" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -188,27 +254,16 @@
                           <Component id="lblMinutos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblFecha" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnCancelarVenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnVender" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="lblErrorFecha" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="btnCancelarVenta" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblBuscarProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="671" max="32767" attributes="0"/>
+                  <Component id="lblBuscarProducto" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="710" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -319,12 +374,15 @@
         <Component class="javax.swing.JTable" name="tblProductosAgregados">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="0">
+              <Table columnCount="8" rowCount="0">
                 <Column editable="true" title="ID" type="java.lang.Long"/>
                 <Column editable="true" title="Nombre" type="java.lang.String"/>
                 <Column editable="true" title="Precio Unitario" type="java.lang.Double"/>
                 <Column editable="true" title="Cantidad" type="java.lang.Double"/>
-                <Column editable="true" title="Total" type="java.lang.Double"/>
+                <Column editable="true" title="Subtotal Bruto" type="java.lang.Double"/>
+                <Column editable="true" title="IVA Generado" type="java.lang.Double"/>
+                <Column editable="true" title="Descuento Generado" type="java.lang.Double"/>
+                <Column editable="true" title="Subtotal Neto" type="java.lang.Double"/>
               </Table>
             </Property>
           </Properties>
@@ -343,6 +401,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelarVenta">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="66" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cancelar Venta"/>
       </Properties>
       <Events>
@@ -351,6 +412,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVender">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="99" red="33" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Vender"/>
       </Properties>
       <Events>
@@ -392,8 +456,6 @@
         <Property name="text" type="java.lang.String" value="Buscar Producto:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblErrorFecha">
-    </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -409,5 +471,35 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="lblIVA">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ingrese el porcentaje de IVA que se le aplica al producto:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtIVA">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIVAActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCantidadAVender1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ingrese el descuento aplicado: "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtDescuento">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDescuentoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPercent">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="%"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPercent2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="%"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

@@ -4,7 +4,7 @@
  */
 package UI2;
 
-import BusinessLogic.Caja;
+import BusinessLogic.ProductoService;
 import BusinessLogic.helperUI;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -22,17 +22,18 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
     /**
      * Creates new form CreacionProducto
      */
-    private Caja caja;
+    private ProductoService productoService;
     private InventarioSistema inventarioSistema;
 
-    public CreacionProducto() {
+    public CreacionProducto(ProductoService productoService) {
         initComponents();
+        initServices(productoService);
     }
 
-    public CreacionProducto(Caja caja, InventarioSistema inventarioSistema) {
-        this.caja = caja;
-        this.inventarioSistema = inventarioSistema;
+    public CreacionProducto(ProductoService productoService, InventarioSistema inventarioSistema) {
         initComponents();
+        initServices(productoService);
+        this.inventarioSistema = inventarioSistema;
         inicializarComboTipoProd();
         ((AbstractDocument) txtDay.getDocument()).setDocumentFilter(new helperUI(2));
         ((AbstractDocument) txtMonth.getDocument()).setDocumentFilter(new helperUI(2));
@@ -40,13 +41,14 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
     }
 //gettets y setters.
 
-    public Caja getCaja() {
-        return caja;
+    public ProductoService getProductoService() {
+        return productoService;
     }
 
-    public void setCaja(Caja caja) {
-        this.caja = caja;
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
     }
+
 
     public InventarioSistema getInventarioSistema() {
         return inventarioSistema;
@@ -377,6 +379,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
             String mes = txtMonth.getText().trim();
             String annio = txtYear.getText().trim();
             String textoEtiquetas = txtEtiquetas.getText().trim();
+            
             if (nombre.isBlank() || id.isBlank() || Cantidad.isBlank()
                     || PrecioMayorista.isBlank() || Precio.isBlank() || tipoSeleccionado == null
                     || dia.isBlank() || mes.isBlank() || annio.isBlank()) {
@@ -418,7 +421,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
             }
 
             long Id = Long.parseLong(id);
-            double cantidad = Double.parseDouble(Cantidad);
+            int cantidad = Integer.parseInt(Cantidad);
             double precio = Double.parseDouble(Precio);
             double precioMayorista = Double.parseDouble(PrecioMayorista);
 
@@ -441,18 +444,15 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
             if (Integer.parseInt(txtYear.getText().trim()) < Year.now().getValue()) {
                 throw new IllegalArgumentException("La fecha de vencimiento es incorrecta.");
             }
-            this.getCaja().getInventario().crearProductos(tipoSeleccionado, nombre, Id, precio,
-                    precioMayorista, fechaVencimiento, etiquetas, cantidad);
-            
-            if (!this.getInventarioSistema().isVisible()) {
-                if (this.getInventarioSistema().isClosed()) {
-                    this.getParent().add(this.getInventarioSistema());
-                }
-                this.getInventarioSistema().setVisible(true);
-                this.dispose();
+
+            if (this.getProductoService().añadirProducto(tipoSeleccionado, nombre, Id, precio,
+                    precioMayorista, fechaVencimiento, etiquetas, cantidad) == false) {
+                throw new Exception("Ya existe un producto registrado con ese nombre o con ese ID");
             }
-            this.limpiarCampos();
+
             this.dispose();
+            InventarioSistema inventarioSistema = new InventarioSistema();
+            inventarioSistema.setVisible(true);
 
         } catch (IllegalArgumentException ex) {
             txtErrorRegistro.setText(ex.getMessage());
@@ -469,6 +469,9 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMonthActionPerformed
 
+    private void initServices(ProductoService productoService){
+        this.productoService = productoService;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollMensajesProductos;

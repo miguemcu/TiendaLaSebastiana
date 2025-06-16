@@ -4,9 +4,11 @@
  */
 package UI2;
 
-import BusinessLogic.Caja;
-import BusinessLogic.Empleado;
-import BusinessLogic.Inventario;
+import BusinessLogic.EmpleadoService;
+import BusinessLogic.ProductoService;
+import BusinessLogic.VentaService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
@@ -17,39 +19,48 @@ import javax.swing.JToggleButton;
  */
 public class Main extends javax.swing.JFrame {
 
+    private EmpleadoService empleadoService;
+    private ProductoService productoService;
+    private VentaService ventaService;
     private RegistroEmpleado registroEmpleado;
     private EntrarSistema entrarSistema;
-    private Caja caja;
-    private Inventario inventario;
     private InventarioSistema inventarioSistema;
     private MenuVenta venta;
 
     //private MenuDevolucion devolucion;
     private SistemaReportes sistemaReportes;
 
-    public Main() {
+    public Main() throws Exception {
         initComponents();
-        initObjects();
+        initServices();
         initFrames();
     }
 
-    public Caja getCaja() {
-        return caja;
-    }
-
-    public void setCaja(Caja caja) {
-        this.caja = caja;
-    }
-
-    public Inventario getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
-
     // Getters y Setters
+    public EmpleadoService getEmpleadoService() {
+        return empleadoService;
+    }
+
+    public void setEmpleadoService(EmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
+    }
+
+    public ProductoService getProductoService() {
+        return productoService;
+    }
+
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
+    public VentaService getVentaService() {
+        return ventaService;
+    }
+
+    public void setVentaService(VentaService ventaService) {
+        this.ventaService = ventaService;
+    }
+
     public EntrarSistema getEntrarSistema() {
         return entrarSistema;
     }
@@ -90,7 +101,7 @@ public class Main extends javax.swing.JFrame {
     public void setDevolucion(MenuDevolucion devolucion) {
         this.devolucion = devolucion;
     }
-*/
+     */
     public SistemaReportes getSistemaReportes() {
         return sistemaReportes;
     }
@@ -279,7 +290,7 @@ public class Main extends javax.swing.JFrame {
         this.getBtnReportes().setEnabled(false);
         this.getBtnDevolución().setEnabled(false);
         this.getCerrarSesionItem().setEnabled(false);
-        this.getCaja().setCajero(null);
+        this.getEmpleadoService().setCajero(null);
     }//GEN-LAST:event_cerrarSesionItemActionPerformed
 
     private void btnEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterActionPerformed
@@ -292,7 +303,7 @@ public class Main extends javax.swing.JFrame {
 
     private void iniciarSesionItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarSesionItemActionPerformed
         if (entrarSistema == null) {
-            entrarSistema = new EntrarSistema();
+            entrarSistema = new EntrarSistema(this.empleadoService, this);
         }
 
         if (!entrarSistema.isVisible()) {
@@ -305,7 +316,7 @@ public class Main extends javax.swing.JFrame {
 
     private void registrarEmpleadoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarEmpleadoItemActionPerformed
         if (registroEmpleado == null) {
-            registroEmpleado = new RegistroEmpleado();
+            registroEmpleado = new RegistroEmpleado(this.empleadoService);
         }
 
         if (!registroEmpleado.isVisible()) {
@@ -319,7 +330,8 @@ public class Main extends javax.swing.JFrame {
     private void btnHacerVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHacerVentaActionPerformed
 
         if (this.getVenta() == null) {
-            this.setVenta(new MenuVenta(this.getCaja(), this.desktopPane));
+            this.setVenta(new MenuVenta(this.empleadoService, this.productoService,
+                    this.ventaService, this.desktopPane));
             this.desktopPane.add(this.getVenta());
         }
         if (!this.getVenta().isVisible()) {
@@ -336,7 +348,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         if (this.getInventarioSistema() == null) {
-            this.setInventarioSistema(new InventarioSistema(this.getCaja()));
+            this.setInventarioSistema(new InventarioSistema(this.productoService));
             this.desktopPane.add(this.getInventarioSistema());
         }
         if (!this.getInventarioSistema().isVisible()) {
@@ -348,8 +360,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        if (this.getSistemaReportes()== null) {
-            this.setSistemaReportes(new SistemaReportes(this.getCaja(), this, this.desktopPane));
+        if (this.getSistemaReportes() == null) {
+            this.setSistemaReportes(new SistemaReportes(this, this.ventaService,
+                    this.productoService, this.desktopPane));
             this.desktopPane.add(this.getSistemaReportes());
         }
         if (!this.getSistemaReportes().isVisible()) {
@@ -390,26 +403,31 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                try {
+                    new Main().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     private void initFrames() {
         if (registroEmpleado == null) {
-            registroEmpleado = new RegistroEmpleado(this.getCaja());
+            registroEmpleado = new RegistroEmpleado(this.empleadoService);
         }
         desktopPane.add(registroEmpleado);
 
         if (entrarSistema == null) {
-            entrarSistema = new EntrarSistema(this.getCaja(), this);
+            entrarSistema = new EntrarSistema(this.empleadoService, this);
         }
         desktopPane.add(entrarSistema);
     }
 
-    private void initObjects() {
-        caja = new Caja();
-        inventario = new Inventario();
+    private void initServices() throws Exception {
+        this.empleadoService = new EmpleadoService();
+        this.productoService = new ProductoService();
+        this.ventaService = new VentaService();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

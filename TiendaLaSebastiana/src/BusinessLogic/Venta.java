@@ -97,7 +97,7 @@ public class Venta {
 
     public Document toDocument() {
         Document ventaDocument = new Document("id", ID)
-                .append("fecha", fecha);
+                .append("fecha", fecha.toString());
 
         ArrayList<Document> detallesDoc = new ArrayList<>();
         for (DetalleVenta detalle : detalles) {
@@ -106,11 +106,11 @@ public class Venta {
             var docProducto = producto.toDocument();
             detalleDoc.append("producto", docProducto)
                     .append("cantidad", detalle.getCantidad())
-                    .append("precioUnitario", detalle.getPrecioUnitario())
-                    .append("subtotalBruto", detalle.getSubtotalBruto())
-                    .append("iva", detalle.getIva())
-                    .append("descuento", detalle.getDescuento())
-                    .append("subtotalNeto", detalle.getSubtotalNeto());
+                    .append("precioUnitario", Double.valueOf(detalle.getPrecioUnitario()))
+                    .append("subtotalBruto", Double.valueOf(detalle.getSubtotalBruto()))
+                    .append("iva", Double.valueOf(detalle.getIva()))
+                    .append("descuento", Double.valueOf(detalle.getDescuento()))
+                    .append("subtotalNeto", Double.valueOf(detalle.getSubtotalNeto()));
 
             detallesDoc.add(detalleDoc);
         }

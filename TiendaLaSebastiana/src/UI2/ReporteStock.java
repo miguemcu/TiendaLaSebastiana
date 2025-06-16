@@ -5,8 +5,7 @@
 package UI2;
 
 import BusinessLogic.Producto;
-import BusinessLogic.Reporte;
-import java.util.ArrayList;
+import BusinessLogic.ProductoService;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,9 +15,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ReporteStock extends javax.swing.JInternalFrame {
 
-    private Main parent;
+    private ProductoService productoService;
     private DefaultTableModel modeloTabla;
-    private Reporte reporte;
 
     /**
      * Creates new form ReporteStock
@@ -27,35 +25,36 @@ public class ReporteStock extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public ReporteStock(Main parent) {
+    public ReporteStock(ProductoService productoService) {
         initComponents();
-        this.parent = parent;
+        initServices(productoService);
         modeloTabla = (DefaultTableModel) tblReporteStock.getModel();
-        this.reporte = new Reporte(parent.getCaja());
     }
+
+    public ProductoService getProductoService() {
+        return productoService;
+    }
+
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
     
     //Metodos de la clase
     
-    public void mostrarVentasEnTabla() {
-        Map<Long, Double> cantidades = reporte.filtrarStack();
-        ArrayList<Producto> productos = reporte.filtrarProductos(cantidades);
+    public void mostrarVentasEnTabla() throws Exception {
+        Map<Producto, Integer> productos = this.productoService.filtrarProductosPorStock();
 
         modeloTabla.setRowCount(0);
 
-        for (Long idProd : cantidades.keySet()) {
-            String nombre = "";
-            for (Producto producto : productos) {
-                if (producto.getId() == idProd) {
-                    nombre = producto.getNombre();
-                    break;
-                }
-            }
+        for (Producto producto : productos.keySet()) {
+            String nombre = producto.getNombre();
 
-            double cantidad = cantidades.get(idProd);
+            int cantidad = productos.get(producto.getId());
             String alerta = "";
-            if (cantidad < 5) {
+            if (cantidad <= 10) {
                 alerta = "⚠️ Stock Critico";
-            } else if (cantidad > 20) {
+            } else if (cantidad > 50) {
                 alerta = "Sobrestock";
             } else {
                 alerta = "Normal";
@@ -65,11 +64,15 @@ public class ReporteStock extends javax.swing.JInternalFrame {
         }
     }
 
-    public void agregarFilaProducto(String producto, Double cantidad, String alerta) {
+    public void agregarFilaProducto(String producto, int cantidad, String alerta) {
         Object[] nuevaFila = {producto, cantidad, alerta};
         modeloTabla.addRow(nuevaFila);
     } 
-
+    
+    private void initServices(ProductoService productoService){
+        this.productoService = productoService;
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

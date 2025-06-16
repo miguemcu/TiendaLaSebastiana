@@ -51,7 +51,7 @@ public class RepoProductos {
             var productosEncontrados = collection.find();
             Map<Producto, Integer> productos = new HashMap<>();
             for (Document doc : productosEncontrados) {
-                var producto = Utils.getProductoMongo(doc);
+                var producto = Utils.getProductoMongo((Document) doc.get("producto"));
                 int cantidad = doc.getInteger("cantidad");
                 productos.put(producto, cantidad);
             }
