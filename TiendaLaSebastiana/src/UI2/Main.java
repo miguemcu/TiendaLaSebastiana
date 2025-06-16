@@ -343,7 +343,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnDevoluciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevoluciónActionPerformed
         if (this.getDevolucion()== null) {
-            this.setDevolucion(new Devolucion(this.ventaService, this));
+            this.setDevolucion(new Devolucion(this.ventaService, this.productoService, this));
             this.desktopPane.add(this.getDevolucion());
         }
         if (!this.getDevolucion().isVisible()) {

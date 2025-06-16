@@ -5,6 +5,7 @@
 package Repository;
 
 import BusinessLogic.DetalleVenta;
+import BusinessLogic.Producto;
 import BusinessLogic.Utils;
 import BusinessLogic.Venta;
 import com.mongodb.client.MongoClients;
@@ -80,6 +81,21 @@ public class RepoVentas {
             throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
         }
     }
+    
+    public Venta getVenta(long id) throws Exception {
+        try{
+            Document doc = collection.find(Filters.eq("id", id)).first();
+
+            if (doc == null) {
+                throw new Exception("Venta no encontrada.");
+            } else {
+                return Venta.fromDocument(doc, id);
+                
+            }
+        } catch (Exception e) {
+            throw new Exception("Error inesperado: " + e.getMessage());
+        }
+    }
 
     public boolean agregarVenta(ArrayList<DetalleVenta> detalles, double totalVenta, double totalBruto,
             double totalDescuento, double totalIva, LocalDateTime fecha, long id) throws Exception {
@@ -93,8 +109,7 @@ public class RepoVentas {
     }
     public boolean eliminarVenta(Venta venta) throws Exception{
         try {
-            Bson filtro = Filters.and(
-                    Filters.eq(venta));
+            Bson filtro = Filters.eq("id", venta.getID());
             
 
             if (collection.find(filtro).first() == null) {
