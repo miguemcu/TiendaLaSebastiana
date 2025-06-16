@@ -5,6 +5,8 @@
 package UI2;
 
 import BusinessLogic.Caja;
+import BusinessLogic.ProductoService;
+import BusinessLogic.VentaService;
 import javax.swing.JDesktopPane;
 
 /**
@@ -12,9 +14,10 @@ import javax.swing.JDesktopPane;
  * @author DELL
  */
 public class SistemaReportes extends javax.swing.JInternalFrame {
-
-    private Caja caja;
+    
     private Main main;
+    private VentaService ventaService;
+    private ProductoService productoService;
     private ReporteStock reporteStock;
     private ReporteVentas reporteVentas;
     private JDesktopPane desktopPane;
@@ -26,21 +29,13 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public SistemaReportes(Caja caja, Main main, JDesktopPane desktopPane) {
+    public SistemaReportes(Main main, VentaService ventaService, ProductoService productoService, JDesktopPane desktopPane) {
         initComponents();
-        this.caja = caja;
+        initServices( ventaService, productoService);
         this.main = main;
         this.desktopPane = desktopPane;    
     }
     //Getters y Setters
-
-    public Caja getCaja() {
-        return caja;
-    }
-
-    public void setCaja(Caja caja) {
-        this.caja = caja;
-    }
 
     public Main getMain() {
         return main;
@@ -75,6 +70,16 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
         this.desktopPane = desktopPane;
     }
 
+    public VentaService getVentaService() {
+        return ventaService;
+    }
+
+    public void setVentaService(VentaService ventaService) {
+        this.ventaService = ventaService;
+    }
+    
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,7 +91,7 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
 
         lblReportesDeseaHacer = new javax.swing.JLabel();
         btnReporteVentas = new javax.swing.JButton();
-        btnReporteStack = new javax.swing.JButton();
+        btnReporteStock = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -101,11 +106,11 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
             }
         });
 
-        btnReporteStack.setText("Reporte de Stack");
-        btnReporteStack.setToolTipText("");
-        btnReporteStack.addActionListener(new java.awt.event.ActionListener() {
+        btnReporteStock.setText("Reporte de Stock");
+        btnReporteStock.setToolTipText("");
+        btnReporteStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteStackActionPerformed(evt);
+                btnReporteStockActionPerformed(evt);
             }
         });
 
@@ -119,7 +124,7 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
                         .addGap(125, 125, 125)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnReporteVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnReporteStack, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnReporteStock, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addComponent(lblReportesDeseaHacer)))
@@ -133,7 +138,7 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
                 .addGap(39, 39, 39)
                 .addComponent(btnReporteVentas)
                 .addGap(18, 18, 18)
-                .addComponent(btnReporteStack)
+                .addComponent(btnReporteStock)
                 .addGap(102, 102, 102))
         );
 
@@ -142,7 +147,7 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
 
     private void btnReporteVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteVentasActionPerformed
         if (this.getReporteVentas() == null) {
-            this.setReporteVentas(new ReporteVentas(this.getMain(), this.getDesktopPane()));
+            this.setReporteVentas(new ReporteVentas(this.main, this.ventaService, this.getDesktopPane()));
             this.getParent().add(this.getReporteVentas());
         }
         if (!this.getReporteVentas().isVisible()) {
@@ -153,9 +158,9 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnReporteVentasActionPerformed
 
-    private void btnReporteStackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteStackActionPerformed
+    private void btnReporteStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteStockActionPerformed
        if (this.getReporteStock()== null) {
-            this.setReporteStock(new ReporteStock(this.getMain()));
+            this.setReporteStock(new ReporteStock(this.productoService));
             this.getParent().add(this.getReporteStock());
         }
         if (!this.getReporteStock().isVisible()) {
@@ -167,11 +172,15 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
         /*var ReporteStock = new ReporteStock(parent);
        ReporteStock.setVisible(true);
        ReporteStock.mostrarVentasEnTabla*/
-    }//GEN-LAST:event_btnReporteStackActionPerformed
-
+    }//GEN-LAST:event_btnReporteStockActionPerformed
+    
+    private void initServices(VentaService ventaService, ProductoService productoService){
+        this.ventaService = ventaService;
+        this.productoService = productoService;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnReporteStack;
+    private javax.swing.JButton btnReporteStock;
     private javax.swing.JButton btnReporteVentas;
     private javax.swing.JLabel lblReportesDeseaHacer;
     // End of variables declaration//GEN-END:variables

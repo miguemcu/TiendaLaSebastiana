@@ -69,8 +69,7 @@ public class Utils {
         return ficha.toString();
     }
 
-    public static Producto getProductoMongo(Document doc) {
-        Document producto = (Document) doc.get("producto");
+    public static Producto getProductoMongo(Document producto) {
         String nombre = producto.getString("nombre");
         Long id = producto.getLong("id");
         Double precio = producto.getDouble("precio");

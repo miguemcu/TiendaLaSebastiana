@@ -29,7 +29,7 @@
                       <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnReporteVentas" max="32767" attributes="0"/>
-                          <Component id="btnReporteStack" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="btnReporteStock" min="-2" pref="125" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -49,7 +49,7 @@
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Component id="btnReporteVentas" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnReporteStack" min="-2" max="-2" attributes="0"/>
+              <Component id="btnReporteStock" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -70,13 +70,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteVentasActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnReporteStack">
+    <Component class="javax.swing.JButton" name="btnReporteStock">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Reporte de Stack"/>
+        <Property name="text" type="java.lang.String" value="Reporte de Stock"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteStackActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteStockActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

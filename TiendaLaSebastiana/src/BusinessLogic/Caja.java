@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 public class Caja {
 
-    private Empleado cajero;
     private ArrayList<Venta> ventas;
     private Inventario inventario;
 
@@ -25,15 +24,7 @@ public class Caja {
         this.inventario = new Inventario();
         this.ventas = new ArrayList<>();
     }
-
-    public Empleado getCajero() {
-        return cajero;
-    }
-
-    public void setCajero(Empleado cajero) {
-        this.cajero = cajero;
-    }
-
+    
     public ArrayList<Venta> getVentas() {
         return ventas;
     }

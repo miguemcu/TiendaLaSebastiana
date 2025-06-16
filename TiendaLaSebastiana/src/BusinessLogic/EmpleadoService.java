@@ -5,6 +5,7 @@
 package BusinessLogic;
 
 import Repository.RepoEmpleados;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,6 +13,7 @@ import Repository.RepoEmpleados;
  */
 public class EmpleadoService {
     private RepoEmpleados repositorio;
+    private Empleado cajero;
 
     public EmpleadoService() throws Exception {
         this.repositorio = new RepoEmpleados();
@@ -24,7 +26,18 @@ public class EmpleadoService {
     public void setRepositorio(RepoEmpleados repositorio) {
         this.repositorio = repositorio;
     }
+
+    public Empleado getCajero() {
+        return cajero;
+    }
+
+    public void setCajero(Empleado cajero) {
+        this.cajero = cajero;
+    }
     
+    public ArrayList<Empleado> getEmpleados() throws Exception {
+        return repositorio.getEmpleados();
+    }
     
     public Empleado validarDocumento(String nombre, String documento) throws Exception {
         var empleado = repositorio.getEmpleado(nombre);

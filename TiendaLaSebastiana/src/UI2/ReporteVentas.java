@@ -4,9 +4,13 @@
  */
 package UI2;
 
-import BusinessLogic.Reporte;
+import BusinessLogic.Venta;
+import BusinessLogic.VentaService;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 
 /**
@@ -15,10 +19,10 @@ import javax.swing.JDesktopPane;
  */
 public class ReporteVentas extends javax.swing.JInternalFrame {
 
-    private Main main;
+    private VentaService ventaService;
     private JDesktopPane desktopPane;
     private VentasPeriodo ventasPeriodo;
-
+    private Main main;
     /**
      * Creates new form ReporteVentas
      */
@@ -26,11 +30,20 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public ReporteVentas(Main main, JDesktopPane desktopPane) {
-        initComponents();
+    public ReporteVentas( Main main, VentaService ventaService, JDesktopPane desktopPane) {
         this.main = main;
+        initComponents();
+        initServices(ventaService);
         this.desktopPane = desktopPane;
         
+    }
+
+    public VentaService getVentaService() {
+        return ventaService;
+    }
+
+    public void setVentaService(VentaService ventaService) {
+        this.ventaService = ventaService;
     }
 
     public Main getMain() {
@@ -41,6 +54,7 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
         this.main = main;
     }
 
+    
     public VentasPeriodo getVentasPeriodo() {
         return ventasPeriodo;
     }
@@ -239,7 +253,7 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtMesInicioActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        Reporte reporte = new Reporte(this.getMain().getCaja());
+
         String diaInicioStr = txtDiaInicio.getText().trim();
         String mesInicioStr = txtMesInicio.getText().trim();
         String anioInicioStr = txtAnioInicio.getText().trim();
@@ -273,10 +287,12 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
             lblFechaInicio.setText("Fecha de inicio: " + fechaInicio);
             lblFechaFin.setText("Fecha de fin: " + fechaFin);
 
-            reporte.setFechaInicio(fechaInicio);
-            reporte.setFechaFin(fechaFin);
-
-            var ventasAMostrar = reporte.obtenerVentasSegunPeriodo();
+            ArrayList<Venta> ventasAMostrar = new ArrayList<>();
+            try {
+                ventasAMostrar = this.getVentaService().obtenerVentasSegunPeriodo(fechaInicio, fechaFin);
+            } catch (Exception ex) {
+                Logger.getLogger(ReporteVentas.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (this.getVentasPeriodo() == null) {
                 this.setVentasPeriodo(new VentasPeriodo(ventasAMostrar));
                 this.getMain().add(this.getVentasPeriodo());
@@ -331,7 +347,9 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
     private void txtAnioFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioFinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAnioFinActionPerformed
-
+    private void initServices(VentaService ventaService){
+        this.ventaService = ventaService;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;

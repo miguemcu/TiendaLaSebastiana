@@ -4,8 +4,8 @@
  */
 package UI2;
 
-import BusinessLogic.Caja;
 import BusinessLogic.Empleado;
+import BusinessLogic.EmpleadoService;
 import BusinessLogic.helperUI;
 import java.util.ArrayList;
 
@@ -13,30 +13,31 @@ import java.util.ArrayList;
  *
  * @author DELL
  */
-public class EntrarSistema extends javax.swing.JInternalFrame{
+public class EntrarSistema extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form EntrarSistema
      */
-    private Caja caja;
+    private EmpleadoService empleadoService;
     private Main main;
 
-    public EntrarSistema() {
+    public EntrarSistema(EmpleadoService empleadoService, Main main) {
         initComponents();
-    }
-
-    public EntrarSistema(Caja caja, Main main) {
-        initComponents();
-        this.caja = caja;
+        initServices(empleadoService);
         this.main = main;
     }
 
-    public Caja getCaja() {
-        return caja;
+    public EntrarSistema(EmpleadoService empleadoService) {
+        initComponents();
+        initServices(empleadoService);
     }
 
-    public void setCaja(Caja caja) {
-        this.caja = caja;
+    public EmpleadoService getEmpleadoService() {
+        return empleadoService;
+    }
+
+    public void setEmpleadoService(EmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
     }
 
     public Main getMain() {
@@ -165,11 +166,11 @@ public class EntrarSistema extends javax.swing.JInternalFrame{
             if (!cedula.matches("\\d+")) {
                 throw new IllegalArgumentException("La cedula solo debe contener números.");
             }
-            Empleado cajero = this.getCaja().verificarEmpleado(nombre, cedula);
+            Empleado cajero = this.getEmpleadoService().validarDocumento(nombre, cedula);
 
             if (cajero != null) {
 
-                this.getCaja().setCajero(cajero);
+                this.getEmpleadoService().setCajero(cajero);
                 this.getMain().getBtnHacerVenta().setEnabled(true);
                 this.getMain().getBtnInventario().setEnabled(true);
                 this.getMain().getBtnReportes().setEnabled(true);
@@ -204,5 +205,9 @@ public class EntrarSistema extends javax.swing.JInternalFrame{
         campos.add(txtNombreEmpleado);
         helperUI.limpiarCampos(campos);
 
+    }
+
+    private void initServices(EmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
     }
 }

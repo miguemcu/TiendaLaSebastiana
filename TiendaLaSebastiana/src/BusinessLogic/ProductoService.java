@@ -7,6 +7,7 @@ package BusinessLogic;
 import Repository.RepoProductos;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -93,6 +94,23 @@ public class ProductoService {
                 }
             }
         }
+    }
+    
+    public Map<Producto, Integer> filtrarProductosPorStock() throws Exception {
+        
+        Map<Producto, Integer> productosFiltrados = new HashMap<>();
+
+        for (Map.Entry<Producto, Integer> entrada : this.getProductos().entrySet()) {
+            Producto producto = entrada.getKey();
+            Integer cantidad = entrada.getValue();
+
+            // Crítico si tenemos 10 o menos y sobrestock si tenemos más de 50
+            if (cantidad <= 10 || cantidad > 50) {
+                productosFiltrados.put(producto, cantidad);
+            }
+        }
+
+        return productosFiltrados;
     }
 
 }

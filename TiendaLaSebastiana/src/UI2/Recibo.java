@@ -50,14 +50,14 @@ public class Recibo extends javax.swing.JInternalFrame {
     }
 
     //Metodos para la UI
-    public void agregarFilaProducto(String descripcion, double cantidad, double precioUni, double precioTotal) {
+    public void agregarFilaProducto(String descripcion, int cantidad, double precioUni, double precioTotal) {
         Object[] nuevaFila = {descripcion, cantidad, precioUni, precioTotal};
         modeloTabla.addRow(nuevaFila);
     }
 
     public void mostrarVentasEnRecibo() {
         String producto = null;
-        double cantidad = 0.0;
+        int cantidad = 0;
         double precioUni = 0.0;
         double precioTotal = 0.0;
         for (DetalleVenta detalle : venta.getDetalles()) {
@@ -79,7 +79,7 @@ public class Recibo extends javax.swing.JInternalFrame {
     }
 
     private void mostrarEmpleado() {
-        txtEmpleado.setText(this.getMenuVenta().getCaja().getCajero().getNombre());
+        txtEmpleado.setText(this.getMenuVenta().getEmpleadoService().getCajero().getNombre());
 
     }
 

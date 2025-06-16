@@ -4,8 +4,7 @@
  */
 package UI2;
 
-import BusinessLogic.Caja;
-import BusinessLogic.Empleado;
+import BusinessLogic.EmpleadoService;
 import BusinessLogic.helperUI;
 import java.util.ArrayList;
 
@@ -15,25 +14,22 @@ import java.util.ArrayList;
  * @author Sebastian
  */
 public class RegistroEmpleado extends javax.swing.JInternalFrame {
+    private EmpleadoService empleadoService;
 
-    private Caja caja;
-
-    public RegistroEmpleado() {
+    public RegistroEmpleado(EmpleadoService empleadoService) {
         initComponents();
+        initServices(empleadoService);
     }
 
-    public RegistroEmpleado(Caja caja) {
-        this.caja = caja;
-        initComponents();
+    public EmpleadoService getEmpleadoService() {
+        return empleadoService;
     }
 
-    public Caja getCaja() {
-        return caja;
+    public void setEmpleadoService(EmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
     }
-
-    public void setCaja(Caja caja) {
-        this.caja = caja;
-    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -144,30 +140,26 @@ public class RegistroEmpleado extends javax.swing.JInternalFrame {
 
     private void btnRegistroEmpleadoExitosoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroEmpleadoExitosoActionPerformed
         String nombre = txtNombreEmpleado.getText().trim();
-        String cedula = txtCedulaEmpleado.getText().trim();
+        String documento = txtCedulaEmpleado.getText().trim();
 
         try {
-
-            if (nombre.isBlank() || cedula.isBlank()) {
+            
+            if (nombre.isBlank() || documento.isBlank()){
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
-
-            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")) {
+            
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+")){
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
-
-            for (Empleado empleado : this.getCaja().getEmpleados()) {
-                if (empleado.getCedula().equals(cedula)) {
-                    throw new IllegalArgumentException("Ya hay un empleado registrado con esa cédula.");
-                }
-
+            
+            if (!documento.matches("\\d+")){
+                throw new IllegalArgumentException("La documento solo debe contener números.");
+            }
+        
+            if(this.getEmpleadoService().agregarEmpleado(nombre, documento) == false){
+                throw new Exception("Ya existe un empleado registrado con ese documento o con ese nombre.");
             }
 
-            if (!cedula.matches("\\d+")) {
-                throw new IllegalArgumentException("La cedula solo debe contener números.");
-            }
-
-            this.getCaja().agregarEmpleado(nombre, cedula);
             this.dispose();
 
         } catch (IllegalArgumentException ex) {
@@ -194,6 +186,10 @@ public class RegistroEmpleado extends javax.swing.JInternalFrame {
         campos.add(txtCedulaEmpleado);
         campos.add(txtNombreEmpleado);
         helperUI.limpiarCampos(campos);
+    }
+    
+    private void initServices(EmpleadoService empleadoService){
+        this.empleadoService = empleadoService;
     }
 }
 

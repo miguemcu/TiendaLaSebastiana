@@ -6,14 +6,19 @@ package UI2;
 
 import BusinessLogic.Caja;
 import BusinessLogic.DetalleVenta;
+import BusinessLogic.EmpleadoService;
 import BusinessLogic.Producto;
+import BusinessLogic.ProductoService;
 import BusinessLogic.Utils;
 import BusinessLogic.Venta;
+import BusinessLogic.VentaService;
 import BusinessLogic.helperUI;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +29,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MenuVenta extends javax.swing.JInternalFrame {
 
-    private Caja caja;
+    private EmpleadoService empleadoService;
+    private ProductoService productoService;
+    private VentaService ventaService;
     private DefaultTableModel modeloTabla;
     private Venta venta;
     private Recibo recibo;
@@ -38,23 +45,39 @@ public class MenuVenta extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public MenuVenta(Caja caja, JDesktopPane desktopPane) {
-
+    public MenuVenta(EmpleadoService empleadoService, ProductoService productoService,
+            VentaService ventaService, JDesktopPane desktopPane) {
         initComponents();
+        initServices(empleadoService, productoService, ventaService);
         modeloTabla = (DefaultTableModel) tblProductosAgregados.getModel();
         this.venta = new Venta();
         this.venta.setDetalles(new ArrayList<>());
-        this.caja = caja;
         this.desktopPane = desktopPane;
     }
 
     //Setter y Getter
-    public Caja getCaja() {
-        return caja;
+    public EmpleadoService getEmpleadoService() {
+        return empleadoService;
     }
 
-    public void setCaja(Caja caja) {
-        this.caja = caja;
+    public void setEmpleadoService(EmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
+    }
+
+    public ProductoService getProductoService() {
+        return productoService;
+    }
+
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
+    public VentaService getVentaService() {
+        return ventaService;
+    }
+
+    public void setVentaService(VentaService ventaService) {
+        this.ventaService = ventaService;
     }
 
     public DefaultTableModel getModeloTabla() {
@@ -115,13 +138,13 @@ public class MenuVenta extends javax.swing.JInternalFrame {
     }
 
     //Metodos para la clase
-    private void setearCampos(Producto producto) {
+    private void setearCampos(Producto producto) throws Exception {
         txtNombreProducto.setEditable(false);
         txtCantidadDisponible.setEditable(false);
         txtPrecioUnitario.setEditable(false);
         txtCantidadVender.setEditable(true);
         txtNombreProducto.setText(producto.getNombre());
-        txtCantidadDisponible.setText(String.valueOf(this.getCaja().getInventario().getCantidadProducto(producto.getId())));
+        txtCantidadDisponible.setText(String.valueOf(this.getProductoService().getCantidadProducto(producto.getId())));
         txtPrecioUnitario.setText(String.valueOf(producto.getPrecio()));
         txtTotalVenta.setEditable(false);
     }
@@ -135,17 +158,19 @@ public class MenuVenta extends javax.swing.JInternalFrame {
 
             if (busqueda.matches("\\d+")) {
 
-                if (this.getCaja().getInventario().buscarProductos("ID", busqueda) != null) {
-                    setearCampos(this.getCaja().getInventario().buscarProductos("ID", busqueda));
-                    return this.getCaja().getInventario().buscarProductos("ID", busqueda);
+                if (this.getProductoService().buscarProducto("ID", busqueda) != null) {
+                    var producto = this.getProductoService().buscarProducto("ID", busqueda);
+                    setearCampos(producto);
+                    return producto;
                 } else {
                     throw new NoSuchElementException("Producto no encontrado.");
                 }
 
             } else {
-                if (this.getCaja().getInventario().buscarProductos("nombre", busqueda) != null) {
-                    setearCampos(this.getCaja().getInventario().buscarProductos("nombre", busqueda));
-                    return this.getCaja().getInventario().buscarProductos("nombre", busqueda);
+                if (this.getProductoService().buscarProducto("nombre", busqueda) != null) {
+                    var producto = this.getProductoService().buscarProducto("ID", busqueda);
+                    setearCampos(producto);
+                    return producto;
                 } else {
                     throw new NoSuchElementException("Producto no encontrado.");
                 }
@@ -159,7 +184,7 @@ public class MenuVenta extends javax.swing.JInternalFrame {
         return null;
     }
 
-    public void agregarFilaProducto(Long id, String nombre, double precioUni, double cantidad, double total) {
+    public void agregarFilaProducto(Long id, String nombre, double precioUni, int cantidad, double total) {
         Object[] nuevaFila = {id, nombre, precioUni, cantidad, total};
         modeloTabla.addRow(nuevaFila);
     }
@@ -567,19 +592,19 @@ public class MenuVenta extends javax.swing.JInternalFrame {
 
     private void btnAgregarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVentaActionPerformed
         try {
-            double cantidadDisponible = Double.parseDouble(txtCantidadDisponible.getText());
+            int cantidadDisponible = Integer.parseInt(txtCantidadDisponible.getText());
             if (txtCantidadVender.getText().isBlank()) {
                 throw new IllegalArgumentException("El campo de cantidad a vender es obligatorio.");
             }
             if (!txtCantidadVender.getText().matches("\\d+")) {
                 throw new IllegalArgumentException("La cantidad solo debe contener números positivos.");
             }
-            double cantidadVender = Double.parseDouble(txtCantidadVender.getText());
+            int cantidadVender = Integer.parseInt(txtCantidadVender.getText());
 
             Producto producto = this.buscarAction();
             double precio = 0;
             double total = 0;
-            
+
             if (cantidadDisponible < cantidadVender) {
                 this.lblInsucienteStock.setVisible(true);
             } else {
@@ -595,7 +620,7 @@ public class MenuVenta extends javax.swing.JInternalFrame {
                 this.agregarFilaProducto(producto.getId(), producto.getNombre(),
                         precio, cantidadVender, total);
             }
-            var detalleVenta = new DetalleVenta(producto, cantidadVender, precio, total, 0, 0);
+            var detalleVenta = new DetalleVenta(producto, cantidadVender, precio, total, 0, 0, total);
             venta.getDetalles().add(detalleVenta);
             this.setTotal_acumulado(total_acumulado + total);
             txtTotalVenta.setText(String.valueOf(this.getTotal_acumulado()));
@@ -633,15 +658,26 @@ public class MenuVenta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarVentaActionPerformed
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+        try {
+            this.venderAction();
+        } catch (Exception ex) {
+            Logger.getLogger(MenuVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnVenderActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        this.buscarAction();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private boolean venderAction() throws Exception {
         double totalVenta = sumarColumnaDouble(tblProductosAgregados, 4);
         txtTotalVenta.setText(String.valueOf(totalVenta));
-        Long id = Utils.generarIdUnico(this.getCaja().getVentas());
+        Long id = Utils.generarIdUnico(this.getVentaService().getVentas());
         LocalDateTime fecha = capturarFecha();
 
         if (fecha == null) {
             lblErrorFecha.setText("Fecha inválida, ingrese de nuevo.");
-            return;
+            return false;
         }
 
         venta.setTotalVenta(totalVenta);
@@ -650,8 +686,16 @@ public class MenuVenta extends javax.swing.JInternalFrame {
         venta.setTotalIva(0);
         venta.setFecha(fecha);
         venta.setID(id);
-        this.getCaja().setInventario(venta.detallarCantidades(this.getCaja().getInventario()));
-        this.getCaja().agregarVenta(venta);
+
+        try {
+            this.getVentaService().añadirVenta(venta);
+        } catch (Exception ex) {
+            txtError.setText("Error inesperado: No se pudo registrar la venta");
+            return false;
+        }
+
+        this.getProductoService().ajustarCantidades(venta);
+
         this.dispose();
 
         if (this.getRecibo() == null) {
@@ -664,15 +708,15 @@ public class MenuVenta extends javax.swing.JInternalFrame {
             }
             this.getRecibo().setVisible(true);
         }
-        /*var recibo = new Recibo(this, venta);
-        recibo.mostrarVentasEnRecibo();
-        recibo.setVisible(true);*/
-    }//GEN-LAST:event_btnVenderActionPerformed
+        return true;
+    }
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        this.buscarAction();
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
+    private void initServices(EmpleadoService empleadoService, ProductoService productoService,
+            VentaService ventaService) {
+        this.empleadoService = empleadoService;
+        this.productoService = productoService;
+        this.ventaService = ventaService;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarVenta;

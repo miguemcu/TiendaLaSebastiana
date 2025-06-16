@@ -10,6 +10,7 @@ import BusinessLogic.Venta;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -49,7 +50,8 @@ public class RepoVentas {
                 ArrayList<DetalleVenta> detalles = new ArrayList<>();
                 for (Document docDetalle : detallesDoc) {
                     // Atributos del producto contenido en el detalle
-                    var producto = Utils.getProductoMongo(docDetalle);
+                    Document docProducto = (Document) docDetalle.get("producto");
+                    var producto = Utils.getProductoMongo(docProducto);
 
                     // Atributos del detalle
                     int cantidad = docDetalle.getInteger("cantidad");
@@ -67,7 +69,7 @@ public class RepoVentas {
                 double totalDescuento = doc.getDouble("totalDescuento");
                 double totalIVA = doc.getDouble("totalIVA");
 
-                LocalDateTime fecha = LocalDateTime.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                LocalDateTime fecha = LocalDateTime.parse(fechaStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
                 Venta venta = new Venta(detalles, totalVenta, totalBruto, totalDescuento, totalIVA, fecha, id);
                 ventas.add(venta);

@@ -5,6 +5,9 @@
 package BusinessLogic;
 
 import Repository.RepoVentas;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -26,10 +29,27 @@ public class VentaService {
         this.repositorio = repositorio;
     }
 
+    public ArrayList<Venta> getVentas() throws Exception {
+        return repositorio.getVentas();
+
+    }
+
     public boolean añadirVenta(Venta venta) throws Exception {
         return repositorio.agregarVenta(venta.getDetalles(), venta.getTotalVenta(),
                 venta.getTotalBruto(), venta.getTotalDescuento(), venta.getTotalIva(),
                 venta.getFecha(), venta.getID());
     }
-    
+
+    public ArrayList<Venta> obtenerVentasSegunPeriodo(LocalDate fechaInicio,
+            LocalDate fechaFin) throws Exception {
+        ArrayList<Venta> ventasFiltradas = this.getVentas().stream()
+                .filter(v -> {
+                    LocalDate fechaVenta = v.getFecha().toLocalDate();
+                    return !fechaVenta.isBefore(fechaInicio) && !fechaVenta.isAfter(fechaFin);
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        return ventasFiltradas;
+    }
+
 }
