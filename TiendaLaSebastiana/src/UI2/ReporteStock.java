@@ -61,11 +61,11 @@ public class ReporteStock extends javax.swing.JInternalFrame {
                 alerta = "Normal";
             }
 
-            agregarProductoFactura(id, nombre, cantidad, alerta);
+            agregarProducto(id, nombre, cantidad, alerta);
         }
     }
 
-    public void agregarProductoFactura(Long id, String producto, int cantidad,
+    public void agregarProducto(Long id, String producto, int cantidad,
             String alerta) {
 
         Object[] rowData = {
