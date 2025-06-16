@@ -9,6 +9,7 @@ import BusinessLogic.ProductoService;
 import BusinessLogic.helperUI;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import javax.swing.text.AbstractDocument;
 
 /**
  *
@@ -25,6 +26,10 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
      */
     public InventarioSistema() {
         initComponents();
+        ((AbstractDocument) txtBuscar.getDocument()).setDocumentFilter(new helperUI(50));
+        ((AbstractDocument) txtCantidadAjustar.getDocument()).setDocumentFilter(new helperUI(4));
+        
+        
     }
 
     public InventarioSistema(ProductoService productoService) {
@@ -184,6 +189,12 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
         });
 
         jLabel1.setText("Ficha");
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         txtPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -384,6 +395,10 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
     
     private void initServices(ProductoService productoService){
         this.productoService = productoService;

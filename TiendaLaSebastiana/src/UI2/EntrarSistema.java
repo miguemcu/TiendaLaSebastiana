@@ -8,6 +8,7 @@ import BusinessLogic.Empleado;
 import BusinessLogic.EmpleadoService;
 import BusinessLogic.helperUI;
 import java.util.ArrayList;
+import javax.swing.text.AbstractDocument;
 
 /**
  *
@@ -23,6 +24,8 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
 
     public EntrarSistema(EmpleadoService empleadoService, Main main) {
         initComponents();
+        ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new helperUI(10));
+        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new helperUI(10));
         initServices(empleadoService);
         this.main = main;
     }

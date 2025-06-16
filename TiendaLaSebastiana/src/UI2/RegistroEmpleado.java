@@ -7,6 +7,7 @@ package UI2;
 import BusinessLogic.EmpleadoService;
 import BusinessLogic.helperUI;
 import java.util.ArrayList;
+import javax.swing.text.AbstractDocument;
 
 
 /**
@@ -18,6 +19,8 @@ public class RegistroEmpleado extends javax.swing.JInternalFrame {
 
     public RegistroEmpleado(EmpleadoService empleadoService) {
         initComponents();
+        ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new helperUI(10));
+        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new helperUI(10));
         initServices(empleadoService);
     }
 

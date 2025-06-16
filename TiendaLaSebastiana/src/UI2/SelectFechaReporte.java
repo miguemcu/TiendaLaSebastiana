@@ -6,12 +6,14 @@ package UI2;
 
 import BusinessLogic.Venta;
 import BusinessLogic.VentaService;
+import BusinessLogic.helperUI;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
+import javax.swing.text.AbstractDocument;
 
 /**
  *
@@ -28,11 +30,23 @@ public class SelectFechaReporte extends javax.swing.JInternalFrame {
      */
     public SelectFechaReporte() {
         initComponents();
+        ((AbstractDocument) txtDiaInicio.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtMesInicio.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtAnioInicio.getDocument()).setDocumentFilter(new helperUI(5));
+        ((AbstractDocument) txtDiaFin.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtMesFin.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtAnioFin.getDocument()).setDocumentFilter(new helperUI(5));
     }
 
     public SelectFechaReporte( Main main, VentaService ventaService, JDesktopPane desktopPane) {
         this.main = main;
         initComponents();
+        ((AbstractDocument) txtDiaInicio.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtMesInicio.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtAnioInicio.getDocument()).setDocumentFilter(new helperUI(5));
+        ((AbstractDocument) txtDiaFin.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtMesFin.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtAnioFin.getDocument()).setDocumentFilter(new helperUI(5));
         initServices(ventaService);
         this.desktopPane = desktopPane;
         

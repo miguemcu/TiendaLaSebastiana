@@ -40,4 +40,9 @@ public class helperUI extends DocumentFilter {
             txt.setText("");
         }
     }
+    static public void limitarCampos(ArrayList<javax.swing.JTextField> campos,helperUI filter){
+        for (var txt:campos){
+            ((AbstractDocument) txt.getDocument()).setDocumentFilter(filter);
+                    }
+    }
 }

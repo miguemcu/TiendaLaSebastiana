@@ -35,6 +35,11 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         initServices(productoService);
         this.inventarioSistema = inventarioSistema;
         inicializarComboTipoProd();
+        ((AbstractDocument)txtCantidad.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument)txtID.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument)txtNombre.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument)txtPrecio.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument)txtPrecioMayorista.getDocument()).setDocumentFilter(new helperUI(2));
         ((AbstractDocument) txtDay.getDocument()).setDocumentFilter(new helperUI(2));
         ((AbstractDocument) txtMonth.getDocument()).setDocumentFilter(new helperUI(2));
         ((AbstractDocument) txtYear.getDocument()).setDocumentFilter(new helperUI(5));
@@ -449,7 +454,8 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
                     precioMayorista, fechaVencimiento, etiquetas, cantidad) == false) {
                 throw new Exception("Ya existe un producto registrado con ese nombre o con ese ID");
             }
-
+            
+            this.limpiarCampos();
             this.dispose();
             InventarioSistema inventarioSistema = new InventarioSistema();
             inventarioSistema.setVisible(true);

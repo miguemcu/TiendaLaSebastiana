@@ -8,11 +8,13 @@ import BusinessLogic.DetalleVenta;
 import BusinessLogic.ProductoService;
 import BusinessLogic.Venta;
 import BusinessLogic.VentaService;
+import BusinessLogic.helperUI;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 
 /**
  *
@@ -30,6 +32,12 @@ public class Devolucion extends javax.swing.JInternalFrame {
      */
     public Devolucion() {
         initComponents();
+        ((AbstractDocument) txtDiaInicio.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtMesInicio.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtAnioInicio.getDocument()).setDocumentFilter(new helperUI(5));
+        ((AbstractDocument) txtDiaFin.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtMesFin.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtAnioFin.getDocument()).setDocumentFilter(new helperUI(5));
         initJTable();
     }
 
@@ -39,6 +47,12 @@ public class Devolucion extends javax.swing.JInternalFrame {
         this.productoService = productoService;
         this.main = main;
         initComponents();
+        ((AbstractDocument) txtDiaInicio.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtMesInicio.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtAnioInicio.getDocument()).setDocumentFilter(new helperUI(5));
+        ((AbstractDocument) txtDiaFin.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtMesFin.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument) txtAnioFin.getDocument()).setDocumentFilter(new helperUI(5));
         initJTable();
 
     }
@@ -76,7 +90,7 @@ public class Devolucion extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanelInfoVenta = new javax.swing.JPanel();
         lblFechaInicioConsultar = new javax.swing.JLabel();
         txtDiaFin = new javax.swing.JTextField();
         txtMesInicio = new javax.swing.JTextField();
@@ -104,6 +118,12 @@ public class Devolucion extends javax.swing.JInternalFrame {
         setIconifiable(true);
 
         lblFechaInicioConsultar.setText("Fecha Inicio:");
+
+        txtDiaFin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDiaFinActionPerformed(evt);
+            }
+        });
 
         txtMesInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,6 +172,12 @@ public class Devolucion extends javax.swing.JInternalFrame {
 
         lblSelecPeriodoTiempo.setText("Seleccione el periodo de tiempo a consultar:");
 
+        txtDiaInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDiaInicioActionPerformed(evt);
+            }
+        });
+
         lblMesInicio.setText("MM");
 
         lblAnioFin.setText("AAAA");
@@ -167,94 +193,94 @@ public class Devolucion extends javax.swing.JInternalFrame {
         txtError.setRows(5);
         jScrollPane2.setViewportView(txtError);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelInfoVentaLayout = new javax.swing.GroupLayout(jPanelInfoVenta);
+        jPanelInfoVenta.setLayout(jPanelInfoVentaLayout);
+        jPanelInfoVentaLayout.setHorizontalGroup(
+            jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInfoVentaLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
+                        .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSelecPeriodoTiempo)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                 .addComponent(lblFechaInicioConsultar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDiaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(lblDiaInicio)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtMesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(lblMesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtAnioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                         .addGap(20, 20, 20)
                                         .addComponent(lblAnioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                 .addComponent(lblFechaFinConsultar)
                                 .addGap(27, 27, 27)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
+                                        .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtDiaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                                 .addGap(6, 6, 6)
                                                 .addComponent(lblDiaFin)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                                 .addComponent(txtMesFin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(txtAnioFin, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                                 .addGap(6, 6, 6)
                                                 .addComponent(lblMesFin, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(30, 30, 30)
                                                 .addComponent(lblAnioFin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(btnDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addComponent(lblIdVentaRequerido, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelInfoVentaLayout.setVerticalGroup(
+            jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
                 .addComponent(lblSelecPeriodoTiempo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaInicioConsultar)
                     .addComponent(txtDiaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAnioInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDiaInicio)
                     .addComponent(lblMesInicio)
                     .addComponent(lblAnioInicio))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFechaFinConsultar)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(jPanelInfoVentaLayout.createSequentialGroup()
+                        .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtDiaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMesFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAnioFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanelInfoVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDiaFin)
                             .addComponent(lblMesFin)
                             .addComponent(lblAnioFin))))
@@ -296,7 +322,7 @@ public class Devolucion extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelInfoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollPanelVentasFiltradas, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
                 .addContainerGap())
@@ -306,7 +332,7 @@ public class Devolucion extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelInfoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(scrollPanelVentasFiltradas, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
@@ -403,6 +429,14 @@ public class Devolucion extends javax.swing.JInternalFrame {
             txtError.setText("Error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void txtDiaFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaFinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDiaFinActionPerformed
+
+    private void txtDiaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDiaInicioActionPerformed
     public void agregarVentaFila(LocalDateTime fecha, long ID, StringBuilder productos, double totalVenta) {
 
         Object[] rowData = {
@@ -435,7 +469,7 @@ public class Devolucion extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnDevolver;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelInfoVenta;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAnioFin;
     private javax.swing.JLabel lblAnioInicio;

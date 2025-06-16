@@ -20,7 +20,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 
 /**
  *
@@ -35,6 +37,7 @@ public class MenuVenta extends javax.swing.JInternalFrame {
     private Venta venta;
     private Recibo recibo;
     private JDesktopPane desktopPane;
+    private ArrayList<javax.swing.JTextField> camposEditables;
 
     /**
      * Creates new form Venta
@@ -46,6 +49,10 @@ public class MenuVenta extends javax.swing.JInternalFrame {
     public MenuVenta(EmpleadoService empleadoService, ProductoService productoService,
             VentaService ventaService, JDesktopPane desktopPane) {
         initComponents();
+        ((AbstractDocument) txtBuscar.getDocument()).setDocumentFilter(new helperUI(20));
+        ((AbstractDocument) txtCantidadVender.getDocument()).setDocumentFilter(new helperUI(4));
+        ((AbstractDocument) txtIVA.getDocument()).setDocumentFilter(new helperUI(5));
+        ((AbstractDocument) txtDescuento.getDocument()).setDocumentFilter(new helperUI(5));
         initServices(empleadoService, productoService, ventaService);
         initJTable();
         this.venta = new Venta();
@@ -54,6 +61,14 @@ public class MenuVenta extends javax.swing.JInternalFrame {
     }
 
     //Setter y Getter
+    public ArrayList<JTextField> getCamposEditables() {
+        return camposEditables;
+    }
+
+    public void setCamposEditables(ArrayList<JTextField> camposEditables) {
+        this.camposEditables = camposEditables;
+    }
+
     public EmpleadoService getEmpleadoService() {
         return empleadoService;
     }
@@ -353,6 +368,12 @@ public class MenuVenta extends javax.swing.JInternalFrame {
         lblInsucienteStock.setText("Insuficiente Stock");
 
         lblDia.setText("DD");
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         lblIngresarFecha.setText("Ingrese la fecha:");
 
@@ -766,11 +787,11 @@ public class MenuVenta extends javax.swing.JInternalFrame {
             } else {
                 producto = this.getProductoService().buscarProducto("nombre", busqueda);
                 if (producto != null) {
-                    for (DetalleVenta detalle: venta.getDetalles()){
-                    if (producto.getId() == detalle.getProducto().getId()){
-                        throw new NoSuchElementException("Producto ya agregado.");
+                    for (DetalleVenta detalle : venta.getDetalles()) {
+                        if (producto.getId() == detalle.getProducto().getId()) {
+                            throw new NoSuchElementException("Producto ya agregado.");
+                        }
                     }
-                }
                     setearCampos(producto);
                     encontrado = true;
                     return producto;
@@ -798,6 +819,10 @@ public class MenuVenta extends javax.swing.JInternalFrame {
     private void txtDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescuentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescuentoActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
     public double sumatoriaColumna(JTable tabla, int columnIndex) {
         double suma = 0.0;
         int rowCount = modeloTabla.getRowCount();
@@ -858,6 +883,15 @@ public class MenuVenta extends javax.swing.JInternalFrame {
             }
         };
         tblProductosAgregados.setModel(modeloTabla);
+    }
+
+    public void crearCamposDisponibles() {
+        javax.swing.JTextField txtAnio;
+        javax.swing.JTextField txtBuscar;
+        javax.swing.JTextField txtCantidadDisponible;
+        javax.swing.JTextField txtCantidadVender;
+        javax.swing.JTextField txtDescuento;
+        javax.swing.JTextField txtDia;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
