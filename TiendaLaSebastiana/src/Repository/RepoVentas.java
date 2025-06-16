@@ -10,10 +10,12 @@ import BusinessLogic.Venta;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -84,6 +86,22 @@ public class RepoVentas {
         try {
             Venta venta = new Venta(detalles, totalVenta, totalBruto, totalDescuento, totalIva, fecha, id);
             collection.insertOne(venta.toDocument());
+            return true;
+        } catch (Exception e) {
+            throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());
+        }
+    }
+    public boolean eliminarVenta(Venta venta) throws Exception{
+        try {
+            Bson filtro = Filters.and(
+                    Filters.eq(venta));
+            
+
+            if (collection.find(filtro).first() == null) {
+                return false; // No existe esa venta
+            }
+
+            collection.deleteOne(filtro);
             return true;
         } catch (Exception e) {
             throw new Exception("Ha ocurrido un error, contacte al administrador: " + e.getMessage());

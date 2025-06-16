@@ -39,7 +39,10 @@ public class VentaService {
                 venta.getTotalBruto(), venta.getTotalDescuento(), venta.getTotalIva(),
                 venta.getFecha(), venta.getID());
     }
-
+    
+    public boolean eliminarVenta(Venta venta) throws Exception{
+        return repositorio.eliminarVenta(venta);
+    }
     public ArrayList<Venta> obtenerVentasSegunPeriodo(LocalDate fechaInicio,
             LocalDate fechaFin) throws Exception {
         ArrayList<Venta> ventasFiltradas = this.getVentas().stream()

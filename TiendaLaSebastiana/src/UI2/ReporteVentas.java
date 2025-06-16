@@ -370,5 +370,6 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDiaInicio;
     private javax.swing.JTextField txtMesFin;
     private javax.swing.JTextField txtMesInicio;
+    private javax.swing.JTextField txtMesInicio1;
     // End of variables declaration//GEN-END:variables
 }
