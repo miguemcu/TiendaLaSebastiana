@@ -150,6 +150,15 @@ public class Main extends javax.swing.JFrame {
         this.cerrarSesionItem = cerrarSesionItem;
     }
 
+    public JMenuItem getIniciarSesionItem() {
+        return iniciarSesionItem;
+    }
+
+    public void setIniciarSesionItem(JMenuItem iniciarSesionItem) {
+        this.iniciarSesionItem = iniciarSesionItem;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -290,6 +299,7 @@ public class Main extends javax.swing.JFrame {
         this.getBtnReportes().setEnabled(false);
         this.getBtnDevolución().setEnabled(false);
         this.getCerrarSesionItem().setEnabled(false);
+        this.getIniciarSesionItem().setEnabled(true);
         this.getEmpleadoService().setCajero(null);
     }//GEN-LAST:event_cerrarSesionItemActionPerformed
 
