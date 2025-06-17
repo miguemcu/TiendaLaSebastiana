@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -115,6 +116,56 @@ public class RepoProductos {
             collection.updateOne(filtro, cantidadNueva);
         } catch (Exception e) {
             throw new Exception("Ha ocurrido un error, por favor contacte al administrador");
+        }
+    }
+    
+    public boolean actualizarProducto(String tipoProducto, String nombre, long id,
+                                      double precioMayorista, double precio, LocalDate fechaDeVencimiento,
+                                      ArrayList<String> etiquetas, int cantidad) throws Exception {
+        try {
+
+            Bson filtro = Filters.eq("producto.id", id);
+
+            Document productoExistente = collection.find(filtro).first();
+
+            if (productoExistente == null) {
+                throw new NoSuchElementException("Producto no encontrado");
+            }
+
+            ArrayList<Bson> updates = new ArrayList<>();
+
+            updates.add(Updates.set("producto.nombre", nombre));
+            updates.add(Updates.set("producto.precioMayorista", precioMayorista));
+            updates.add(Updates.set("producto.precio", precio));
+            updates.add(Updates.set("producto.fechaDeVencimiento", fechaDeVencimiento.toString()));
+            updates.add(Updates.set("producto.etiquetas", etiquetas));
+            updates.add(Updates.set("cantidad", cantidad));
+            
+            updates.add(Updates.set("producto.tipoProducto", tipoProducto.toUpperCase()));
+            collection.updateOne(filtro, Updates.combine(updates)).getModifiedCount();
+            return true;
+        } catch (IllegalArgumentException e) {
+             throw new IllegalArgumentException(e.getMessage());
+        }
+        catch (NoSuchElementException e) {
+             throw new NoSuchElementException(e.getMessage());
+        }
+        catch (Exception e) {
+            throw new Exception("Error inesperado, por favor contacte al administrador: " + e.getMessage());
+        }
+    }
+    
+    public boolean eliminarProducto(long id) throws Exception {
+        try {
+            Bson filtro = Filters.eq("id", id);
+
+            if (collection.deleteOne(filtro) == null){
+                return false;
+            }
+            return true;
+            
+        } catch (Exception e) {
+            throw new Exception("Ha ocurrido un error al eliminar el producto, por favor contacte al administrador: " + e.getMessage(), e);
         }
     }
 }

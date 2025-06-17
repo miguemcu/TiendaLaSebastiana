@@ -1,38 +1,110 @@
 [
   {
+    "_id": {
+      "$oid": "6849a1e9b5397a56017ccc92"
+    },
     "producto": {
-      "nombre": "Laptop",
+      "nombre": "Atún en Agua 1000g",
       "id": 1001,
-      "precioMayorista": 3200.0,
-      "precio": 3500.0,
-      "tipoProducto": "ENLATADOS",
+      "precioMayorista": 3500.0,
+      "precio": 3200.0,
+      "tipoProducto": "ENLATADO",
       "fechaDeVencimiento": "2026-12-31",
-      "etiquetas": ["tecnología", "portátil"]
+      "etiquetas": [
+        "light",
+        "producto salado"
+      ]
     },
-    "cantidad": 2
+    "cantidad": 9
   },
   {
+    "_id": {
+      "$oid": "6640e7a1c8f1a2b3c4d5e6f7"
+    },
     "producto": {
-      "nombre": "Mouse",
+      "nombre": "Detergente Líquido 2L",
       "id": 1002,
-      "precioMayorista": 20.0,
-      "precio": 30.0,
+      "precioMayorista": 12500.0,
+      "precio": 14900.0,
       "tipoProducto": "ASEO",
-      "fechaDeVencimiento": "2027-06-15",
-      "etiquetas": ["accesorio", "usb", "ergonómico"]
+      "fechaDeVencimiento": "2027-06-30",
+      "etiquetas": [
+        "limpieza",
+        "ropa"
+      ]
     },
-    "cantidad": 5
+    "cantidad": 25
   },
   {
-    "producto": {
-      "nombre": "Café Premium",
-      "id": 1003,
-      "precioMayorista": 8000.0,
-      "precio": 9500.0,
-      "tipoProducto": "GRANOS",
-      "fechaDeVencimiento": "2025-10-10",
-      "etiquetas": ["orgánico", "colombiano", "molido"]
+    "_id": {
+      "$oid": "6640e7a1c8f1a2b3c4d5e6f8"
     },
-    "cantidad": 3
+    "producto": {
+      "nombre": "Gaseosa Cola 1.5L",
+      "id": 1003,
+      "precioMayorista": 2000.0,
+      "precio": 2500.0,
+      "tipoProducto": "BEBIDA",
+      "fechaDeVencimiento": "2025-11-15",
+      "etiquetas": [
+        "bebida",
+        "azucarada"
+      ]
+    },
+    "cantidad": 40
+  },
+  {
+    "_id": {
+      "$oid": "6640e7a1c8f1a2b3c4d5e6f9"
+    },
+    "producto": {
+      "nombre": "Galletas de Chocolate",
+      "id": 1004,
+      "precioMayorista": 1800.0,
+      "precio": 2200.0,
+      "tipoProducto": "MECATO",
+      "fechaDeVencimiento": "2025-09-01",
+      "etiquetas": [
+        "dulce",
+        "snack"
+      ]
+    },
+    "cantidad": 30
+  },
+  {
+    "_id": {
+      "$oid": "6640e7a1c8f1a2b3c4d5e6fa"
+    },
+    "producto": {
+      "nombre": "Arroz Blanco 5Kg",
+      "id": 1005,
+      "precioMayorista": 9000.0,
+      "precio": 10500.0,
+      "tipoProducto": "GRANOS",
+      "fechaDeVencimiento": "2027-03-20",
+      "etiquetas": [
+        "básico",
+        "cocina"
+      ]
+    },
+    "cantidad": 15
+  },
+  {
+    "_id": {
+      "$oid": "6640e7a1c8f1a2b3c4d5e6fb"
+    },
+    "producto": {
+      "nombre": "Frijoles Rojos Enlatados 400g",
+      "id": 1006,
+      "precioMayorista": 2800.0,
+      "precio": 3300.0,
+      "tipoProducto": "ENLATADO",
+      "fechaDeVencimiento": "2026-08-10",
+      "etiquetas": [
+        "legumbres",
+        "rápido"
+      ]
+    },
+    "cantidad": 20
   }
 ]
