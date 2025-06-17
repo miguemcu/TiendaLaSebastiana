@@ -49,7 +49,7 @@ public class MenuVenta extends javax.swing.JInternalFrame {
     public MenuVenta(EmpleadoService empleadoService, ProductoService productoService,
             VentaService ventaService, JDesktopPane desktopPane) {
         initComponents();
-        ((AbstractDocument) txtBuscar.getDocument()).setDocumentFilter(new helperUI(20));
+        ((AbstractDocument) txtBuscar.getDocument()).setDocumentFilter(new helperUI(30));
         ((AbstractDocument) txtCantidadVender.getDocument()).setDocumentFilter(new helperUI(4));
         ((AbstractDocument) txtIVA.getDocument()).setDocumentFilter(new helperUI(5));
         ((AbstractDocument) txtDescuento.getDocument()).setDocumentFilter(new helperUI(5));

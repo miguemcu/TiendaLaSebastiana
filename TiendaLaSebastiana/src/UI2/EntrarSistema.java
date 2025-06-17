@@ -25,7 +25,7 @@ public class EntrarSistema extends javax.swing.JInternalFrame {
     public EntrarSistema(EmpleadoService empleadoService, Main main) {
         initComponents();
         ((AbstractDocument) txtCedulaEmpleado.getDocument()).setDocumentFilter(new helperUI(10));
-        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new helperUI(10));
+        ((AbstractDocument) txtNombreEmpleado.getDocument()).setDocumentFilter(new helperUI(35));
         initServices(empleadoService);
         this.main = main;
     }

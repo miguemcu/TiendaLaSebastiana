@@ -39,7 +39,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         ((AbstractDocument)txtID.getDocument()).setDocumentFilter(new helperUI(35));
         ((AbstractDocument)txtNombre.getDocument()).setDocumentFilter(new helperUI(35));
         ((AbstractDocument)txtPrecio.getDocument()).setDocumentFilter(new helperUI(35));
-        ((AbstractDocument)txtPrecioMayorista.getDocument()).setDocumentFilter(new helperUI(2));
+        ((AbstractDocument)txtPrecioMayorista.getDocument()).setDocumentFilter(new helperUI(35));
         ((AbstractDocument) txtDay.getDocument()).setDocumentFilter(new helperUI(2));
         ((AbstractDocument) txtMonth.getDocument()).setDocumentFilter(new helperUI(2));
         ((AbstractDocument) txtYear.getDocument()).setDocumentFilter(new helperUI(5));

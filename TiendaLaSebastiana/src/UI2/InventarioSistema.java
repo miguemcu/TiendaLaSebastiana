@@ -34,6 +34,8 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
 
     public InventarioSistema(ProductoService productoService) {
         initComponents();
+        ((AbstractDocument) txtBuscar.getDocument()).setDocumentFilter(new helperUI(50));
+        ((AbstractDocument) txtCantidadAjustar.getDocument()).setDocumentFilter(new helperUI(4));
         initServices(productoService);
         this.productoBuscado = null;
     }
