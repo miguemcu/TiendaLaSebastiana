@@ -174,6 +174,12 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
             if (this.getReporteStock().isClosed()) {
                 this.getParent().add(this.getReporteStock());
             }
+            this.getReporteStock().getModeloTabla().setRowCount(0);
+           try {
+               this.getReporteStock().mostrarVentasEnTabla();
+           } catch (Exception ex) {
+               Logger.getLogger(SistemaReportes.class.getName()).log(Level.SEVERE, null, ex);
+           }
             this.getReporteStock().setVisible(true);
         }
         /*var ReporteStock = new ReporteStock(parent);

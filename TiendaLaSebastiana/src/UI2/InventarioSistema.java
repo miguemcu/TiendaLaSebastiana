@@ -22,6 +22,7 @@ public class InventarioSistema extends javax.swing.JInternalFrame {
     private CreacionProducto crearProducto;
     private ProductoService productoService;
     private InventarioFrame inventarioFrame;
+    private EdicionProducto edicionProducto;
 
     /**
      * Creates new form InventarioSistema
@@ -69,6 +70,15 @@ public class InventarioSistema extends javax.swing.JInternalFrame {
     public void setInventarioFrame(InventarioFrame inventarioFrame) {
         this.inventarioFrame = inventarioFrame;
     }
+
+    public EdicionProducto getEdicionProducto() {
+        return edicionProducto;
+    }
+
+    public void setEdicionProducto(EdicionProducto edicionProducto) {
+        this.edicionProducto = edicionProducto;
+    }
+    
     
     
 
@@ -134,6 +144,7 @@ public class InventarioSistema extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextField();
         txtPrecio = new javax.swing.JTextField();
         btnMostrarInventario = new javax.swing.JToggleButton();
+        btnActualizarProducto = new javax.swing.JToggleButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -212,27 +223,17 @@ public class InventarioSistema extends javax.swing.JInternalFrame {
             }
         });
 
+        btnActualizarProducto.setText("Actualizar Producto");
+        btnActualizarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarProductoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblNombre)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscar)))
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAjustarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCantidadAjustar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMostrarInventario))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -260,6 +261,24 @@ public class InventarioSistema extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(58, 58, 58))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lblNombre)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar)))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAjustarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantidadAjustar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMostrarInventario)
+                    .addComponent(btnActualizarProducto))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,6 +295,8 @@ public class InventarioSistema extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtCantidadAjustar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActualizarProducto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnMostrarInventario)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,15 +444,35 @@ public class InventarioSistema extends javax.swing.JInternalFrame {
             if (this.getInventarioFrame().isClosed()) {
                 this.getParent().add(this.getInventarioFrame());
             }
+            this.getInventarioFrame().getModeloTabla().setRowCount(0);
+            try {
+                this.getInventarioFrame().mostrarProductos();
+            } catch (Exception ex) {
+                Logger.getLogger(InventarioSistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.getInventarioFrame().setVisible(true);
         }
     }//GEN-LAST:event_btnMostrarInventarioActionPerformed
+
+    private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProductoActionPerformed
+        if (this.getEdicionProducto() == null) {
+            this.setEdicionProducto(new EdicionProducto(this.productoService, this));
+            this.getParent().add(this.getEdicionProducto());
+        }
+        if (!this.getEdicionProducto().isVisible()) {
+            if (this.getEdicionProducto().isClosed()) {
+                this.getParent().add(this.getEdicionProducto());
+            }
+            this.getEdicionProducto().setVisible(true);
+        }
+    }//GEN-LAST:event_btnActualizarProductoActionPerformed
     
     private void initServices(ProductoService productoService){
         this.productoService = productoService;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnActualizarProducto;
     private javax.swing.JToggleButton btnAjustarCantidad;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JToggleButton btnCrearProducto;

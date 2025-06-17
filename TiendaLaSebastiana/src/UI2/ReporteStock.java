@@ -7,6 +7,7 @@ package UI2;
 import BusinessLogic.Producto;
 import BusinessLogic.ProductoService;
 import java.util.Map;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -39,6 +40,24 @@ public class ReporteStock extends javax.swing.JInternalFrame {
     public void setProductoService(ProductoService productoService) {
         this.productoService = productoService;
     }
+
+    public DefaultTableModel getModeloTabla() {
+        return modeloTabla;
+    }
+
+    public void setModeloTabla(DefaultTableModel modeloTabla) {
+        this.modeloTabla = modeloTabla;
+    }
+
+    public JTable getTblReporteStock() {
+        return tblReporteStock;
+    }
+
+    public void setTblReporteStock(JTable tblReporteStock) {
+        this.tblReporteStock = tblReporteStock;
+    }
+    
+    
 
     
     //Metodos de la clase
