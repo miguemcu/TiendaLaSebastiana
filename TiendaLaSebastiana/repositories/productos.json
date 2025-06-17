@@ -5,7 +5,7 @@
     },
     "producto": {
       "nombre": "Atún en Agua 1000g",
-      "id": 1001,
+      "id": { "$numberLong": "1001" },           
       "precioMayorista": 3500.0,
       "precio": 3200.0,
       "tipoProducto": "ENLATADO",
@@ -23,9 +23,9 @@
     },
     "producto": {
       "nombre": "Detergente Líquido 2L",
-      "id": 1002,
-      "precioMayorista": 12500.0,
-      "precio": 14900.0,
+      "id": { "$numberLong": "1002" },
+      "precioMayorista": 12500.50, 
+      "precio": 14900.99,    
       "tipoProducto": "ASEO",
       "fechaDeVencimiento": "2027-06-30",
       "etiquetas": [
@@ -41,7 +41,7 @@
     },
     "producto": {
       "nombre": "Gaseosa Cola 1.5L",
-      "id": 1003,
+      "id": { "$numberLong": "1003" },
       "precioMayorista": 2000.0,
       "precio": 2500.0,
       "tipoProducto": "BEBIDA",
@@ -59,9 +59,9 @@
     },
     "producto": {
       "nombre": "Galletas de Chocolate",
-      "id": 1004,
-      "precioMayorista": 1800.0,
-      "precio": 2200.0,
+      "id": { "$numberLong": "1004" },
+      "precioMayorista": 1800.75,
+      "precio": 2200.50,
       "tipoProducto": "MECATO",
       "fechaDeVencimiento": "2025-09-01",
       "etiquetas": [
@@ -77,7 +77,7 @@
     },
     "producto": {
       "nombre": "Arroz Blanco 5Kg",
-      "id": 1005,
+      "id": { "$numberLong": "1005" },
       "precioMayorista": 9000.0,
       "precio": 10500.0,
       "tipoProducto": "GRANOS",
@@ -95,9 +95,9 @@
     },
     "producto": {
       "nombre": "Frijoles Rojos Enlatados 400g",
-      "id": 1006,
-      "precioMayorista": 2800.0,
-      "precio": 3300.0,
+      "id": { "$numberLong": "1006" },
+      "precioMayorista": 2800.25,
+      "precio": 3300.75,
       "tipoProducto": "ENLATADO",
       "fechaDeVencimiento": "2026-08-10",
       "etiquetas": [
@@ -106,5 +106,41 @@
       ]
     },
     "cantidad": 20
+  },
+  {
+    "_id": {
+      "$oid": "6640e7a1c8f1a2b3c4d5e6fc"
+    },
+    "producto": {
+      "nombre": "Jabon de Baño Natural",
+      "id": { "$numberLong": "2001" },
+      "precioMayorista": 2500.0,
+      "precio": 3000.0,
+      "tipoProducto": "ASEO",
+      "fechaDeVencimiento": "2028-01-01",
+      "etiquetas": [
+        "higiene",
+        "personal"
+      ]
+    },
+    "cantidad": 50
+  },
+  {
+    "_id": {
+      "$oid": "6640e7a1c8f1a2b3c4d5e6fd"
+    },
+    "producto": {
+      "nombre": "Agua Mineral 500ml",
+      "id": { "$numberLong": "2002" },
+      "precioMayorista": 800.0,
+      "precio": 1200.0,
+      "tipoProducto": "BEBIDA",
+      "fechaDeVencimiento": "2025-07-20",
+      "etiquetas": [
+        "hidratacion",
+        "natural"
+      ]
+    },
+    "cantidad": 100
   }
 ]

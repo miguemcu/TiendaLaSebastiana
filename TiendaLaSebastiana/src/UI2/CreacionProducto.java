@@ -35,11 +35,11 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         initServices(productoService);
         this.inventarioSistema = inventarioSistema;
         inicializarComboTipoProd();
-        ((AbstractDocument)txtCantidad.getDocument()).setDocumentFilter(new helperUI(35));
-        ((AbstractDocument)txtID.getDocument()).setDocumentFilter(new helperUI(35));
-        ((AbstractDocument)txtNombre.getDocument()).setDocumentFilter(new helperUI(35));
-        ((AbstractDocument)txtPrecio.getDocument()).setDocumentFilter(new helperUI(35));
-        ((AbstractDocument)txtPrecioMayorista.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument) txtCantidad.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument) txtID.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument) txtNombre.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument) txtPrecio.getDocument()).setDocumentFilter(new helperUI(35));
+        ((AbstractDocument) txtPrecioMayorista.getDocument()).setDocumentFilter(new helperUI(35));
         ((AbstractDocument) txtDay.getDocument()).setDocumentFilter(new helperUI(2));
         ((AbstractDocument) txtMonth.getDocument()).setDocumentFilter(new helperUI(2));
         ((AbstractDocument) txtYear.getDocument()).setDocumentFilter(new helperUI(5));
@@ -53,7 +53,6 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
     public void setProductoService(ProductoService productoService) {
         this.productoService = productoService;
     }
-
 
     public InventarioSistema getInventarioSistema() {
         return inventarioSistema;
@@ -98,7 +97,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         }
         return fechaVencimiento;
     }
-    
+
     public void limpiarCampos() {
         txtID.setText("");
         txtNombre.setText("");
@@ -373,7 +372,6 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTipoProdActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-
         try {
             String nombre = txtNombre.getText().trim();
             String id = txtID.getText().trim();
@@ -385,13 +383,13 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
             String mes = txtMonth.getText().trim();
             String annio = txtYear.getText().trim();
             String textoEtiquetas = txtEtiquetas.getText().trim();
-            
+
             if (nombre.isBlank() || id.isBlank() || Cantidad.isBlank()
                     || PrecioMayorista.isBlank() || Precio.isBlank() || tipoSeleccionado == null
                     || dia.isBlank() || mes.isBlank() || annio.isBlank()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
-            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\\s]+")) {
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\\s.]+")) {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
 
@@ -455,7 +453,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
                     precioMayorista, fechaVencimiento, etiquetas, cantidad) == false) {
                 throw new Exception("Ya existe un producto registrado con ese nombre o con ese ID");
             }
-            
+
             this.limpiarCampos();
             this.dispose();
             InventarioSistema inventarioSistema = new InventarioSistema(this.productoService);
@@ -476,7 +474,7 @@ public class CreacionProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMonthActionPerformed
 
-    private void initServices(ProductoService productoService){
+    private void initServices(ProductoService productoService) {
         this.productoService = productoService;
     }
 

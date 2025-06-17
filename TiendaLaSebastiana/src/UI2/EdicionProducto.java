@@ -474,7 +474,7 @@ public class EdicionProducto extends javax.swing.JInternalFrame {
                     || dia.isBlank() || mes.isBlank() || annio.isBlank()) {
                 throw new IllegalArgumentException("Todos los campos son obligatorios.");
             }
-            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\\s]+")) {
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\\s.]+")) {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios.");
             }
 
@@ -599,6 +599,7 @@ public class EdicionProducto extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(EdicionProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.dispose();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
