@@ -9,7 +9,6 @@ import BusinessLogic.ProductoService;
 import BusinessLogic.helperUI;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import javax.swing.text.AbstractDocument;
 
 /**
  *
@@ -20,22 +19,17 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
     private Producto productoBuscado;
     private CreacionProducto crearProducto;
     private ProductoService productoService;
+    private EdicionProducto edicionProducto;
 
     /**
      * Creates new form InventarioSistema
      */
     public InventarioSistema() {
         initComponents();
-        ((AbstractDocument) txtBuscar.getDocument()).setDocumentFilter(new helperUI(50));
-        ((AbstractDocument) txtCantidadAjustar.getDocument()).setDocumentFilter(new helperUI(4));
-        
-        
     }
 
     public InventarioSistema(ProductoService productoService) {
         initComponents();
-        ((AbstractDocument) txtBuscar.getDocument()).setDocumentFilter(new helperUI(50));
-        ((AbstractDocument) txtCantidadAjustar.getDocument()).setDocumentFilter(new helperUI(4));
         initServices(productoService);
         this.productoBuscado = null;
     }
@@ -64,6 +58,14 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
 
     public void setCrearProducto(CreacionProducto crearProducto) {
         this.crearProducto = crearProducto;
+    }
+
+    public EdicionProducto getEdicionProducto() {
+        return edicionProducto;
+    }
+
+    public void setEdicionProducto(EdicionProducto edicionProducto) {
+        this.edicionProducto = edicionProducto;
     }
 
     //metodos para la clase.
@@ -106,7 +108,7 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
     private void initComponents() {
 
         btnBuscar = new javax.swing.JButton();
-        jScrollPaneTxtError = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         txtError = new javax.swing.JTextArea();
         lblNombre = new javax.swing.JLabel();
         lblTipo = new javax.swing.JLabel();
@@ -127,13 +129,12 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         txtPrecio = new javax.swing.JTextField();
+        btnEditarProducto = new javax.swing.JToggleButton();
 
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
 
-        btnBuscar.setBackground(new java.awt.Color(102, 255, 102));
-        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,12 +142,12 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
             }
         });
 
-        jScrollPaneTxtError.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        jScrollPaneTxtError.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         txtError.setColumns(20);
         txtError.setRows(5);
-        jScrollPaneTxtError.setViewportView(txtError);
+        jScrollPane1.setViewportView(txtError);
 
         lblNombre.setText("Nombre");
 
@@ -174,8 +175,6 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
             }
         });
 
-        btnAjustarCantidad.setBackground(new java.awt.Color(102, 255, 153));
-        btnAjustarCantidad.setForeground(new java.awt.Color(0, 0, 0));
         btnAjustarCantidad.setText("Ajustar cantidad");
         btnAjustarCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,8 +186,6 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
         txtFichaProducto.setRows(5);
         jScrollPane2.setViewportView(txtFichaProducto);
 
-        btnCrearProducto.setBackground(new java.awt.Color(102, 255, 102));
-        btnCrearProducto.setForeground(new java.awt.Color(0, 0, 0));
         btnCrearProducto.setText("Crear Producto");
         btnCrearProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,15 +195,16 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
 
         jLabel1.setText("Ficha");
 
-        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarActionPerformed(evt);
-            }
-        });
-
         txtPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPrecioActionPerformed(evt);
+            }
+        });
+
+        btnEditarProducto.setText("Editar Producto");
+        btnEditarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarProductoActionPerformed(evt);
             }
         });
 
@@ -234,7 +232,7 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
                                     .addComponent(txtCantidadAjustar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnCrearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPaneTxtError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -254,7 +252,10 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
                                 .addComponent(txtPrecioMayorista, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtTipo, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(btnEditarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -272,7 +273,7 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
                         .addGap(18, 18, 18)
                         .addComponent(txtCantidadAjustar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPaneTxtError, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -303,7 +304,9 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(159, 159, 159))
+                .addGap(45, 45, 45)
+                .addComponent(btnEditarProducto)
+                .addGap(87, 87, 87))
         );
 
         pack();
@@ -404,9 +407,18 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioActionPerformed
 
-    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarActionPerformed
+    private void btnEditarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProductoActionPerformed
+        if (this.getEdicionProducto() == null) {
+            this.setEdicionProducto(new EdicionProducto(this.productoService, this));
+            this.getParent().add(this.getEdicionProducto());
+        }
+        if (!this.getEdicionProducto().isVisible()) {
+            if (this.getEdicionProducto().isClosed()) {
+                this.getParent().add(this.getEdicionProducto());
+            }
+            this.getEdicionProducto().setVisible(true);
+        }
+    }//GEN-LAST:event_btnEditarProductoActionPerformed
     
     private void initServices(ProductoService productoService){
         this.productoService = productoService;
@@ -416,9 +428,10 @@ public class InventarioSistema extends javax.swing.JInternalFrame{
     private javax.swing.JToggleButton btnAjustarCantidad;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JToggleButton btnCrearProducto;
+    private javax.swing.JToggleButton btnEditarProducto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPaneTxtError;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblNombre;

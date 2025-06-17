@@ -112,7 +112,7 @@ public class Utils {
                 .append("precio", producto.getPrecio())
                 .append("tipoProducto", producto.getTipoProducto())
                 .append("fechaDeVencimiento", producto.getFechaDeVencimiento().toString())
-                .append("Etiquetas", producto.getEtiquetas());
+                .append("etiquetas", producto.getEtiquetas());
         return doc;
     }
 }

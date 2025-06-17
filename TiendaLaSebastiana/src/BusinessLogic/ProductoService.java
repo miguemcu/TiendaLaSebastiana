@@ -112,5 +112,18 @@ public class ProductoService {
 
         return productosFiltrados;
     }
+    
+    public boolean actualizarProducto(String tipoProducto, String nombre, long id,
+                                      double precioMayorista, double precio, LocalDate fechaDeVencimiento,
+                                      ArrayList<String> etiquetas, int cantidad) throws Exception {
+        return repositorio.actualizarProducto(tipoProducto, nombre, id, precioMayorista,
+                precio, fechaDeVencimiento, etiquetas, cantidad);
+    }
+    
+    public boolean eliminarProducto(Long id) throws Exception{
+        return repositorio.eliminarProducto(id);
+    }
+    
+    
 
 }
