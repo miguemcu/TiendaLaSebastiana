@@ -127,6 +127,7 @@ public class SelectFechaReporte extends javax.swing.JInternalFrame {
             }
         });
 
+        btnConsultar.setBackground(new java.awt.Color(0, 102, 102));
         btnConsultar.setText("Consultar");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -72,6 +72,7 @@ public class RegistroEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        btnRegistroEmpleadoExitoso.setBackground(new java.awt.Color(0, 0, 255));
         btnRegistroEmpleadoExitoso.setText("Registrar");
         btnRegistroEmpleadoExitoso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

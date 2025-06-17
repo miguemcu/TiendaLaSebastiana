@@ -157,6 +157,8 @@ public class Devolucion extends javax.swing.JInternalFrame {
 
         lblDiaFin.setText("DD");
 
+        btnConsultar.setBackground(new java.awt.Color(102, 102, 255));
+        btnConsultar.setForeground(new java.awt.Color(0, 0, 0));
         btnConsultar.setText("Consultar");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,6 +184,8 @@ public class Devolucion extends javax.swing.JInternalFrame {
 
         lblAnioFin.setText("AAAA");
 
+        btnDevolver.setBackground(new java.awt.Color(51, 51, 255));
+        btnDevolver.setForeground(new java.awt.Color(0, 0, 0));
         btnDevolver.setText("Devolver");
         btnDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

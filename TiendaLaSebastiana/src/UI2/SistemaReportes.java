@@ -99,6 +99,7 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
 
         lblReportesDeseaHacer.setText("¿Qué reporte desea consultar?");
 
+        btnReporteVentas.setBackground(new java.awt.Color(0, 153, 204));
         btnReporteVentas.setText("Reporte de Ventas");
         btnReporteVentas.setToolTipText("");
         btnReporteVentas.addActionListener(new java.awt.event.ActionListener() {
@@ -107,6 +108,7 @@ public class SistemaReportes extends javax.swing.JInternalFrame {
             }
         });
 
+        btnReporteStock.setBackground(new java.awt.Color(0, 51, 102));
         btnReporteStock.setText("Reporte de Stock");
         btnReporteStock.setToolTipText("");
         btnReporteStock.addActionListener(new java.awt.event.ActionListener() {
