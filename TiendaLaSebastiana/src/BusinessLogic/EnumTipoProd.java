@@ -4,7 +4,7 @@ package BusinessLogic;
 public enum EnumTipoProd {
     ASEO,
     BEBIDA,
-    ENLATADOS,
+    ENLATADO,
     MECATO,
     GRANOS
 }

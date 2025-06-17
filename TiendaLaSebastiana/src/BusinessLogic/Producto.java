@@ -2,9 +2,10 @@ package BusinessLogic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import org.bson.Document;
 
 public abstract class Producto {
+
     private String nombre;
     private long id;
     private double precioMayorista;
@@ -16,7 +17,7 @@ public abstract class Producto {
     public Producto() {
     }
 
-    public Producto(String nombre, long id, double precioMayorista, double precio, EnumTipoProd tipoProducto, LocalDate fechaDeVencimiento, 
+    public Producto(String nombre, long id, double precioMayorista, double precio, EnumTipoProd tipoProducto, LocalDate fechaDeVencimiento,
             ArrayList<String> etiquetas) {
         this.nombre = nombre;
         this.id = id;
@@ -34,7 +35,7 @@ public abstract class Producto {
     public void setTipoProducto(EnumTipoProd tipoProducto) {
         this.tipoProducto = tipoProducto;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -66,6 +67,7 @@ public abstract class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
     public LocalDate getFechaDeVencimiento() {
         return fechaDeVencimiento;
     }
@@ -73,12 +75,17 @@ public abstract class Producto {
     public void setFechaDeVencimiento(LocalDate fechaDeVencimiento) {
         this.fechaDeVencimiento = fechaDeVencimiento;
     }
+
     public ArrayList<String> getEtiquetas() {
         return etiquetas;
     }
+
     public void setEtiquetas(ArrayList<String> etiquetas) {
         this.etiquetas = etiquetas;
     }
-    
+
     public abstract String imprimirFicha();
+
+    public abstract Document toDocument();
+
 }
