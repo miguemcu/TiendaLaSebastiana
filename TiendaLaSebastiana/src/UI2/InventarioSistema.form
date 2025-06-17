@@ -24,65 +24,62 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="txtNombre" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="txtBuscar" min="-2" pref="181" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnAjustarCantidad" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                  <Component id="txtCantidadAjustar" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                  <Component id="btnCrearProducto" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                  <Component id="btnMostrarInventario" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtNombre" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtBuscar" min="-2" pref="181" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnAjustarCantidad" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                                  <Component id="txtCantidadAjustar" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                                  <Component id="btnCrearProducto" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="51" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jScrollPaneTxtError" alignment="1" min="-2" pref="219" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblCantidad" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblID" alignment="1" min="-2" pref="37" max="-2" attributes="0"/>
+                          <Component id="lblTipo" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="lblPrecioMayorista" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPrecioMenor" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblCantidad" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblID" alignment="1" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="lblTipo" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="lblPrecioMayorista" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblPrecioMenor" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="txtID" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtPrecioMayorista" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtCantidad" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtTipo" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtPrecio" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
+                      <EmptySpace pref="324" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                      <Component id="btnEditarProducto" min="-2" pref="124" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="txtPrecioMayorista" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtCantidad" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtTipo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtPrecio" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="219" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="68" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -102,7 +99,10 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="txtCantidadAjustar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jScrollPaneTxtError" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="btnMostrarInventario" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="60" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -135,17 +135,14 @@
                           <Component id="txtPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblPrecioMenor" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane2" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-              <Component id="btnEditarProducto" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -153,19 +150,13 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="66" green="ff" red="66" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Buscar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPaneTxtError">
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
         <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
         <Property name="verticalScrollBarPolicy" type="int" value="22"/>
@@ -233,12 +224,6 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="btnAjustarCantidad">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="99" green="ff" red="66" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Ajustar cantidad"/>
       </Properties>
       <Events>
@@ -266,12 +251,6 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="btnCrearProducto">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="66" green="ff" red="66" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Crear Producto"/>
       </Properties>
       <Events>
@@ -286,21 +265,18 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtBuscar">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscarActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrecio">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPrecioActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JToggleButton" name="btnEditarProducto">
+    <Component class="javax.swing.JToggleButton" name="btnMostrarInventario">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Editar Producto"/>
+        <Property name="text" type="java.lang.String" value="Mostrar Inventario"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarProductoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarInventarioActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
