@@ -91,7 +91,7 @@ public class RepoProductos {
                     producto = new Mecato(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
                     break;
-                case "ENLATADOS":
+                case "ENLATADO":
                     producto = new Enlatado(nombre, id, precioMayorista, precio,
                             fechaDeVencimiento, etiquetas);
                     break;
@@ -157,7 +157,7 @@ public class RepoProductos {
     
     public boolean eliminarProducto(long id) throws Exception {
         try {
-            Bson filtro = Filters.eq("id", id);
+            Bson filtro = Filters.eq("producto.id", id);
 
             if (collection.deleteOne(filtro) == null){
                 return false;
